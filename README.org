@@ -1,6 +1,6 @@
 #+title: MAZENGINE README
 
-* *M*organ's *a*ma*z*ing engine!!! (or *maz*zy engine)
+* Morgan's AmaZing engine!!! (or MAZzy engine)
 This is a little game engine I've been working on for the past couple of months, and I figured it's beginning to deserve its own repository. This engine is designed first and foremost to be readable and mod-able with less nitty-gritty, low to the metal, coding. Essentially, it is supposed to use as little C++ code as possible, and as much YAML files as are necessary for development. Additionally, I will be providing thorough documentation and perhaps even some literate programming in some of the more code intensive sections of the project.
 
 * What is Mazengine?
