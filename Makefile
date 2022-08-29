@@ -8,6 +8,8 @@ CC = g++
 
 RM = rm
 
+COMPILEDS = bin/*.o
+
 FLAGS = -Wall -Werror
 
 LIBS = $(shell pkg-config --libs --cflags sdl2 SDL2_mixer SDL2_image yaml-cpp ncurses)
@@ -21,10 +23,11 @@ INCLUDES = --include-directory=include/
 all:
 
 compile:
+	$(RM) $(COMPILEDS)
 	$(CC) $(FLAGS) -c $(SRCS) $(LIBS) $(INCLUDES)
 	mv *.o bin/
 
 clean:
-	$(RM)
+	$(RM) $(COMPILEDS)
 
 # end
