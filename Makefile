@@ -21,13 +21,17 @@ SRCS = src/*.cpp
 INCLUDES = --include-directory=include/
 
 all:
+	make clean
+	make compile
 
 compile:
-	$(RM) $(COMPILEDS)
 	$(CC) $(FLAGS) -c $(SRCS) $(LIBS) $(INCLUDES)
 	mv *.o bin/
 
 clean:
 	$(RM) $(COMPILEDS)
+
+generate-json:
+	bear -- make
 
 # end

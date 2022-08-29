@@ -1,6 +1,6 @@
-#include "tile_game.h"
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <tile_game.h>
 
 void tile_game::set_audio_path(std::string path) { audio_path = path; }
 

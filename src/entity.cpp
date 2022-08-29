@@ -1,4 +1,4 @@
-#include "mazengine.h"
+#include <mazengine.h>
 
 using namespace mazengine;
 

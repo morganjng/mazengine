@@ -1,5 +1,5 @@
-#include "tile_renderer.h"
-#include "SDL_render.h"
+#include <SDL_render.h>
+#include <tile_renderer.h>
 
 void tile_renderer::clear(int color) {
   SDL_RenderClear(renderer);

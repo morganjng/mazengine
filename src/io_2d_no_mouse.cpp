@@ -1,5 +1,5 @@
-#include "io_2d_no_mouse.h"
-#include "SDL_keycode.h"
+#include <SDL_keycode.h>
+#include <io_2d_no_mouse.h>
 #include <iostream>
 #include <string>
 #include <yaml-cpp/yaml.h>
@@ -19,7 +19,8 @@ int io_2d_no_mouse::read_settings() {
   }
   YAML::Node input = YAML::LoadFile(settings_path);
   controls->insert(std::pair<SDL_Keycode, mazengine::button>(
-      SDL_GetKeyFromName(input["up"].as<std::string>().c_str()), mazengine::UP));
+      SDL_GetKeyFromName(input["up"].as<std::string>().c_str()),
+      mazengine::UP));
   controls->insert(std::pair<SDL_Keycode, mazengine::button>(
       SDL_GetKeyFromName(input["down"].as<std::string>().c_str()),
       mazengine::DOWN));
@@ -46,8 +47,8 @@ int io_2d_no_mouse::read_settings() {
 }
 
 int io_2d_no_mouse::parse(SDL_Event *event,
-                             std::vector<mazengine::button> *presses,
-                             std::vector<mazengine::button> *releases) {
+                          std::vector<mazengine::button> *presses,
+                          std::vector<mazengine::button> *releases) {
   if (event->type == SDL_QUIT) {
     presses->push_back(mazengine::KILL);
     return -1;

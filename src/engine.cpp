@@ -1,8 +1,8 @@
-#include "mazengine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <chrono>
 #include <iostream>
+#include <mazengine.h>
 #include <thread>
 #include <vector>
 

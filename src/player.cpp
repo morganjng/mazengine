@@ -1,4 +1,4 @@
-#include "player.h"
+#include <player.h>
 
 void tile_player::tick(std::vector<mazengine::button> *presses,
                        std::vector<mazengine::button> *releases) {
