@@ -1,6 +1,3 @@
-#include "../mazengine_dev.h"
+#include "mazengine_dev.h"
 
-int main() {
-
-	return 0;
-}
+int main() { return 0; }
