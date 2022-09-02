@@ -7,19 +7,19 @@
 using namespace mazengine;
 
 class u_game : public game {
-private:
-    std::map<int, game> games;
+	private:
+		std::map<int, game> games;
 
-public:
-    int cursor;
-    int set_game(int key, game game);
+	public:
+		int cursor;
+		int set_game(int key, game game);
 
-    SDL_Renderer *renderer;
-    u_game() { renderer = nullptr; }
-    int initial_tick();
-    int tick(std::vector<button> *presses, std::vector<button> *releases);
-    int draw();
-    int present();
+		SDL_Renderer *renderer;
+		u_game() { renderer = nullptr; }
+		int initial_tick();
+		int tick(std::vector<button> *presses, std::vector<button> *releases);
+		int draw();
+		int present();
 };
 
 #endif // U_GAME_H_
