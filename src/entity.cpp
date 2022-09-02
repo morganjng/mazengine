@@ -1,4 +1,4 @@
-#include <mazengine.h>
+#include <entity.h>
 
 using namespace mazengine;
 
