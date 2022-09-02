@@ -20,23 +20,26 @@ int io_2d_no_mouse::read_settings() {
     }
     YAML::Node input = YAML::LoadFile(settings_path);
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["up"].as<std::string>().c_str()), UP));
+	    SDL_GetKeyFromName(input["up"].as<std::string>().c_str()), UP));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["down"].as<std::string>().c_str()), DOWN));
+	    SDL_GetKeyFromName(input["down"].as<std::string>().c_str()), DOWN));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["left"].as<std::string>().c_str()), LEFT));
+	    SDL_GetKeyFromName(input["left"].as<std::string>().c_str()), LEFT));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["right"].as<std::string>().c_str()), RIGHT));
+	    SDL_GetKeyFromName(input["right"].as<std::string>().c_str()),
+	    RIGHT));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["A"].as<std::string>().c_str()), A));
+	    SDL_GetKeyFromName(input["A"].as<std::string>().c_str()), A));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["B"].as<std::string>().c_str()), B));
+	    SDL_GetKeyFromName(input["B"].as<std::string>().c_str()), B));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["start"].as<std::string>().c_str()), START));
+	    SDL_GetKeyFromName(input["start"].as<std::string>().c_str()),
+	    START));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["select"].as<std::string>().c_str()), SELECT));
+	    SDL_GetKeyFromName(input["select"].as<std::string>().c_str()),
+	    SELECT));
     controls->insert(std::pair<SDL_Keycode, button>(
-	SDL_GetKeyFromName(input["kill"].as<std::string>().c_str()), KILL));
+	    SDL_GetKeyFromName(input["kill"].as<std::string>().c_str()), KILL));
     return 0;
 }
 
