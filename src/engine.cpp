@@ -102,7 +102,7 @@ int engine::start() {
 
 		_game->present();
 
-		if (tick_val != 0) {
+		if (tick_val == ENGINE_KILL) {
 			running = 0;
 		}
 

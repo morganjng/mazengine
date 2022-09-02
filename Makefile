@@ -21,7 +21,6 @@ SRCS = src/*.cpp
 INCLUDES = --include-directory=include/
 
 all:
-	make clean
 	make compile
 
 compile:

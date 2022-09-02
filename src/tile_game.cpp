@@ -41,8 +41,9 @@ int tile_game::initial_tick() {
 
 int tile_game::tick(std::vector<button> *presses,
 					std::vector<button> *releases) {
+	int rv;
 	std::vector<entity> *objs = current_map->get_objects();
-	std::vector<void (*)(button)> funcs;
+	std::vector<void (*)(button, int *)> funcs;
 	player->tick(presses, releases);
 	for (button press : *presses) {
 		if (press == KILL) {
@@ -51,7 +52,7 @@ int tile_game::tick(std::vector<button> *presses,
 		for (entity obj : *objs) {
 			funcs = *obj.get_press_hooks();
 			for (auto func : funcs) {
-				func(press);
+				func(press, &rv);
 			}
 		}
 	}
@@ -59,7 +60,7 @@ int tile_game::tick(std::vector<button> *presses,
 		for (entity obj : *objs) {
 			funcs = *obj.get_release_hooks();
 			for (auto func : funcs) {
-				func(release);
+				func(release, &rv);
 			}
 		}
 	}
@@ -96,3 +97,5 @@ int tile_game::present() {
 	tiles->present();
 	return 0;
 }
+
+int tile_game::reaction(int idx) { return 0; }
