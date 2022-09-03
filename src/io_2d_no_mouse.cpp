@@ -1,3 +1,4 @@
+#include "mazengine.h"
 #include <SDL_keycode.h>
 #include <io_2d_no_mouse.h>
 #include <iostream>
@@ -16,7 +17,7 @@ void io_2d_no_mouse::set_controls_map(std::map<SDL_Keycode, button> *contr) {
 
 int io_2d_no_mouse::read_settings() {
 	if (settings_path == "UNSET") {
-		return -1;
+		return UNSET_VALUE_ERROR;
 	}
 	YAML::Node input = YAML::LoadFile(settings_path);
 	controls->insert(std::pair<SDL_Keycode, button>(
@@ -37,28 +38,27 @@ int io_2d_no_mouse::read_settings() {
 		SDL_GetKeyFromName(input["select"].as<std::string>().c_str()), SELECT));
 	controls->insert(std::pair<SDL_Keycode, button>(
 		SDL_GetKeyFromName(input["kill"].as<std::string>().c_str()), KILL));
-	return 0;
+	return STATUS_OK;
 }
 
-int io_2d_no_mouse::parse(SDL_Event *event, std::vector<button> *presses,
-						  std::vector<button> *releases) {
+int io_2d_no_mouse::parse(SDL_Event *event) {
 	if (event->type == SDL_QUIT) {
 		presses->push_back(KILL);
-		return -1;
+		return ENGINE_KILL;
 	}
 	if (event->type == SDL_KEYDOWN) {
 		iter = controls->find(event->key.keysym.sym);
 		if (iter != controls->end()) {
 			presses->push_back(controls->at(event->key.keysym.sym));
 		}
-		return 0;
+		return STATUS_OK;
 	}
 	if (event->type == SDL_KEYUP) {
 		iter = controls->find(event->key.keysym.sym);
 		if (iter != controls->end()) {
 			releases->push_back(controls->at(event->key.keysym.sym));
 		}
-		return 0;
+		return STATUS_OK;
 	}
-	return 0;
+	return STATUS_OK;
 }

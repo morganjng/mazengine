@@ -73,9 +73,12 @@ int engine::start() {
 
 	_game->renderer = renderer;
 
+	_game->pass_vectors(&presses, &releases);
+	_io->pass_vectors(&presses, &releases);
+
 	tick_val = _game->initial_tick();
 
-	if (tick_val != 0) {
+	if (tick_val != STATUS_OK) {
 		std::cout << "Something failed in _game->initial_tick" << std::endl;
 		return tick_val;
 	}
@@ -89,9 +92,9 @@ int engine::start() {
 		releases.clear();
 
 		while (SDL_PollEvent(&event)) {
-			_io->parse(&event, &presses, &releases);
+			_io->parse(&event);
 		}
-		tick_val = _game->tick(&presses, &releases);
+		tick_val = _game->tick();
 		_game->draw();
 
 		if (tick_rate - (end_time - start_time) > none) {
@@ -115,4 +118,16 @@ int engine::start() {
 	}
 
 	return tick_val;
+}
+
+void game::pass_vectors(std::vector<button> *presses,
+						std::vector<button> *releases) {
+	this->presses = presses;
+	this->releases = releases;
+}
+
+void io::pass_vectors(std::vector<button> *presses,
+					  std::vector<button> *releases) {
+	this->presses = presses;
+	this->releases = releases;
 }

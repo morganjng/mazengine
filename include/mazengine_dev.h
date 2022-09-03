@@ -3,8 +3,10 @@
 
 #include "mazengine.h"
 
-using namespace mazengine;
+namespace mazengine {
 
-class dev {};
+	class dev {};
+
+}; // namespace mazengine
 
 #endif // MAZENGINE_DEV_H_

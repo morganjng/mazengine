@@ -7,6 +7,7 @@
 
 #define STATUS_OK 0
 #define ENGINE_KILL -1
+#define UNSET_VALUE_ERROR -2
 
 namespace mazengine {
 
@@ -48,21 +49,27 @@ namespace mazengine {
 	};
 
 	class io {
+	protected:
+		std::vector<button> *presses;
+		std::vector<button> *releases;
 	public:
 		io(){};
 		virtual int read_settings() = 0;
-		virtual int parse(SDL_Event *event, std::vector<button> *presses,
-						  std::vector<button> *releases) = 0;
+		void pass_vectors(std::vector<button> *presses, std::vector<button> *releases);
+		virtual int parse(SDL_Event *event) = 0;
 	};
 
 	class game {
+	protected:
+		std::vector<button> *presses;
+		std::vector<button> *releases;
 	public:
 		std::string name;
 		SDL_Renderer *renderer;
 		game() { renderer = nullptr; };
+		void pass_vectors(std::vector<button> *presses, std::vector<button> *releases);
 		virtual int initial_tick() = 0;
-		virtual int tick(std::vector<button> *presses,
-						 std::vector<button> *releases) = 0;
+		virtual int tick() = 0;
 		virtual int draw() = 0;
 		virtual int present() = 0;
 		virtual int reaction(int) = 0;

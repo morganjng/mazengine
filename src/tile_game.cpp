@@ -11,18 +11,14 @@ void tile_game::set_data_path(std::string path) { data_path = path; }
 void tile_game::set_img_path(std::string path) { img_path = path; }
 
 int tile_game::initial_tick() {
-	if (img_path == "UNSET") {
-		std::cout << "img_path not yet set" << std::endl;
-		return 2;
+	if (name == "UNSET") {
+		std::cout << "name not yet set" << std::endl;
+		return UNSET_VALUE_ERROR;
 	}
-	if (data_path == "UNSET") {
-		std::cout << "data_path not yet set" << std::endl;
-		return 2;
-	}
-	if (audio_path == "UNSET") {
-		std::cout << "audio_path not yet set" << std::endl;
-		return 2;
-	}
+	YAML::Node mz = YAML::LoadFile("mazzycat");
+	audio_path = mz["audio_path"].as<std::string>();
+	img_path = mz["img_path"].as<std::string>();
+	data_path = mz["data_path"].as<std::string>();
 
 	this->tiles = new tile_renderer(
 		renderer, img_path, YAML::LoadFile(data_path + "img.yaml")["tilesets"],
@@ -36,20 +32,19 @@ int tile_game::initial_tick() {
 		new tile_map(data_path + map_yaml[map_key]["path"].as<std::string>(),
 					 map_yaml[map_key]["name"].as<std::string>(), renderer);
 
-	return 0;
+	return STATUS_OK;
 }
 
-int tile_game::tick(std::vector<button> *presses,
-					std::vector<button> *releases) {
-	int rv;
-	std::vector<entity> *objs = current_map->get_objects();
+int tile_game::tick() {
+	int rv = STATUS_OK;
+	std::vector<tile_entity> *objs = current_map->get_objects();
 	std::vector<void (*)(button, int *)> funcs;
 	player->tick(presses, releases);
 	for (button press : *presses) {
 		if (press == KILL) {
-			return 1;
+			return ENGINE_KILL;
 		}
-		for (entity obj : *objs) {
+		for (tile_entity obj : *objs) {
 			funcs = *obj.get_press_hooks();
 			for (auto func : funcs) {
 				func(press, &rv);
@@ -57,14 +52,14 @@ int tile_game::tick(std::vector<button> *presses,
 		}
 	}
 	for (button release : *releases) {
-		for (entity obj : *objs) {
+		for (tile_entity obj : *objs) {
 			funcs = *obj.get_release_hooks();
 			for (auto func : funcs) {
 				func(release, &rv);
 			}
 		}
 	}
-	return 0;
+	return rv;
 }
 
 int tile_game::draw() {
@@ -90,12 +85,12 @@ int tile_game::draw() {
 		  << ", " << player->position_x % 16 << ", "
 		  << player->position_y % 16 << std::endl;
 		  */
-	return 0;
+	return STATUS_OK;
 }
 
 int tile_game::present() {
 	tiles->present();
-	return 0;
+	return STATUS_OK;
 }
 
-int tile_game::reaction(int idx) { return 0; }
+int tile_game::reaction(int idx) { return STATUS_OK; }
