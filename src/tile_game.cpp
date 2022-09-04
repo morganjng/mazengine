@@ -4,12 +4,6 @@
 
 using namespace mazengine;
 
-void tile_game::set_audio_path(std::string path) { audio_path = path; }
-
-void tile_game::set_data_path(std::string path) { data_path = path; }
-
-void tile_game::set_img_path(std::string path) { img_path = path; }
-
 int tile_game::initial_tick() {
 	if (name == "UNSET") {
 		std::cout << "name not yet set" << std::endl;
@@ -35,7 +29,7 @@ int tile_game::initial_tick() {
 	return STATUS_OK;
 }
 
-int tile_game::tick() {
+int tile_game::tick(int status) {
 	int rv = STATUS_OK;
 	std::vector<tile_entity> *objs = current_map->get_objects();
 	std::vector<void (*)(button, int *)> funcs;

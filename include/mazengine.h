@@ -2,8 +2,10 @@
 #define MAZENGINE_H_
 
 #include <SDL2/SDL.h>
+#include <SDL_image.h>
 #include <string>
 #include <vector>
+#include <yaml-cpp/yaml.h>
 
 #define STATUS_OK 0
 #define ENGINE_KILL -1
@@ -30,16 +32,18 @@ namespace mazengine {
 	class game;
 
 	class engine {
-	private:
+	protected:
 		io *_io;
 		game *_game;
 		int window_width;
 		int window_height;
+		std::string name;
 
 	public:
-		engine(int width, int height) {
+		engine(int width, int height, std::string name) {
 			window_width = width;
 			window_height = height;
+			this->name = name;
 			_io = nullptr;
 			_game = nullptr;
 		};
@@ -52,10 +56,12 @@ namespace mazengine {
 	protected:
 		std::vector<button> *presses;
 		std::vector<button> *releases;
+
 	public:
 		io(){};
 		virtual int read_settings() = 0;
-		void pass_vectors(std::vector<button> *presses, std::vector<button> *releases);
+		void pass_vectors(std::vector<button> *presses,
+						  std::vector<button> *releases);
 		virtual int parse(SDL_Event *event) = 0;
 	};
 
@@ -63,13 +69,20 @@ namespace mazengine {
 	protected:
 		std::vector<button> *presses;
 		std::vector<button> *releases;
+		int internal_width;
+		int internal_height;
+
 	public:
 		std::string name;
 		SDL_Renderer *renderer;
-		game() { renderer = nullptr; };
-		void pass_vectors(std::vector<button> *presses, std::vector<button> *releases);
+		game() {
+			renderer = nullptr;
+			name = "UNSET";
+		};
+		void pass_vectors(std::vector<button> *presses,
+						  std::vector<button> *releases);
 		virtual int initial_tick() = 0;
-		virtual int tick() = 0;
+		virtual int tick(int status) = 0;
 		virtual int draw() = 0;
 		virtual int present() = 0;
 		virtual int reaction(int) = 0;

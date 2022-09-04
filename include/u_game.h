@@ -13,9 +13,12 @@ namespace mazengine {
 	public:
 		int cursor;
 		int push_game(game *game);
-		u_game() { renderer = nullptr; }
+		u_game() {
+			renderer = nullptr;
+			name = "UNSET";
+		};
 		int initial_tick();
-		int tick();
+		int tick(int status);
 		int draw();
 		int present();
 		int reaction(int index);

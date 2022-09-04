@@ -32,7 +32,7 @@ int engine::start() {
 		return 1;
 	}
 
-	if (_io->read_settings() == -1) {
+	if (_io->read_settings() == UNSET_VALUE_ERROR) {
 		std::cout << "Failed to read settings" << std::endl;
 		return 2;
 	}
@@ -45,7 +45,7 @@ int engine::start() {
 
 	// TODO set up a settings thing here
 
-	window = SDL_CreateWindow("Dry Springs", SDL_WINDOWPOS_CENTERED,
+	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED,
 							  SDL_WINDOWPOS_CENTERED, window_width,
 							  window_height, SDL_WINDOW_OPENGL);
 	renderer = SDL_CreateRenderer(window, -1, 0);
@@ -94,7 +94,7 @@ int engine::start() {
 		while (SDL_PollEvent(&event)) {
 			_io->parse(&event);
 		}
-		tick_val = _game->tick();
+		tick_val = _game->tick(STATUS_OK);
 		_game->draw();
 
 		if (tick_rate - (end_time - start_time) > none) {

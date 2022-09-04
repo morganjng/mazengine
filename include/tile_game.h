@@ -38,12 +38,11 @@ namespace mazengine {
 			tile_size = tile_sz;
 			tile_width = tile_w;
 			tile_height = tile_h;
+			internal_width = tile_w * tile_sz;
+			internal_height = tile_h * tile_sz;
 		}
-		void set_data_path(std::string path);
-		void set_img_path(std::string path);
-		void set_audio_path(std::string path);
 		int initial_tick();
-		int tick();
+		int tick(int status);
 		int draw();
 		int present();
 		int reaction(int idx);
