@@ -60,7 +60,13 @@ int menu::initial_tick() {
 	return STATUS_OK;
 }
 
-int menu::tick(int status) { return STATUS_OK; }
+int menu::tick(int status) {
+	for (button press : *presses) {
+	}
+	for (button release : *releases) {
+	}
+	return STATUS_OK;
+}
 
 int menu::draw() {
 	// std::cout << "Starting " << name << " draw function" << std::endl;

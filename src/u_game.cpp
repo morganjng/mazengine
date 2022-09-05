@@ -16,6 +16,7 @@ int u_game::initial_tick() {
 	int rv = STATUS_OK;
 	for (int i = 0; i < int(games.size()); i++) {
 		games[i]->renderer = renderer;
+		games[i]->pass_pointers(presses, releases, cursor_x, cursor_y);
 		rv = games[i]->initial_tick();
 		if (rv != STATUS_OK) {
 			return rv;

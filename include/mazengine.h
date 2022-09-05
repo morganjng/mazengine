@@ -56,12 +56,15 @@ namespace mazengine {
 	protected:
 		std::vector<button> *presses;
 		std::vector<button> *releases;
+		int *cursor_x;
+		int *cursor_y;
 
 	public:
 		io(){};
 		virtual int read_settings() = 0;
-		void pass_vectors(std::vector<button> *presses,
-						  std::vector<button> *releases);
+		void pass_pointers(std::vector<button> *presses,
+						   std::vector<button> *releases, int *cursor_x,
+						   int *cursor_y);
 		virtual int parse(SDL_Event *event) = 0;
 	};
 
@@ -69,6 +72,8 @@ namespace mazengine {
 	protected:
 		std::vector<button> *presses;
 		std::vector<button> *releases;
+		int *cursor_x;
+		int *cursor_y;
 		int internal_width;
 		int internal_height;
 
@@ -79,8 +84,9 @@ namespace mazengine {
 			renderer = nullptr;
 			name = "UNSET";
 		};
-		void pass_vectors(std::vector<button> *presses,
-						  std::vector<button> *releases);
+		void pass_pointers(std::vector<button> *presses,
+						   std::vector<button> *releases, int *cursor_x,
+						   int *cursor_y);
 		virtual int initial_tick() = 0;
 		virtual int tick(int status) = 0;
 		virtual int draw() = 0;

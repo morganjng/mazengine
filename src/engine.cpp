@@ -40,6 +40,9 @@ int engine::start() {
 	SDL_Renderer *renderer = NULL;
 	SDL_Window *window = NULL;
 	SDL_Event event;
+
+	int cursor_x = 0;
+	int cursor_y = 0;
 	std::vector<button> presses;
 	std::vector<button> releases;
 
@@ -73,8 +76,8 @@ int engine::start() {
 
 	_game->renderer = renderer;
 
-	_game->pass_vectors(&presses, &releases);
-	_io->pass_vectors(&presses, &releases);
+	_game->pass_pointers(&presses, &releases, &cursor_x, &cursor_y);
+	_io->pass_pointers(&presses, &releases, &cursor_x, &cursor_y);
 
 	tick_val = _game->initial_tick();
 
@@ -126,14 +129,18 @@ int engine::start() {
 	return tick_val;
 }
 
-void game::pass_vectors(std::vector<button> *presses,
-						std::vector<button> *releases) {
+void game::pass_pointers(std::vector<button> *presses,
+						 std::vector<button> *releases, int *cursor_x,
+						 int *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;
 }
 
-void io::pass_vectors(std::vector<button> *presses,
-					  std::vector<button> *releases) {
+void io::pass_pointers(std::vector<button> *presses,
+					   std::vector<button> *releases, int *cursor_x,
+					   int *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;
+	this->cursor_x = cursor_x;
+	this->cursor_y = cursor_y;
 }
