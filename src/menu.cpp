@@ -1,6 +1,5 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_render.h>
-#include <SDL_image.h>
 #include <iostream>
 #include <menu.h>
 #include <yaml-cpp/node/parse.h>
@@ -50,6 +49,13 @@ int menu::initial_tick() {
 			textures->push_back(IMG_Load((img_prefix + img_path).c_str()));
 		}
 
+		std::cout << widget_name << ", "
+				  << widget["x"].as<double>() * internal_width << ", "
+				  << widget["y"].as<double>() * internal_height << ", "
+				  << widget["width"].as<double>() * internal_width << ", "
+				  << widget["height"].as<double>() * internal_height
+				  << std::endl;
+
 		widgets.push_back(new menu_widget(
 			widget_name, widget["x"].as<double>() * internal_width,
 			widget["y"].as<double>() * internal_height,
@@ -75,16 +81,13 @@ int menu::tick(int status) {
 
 int menu::draw() {
 	// std::cout << "Starting " << name << " draw function" << std::endl;
-
 	SDL_FillRect(internal_surface, NULL, 0);
 	for (menu_widget *widget : widgets) {
 		if (widget->get_texture() == NULL || widget->get_texture() == nullptr) {
 			std::cout << widget->name << " nullptr" << std::endl;
 		}
-		SDL_BlitSurface(widget->get_texture(), NULL, internal_surface,
-						widget->get_rect());
-		// std::cout << widget->name << " " << widget->get_rect()->w << ", "
-		//		  << widget->get_rect()->h << std::endl;
+		SDL_BlitScaled(widget->get_texture(), NULL, internal_surface,
+					   widget->get_rect());
 	}
 	// std::cout << SDL_GetError() << std::endl;
 	SDL_Texture *texture =
