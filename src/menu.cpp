@@ -12,7 +12,10 @@ SDL_Rect *menu_widget::get_rect() { return &rect; }
 SDL_Surface *menu_widget::get_texture() { return textures[texture_idx]; }
 
 int menu::initial_tick() {
-	if (name == "UNSET" || renderer == nullptr) {
+	if (name == "UNSET") {
+		return UNSET_VALUE_ERROR;
+	}
+	if (renderer == nullptr) {
 		return UNSET_VALUE_ERROR;
 	}
 
@@ -61,10 +64,12 @@ int menu::initial_tick() {
 }
 
 int menu::tick(int status) {
+	/*
 	for (button press : *presses) {
 	}
 	for (button release : *releases) {
 	}
+	*/
 	return STATUS_OK;
 }
 

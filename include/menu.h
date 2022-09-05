@@ -17,7 +17,7 @@ namespace mazengine {
 		std::string name;
 		menu_widget(std::string _name, int x, int y, int _width, int _height,
 					std::vector<SDL_Surface *> _textures) {
-			rect = *new SDL_Rect();
+			// rect = *new SDL_Rect();
 			name = _name;
 			rect.w = _width;
 			rect.h = _height;
