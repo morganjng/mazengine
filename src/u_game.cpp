@@ -9,12 +9,13 @@ int u_game::push_game(game *_game) {
 }
 
 int u_game::initial_tick() {
-	if (name == "UNSET") {
+	if (name == "UNSET" || renderer == nullptr) {
 		return UNSET_VALUE_ERROR;
 	}
 
 	int rv = STATUS_OK;
 	for (int i = 0; i < int(games.size()); i++) {
+		games[i]->renderer = renderer;
 		rv = games[i]->initial_tick();
 		if (rv != STATUS_OK) {
 			return rv;

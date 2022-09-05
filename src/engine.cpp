@@ -24,17 +24,17 @@ int engine::start() {
 			<< "null game or xput. please initialize this before starting "
 			   "the engine"
 			<< std::endl;
-		return -1;
+		return ENGINE_KILL;
 	}
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		std::cout << "Initializing SDL failed" << std::endl;
-		return 1;
+		return ENGINE_KILL;
 	}
 
 	if (_io->read_settings() == UNSET_VALUE_ERROR) {
 		std::cout << "Failed to read settings" << std::endl;
-		return 2;
+		return UNSET_VALUE_ERROR;
 	}
 
 	SDL_Renderer *renderer = NULL;
@@ -83,10 +83,12 @@ int engine::start() {
 		return tick_val;
 	}
 
+	std::cout << "Starting " << name << " engine loop" << std::endl;
+
 	while (running == 1) {
 		start_time = std::chrono::system_clock::now();
 
-		end_time = std::chrono::system_clock::now();
+		SDL_RenderClear(renderer);
 
 		presses.clear();
 		releases.clear();
@@ -94,8 +96,12 @@ int engine::start() {
 		while (SDL_PollEvent(&event)) {
 			_io->parse(&event);
 		}
+
 		tick_val = _game->tick(STATUS_OK);
+
 		_game->draw();
+
+		end_time = std::chrono::system_clock::now();
 
 		if (tick_rate - (end_time - start_time) > none) {
 			std::this_thread::sleep_for(tick_rate - (end_time - start_time));

@@ -2,6 +2,7 @@
 #define MENU_H_
 
 #include "mazengine.h"
+#include <iostream>
 #include <vector>
 
 namespace mazengine {
@@ -9,26 +10,34 @@ namespace mazengine {
 	class menu_widget {
 	protected:
 		SDL_Rect rect;
-		SDL_Texture *texture;
+		std::vector<SDL_Surface *> textures;
 		std::string function;
 
 	public:
-		menu_widget(int _width, int _height, int x, int y,
-					std::string _function, SDL_Texture *texture) {
+		std::string name;
+		menu_widget(std::string _name, int x, int y, int _width, int _height,
+					std::vector<SDL_Surface *> _textures) {
+			rect = *new SDL_Rect();
+			name = _name;
 			rect.w = _width;
 			rect.h = _height;
+			// std::cout << _width << _height << std::endl;
 			rect.x = x;
 			rect.y = y;
-			function = _function;
-			this->texture = texture;
+			std::cout << name << ": " << rect.x << ", " << rect.y << ", "
+					  << rect.w << "," << rect.h << std::endl;
+			textures = _textures;
+			texture_idx = 0;
 		};
+		int texture_idx;
 		SDL_Rect *get_rect();
-		SDL_Texture *get_texture();
+		SDL_Surface *get_texture();
 	};
 
 	class menu : public game {
 	protected:
 		std::vector<menu_widget *> widgets;
+		SDL_Surface *internal_surface;
 
 	public:
 		menu() {

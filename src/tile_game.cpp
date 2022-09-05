@@ -5,7 +5,7 @@
 using namespace mazengine;
 
 int tile_game::initial_tick() {
-	if (name == "UNSET") {
+	if (name == "UNSET" || renderer == nullptr) {
 		std::cout << "name not yet set" << std::endl;
 		return UNSET_VALUE_ERROR;
 	}

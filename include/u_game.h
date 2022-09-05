@@ -16,6 +16,7 @@ namespace mazengine {
 		u_game() {
 			renderer = nullptr;
 			name = "UNSET";
+			cursor = 0;
 		};
 		int initial_tick();
 		int tick(int status);

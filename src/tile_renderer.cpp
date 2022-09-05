@@ -4,7 +4,6 @@
 using namespace mazengine;
 
 void tile_renderer::clear(int color) {
-	SDL_RenderClear(renderer);
 	SDL_FillRect(internal_surface, NULL, color);
 	// std::cout << SDL_GetError() << std::endl;
 };
