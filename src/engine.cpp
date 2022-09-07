@@ -71,6 +71,10 @@ int engine::start() {
 		std::chrono::system_clock::now();
 	std::chrono::system_clock::time_point end_time =
 		std::chrono::system_clock::now();
+	std::chrono::system_clock::time_point parse_time =
+		std::chrono::system_clock::now();
+	std::chrono::system_clock::time_point tick_time =
+		std::chrono::system_clock::now();
 	std::chrono::milliseconds none(0);
 	std::chrono::milliseconds tick_rate(20);
 
@@ -102,7 +106,11 @@ int engine::start() {
 			_io->parse(&event);
 		}
 
+		parse_time = std::chrono::system_clock::now();
+
 		tick_val = _game->tick(STATUS_OK);
+
+		tick_time = std::chrono::system_clock::now();
 
 		_game->draw();
 
@@ -111,7 +119,9 @@ int engine::start() {
 		if (tick_rate - (end_time - start_time) > none) {
 			std::this_thread::sleep_for(tick_rate - (end_time - start_time));
 		} else {
-			std::cout << "Lagging behind on tick " << frame_count << std::endl;
+			std::cout << "Lagging behind on tick " << frame_count << " by "
+					  << ((tick_rate) - (end_time - start_time)).count()
+					  << std::endl;
 		}
 
 		_game->present();
@@ -119,6 +129,20 @@ int engine::start() {
 		if (tick_val == ENGINE_KILL) {
 			running = 0;
 		}
+
+		/*
+		if (tick_val % 100 == 0) {
+			std::cout << "Start time: "
+					  << std::chrono::system_clock::to_time_t(start_time)
+					  << " Parse time: "
+					  << std::chrono::system_clock::to_time_t(parse_time)
+					  << " Tick time: "
+					  << std::chrono::system_clock::to_time_t(tick_time)
+					  << " End time: "
+					  << std::chrono::system_clock::to_time_t(end_time)
+					  << std::endl;
+		}
+		*/
 
 		frame_count++;
 	}
