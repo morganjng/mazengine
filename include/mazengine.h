@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL_image.h>
+#include <functional>
 #include <string>
 #include <vector>
 #include <yaml-cpp/yaml.h>
@@ -10,6 +11,9 @@
 #define STATUS_OK 0
 #define ENGINE_KILL -1
 #define UNSET_VALUE_ERROR -2
+
+typedef std::vector<std::function<int()>> vec_func;
+typedef std::vector<std::string> vec_string;
 
 namespace mazengine {
 
@@ -26,6 +30,8 @@ namespace mazengine {
 		MOUSE_CLICK,
 		MOUSE_MOTION
 	};
+
+	typedef std::vector<button> vec_button;
 
 	class engine;
 	class io;
@@ -54,24 +60,23 @@ namespace mazengine {
 
 	class io {
 	protected:
-		std::vector<button> *presses;
-		std::vector<button> *releases;
+		vec_button *presses;
+		vec_button *releases;
 		int *cursor_x;
 		int *cursor_y;
 
 	public:
 		io(){};
 		virtual int read_settings() = 0;
-		void pass_pointers(std::vector<button> *presses,
-						   std::vector<button> *releases, int *cursor_x,
-						   int *cursor_y);
+		void pass_pointers(vec_button *presses, vec_button *releases,
+						   int *cursor_x, int *cursor_y);
 		virtual int parse(SDL_Event *event) = 0;
 	};
 
 	class game {
 	protected:
-		std::vector<button> *presses;
-		std::vector<button> *releases;
+		vec_button *presses;
+		vec_button *releases;
 		int *cursor_x;
 		int *cursor_y;
 		int internal_width;
@@ -84,9 +89,8 @@ namespace mazengine {
 			renderer = nullptr;
 			name = "UNSET";
 		};
-		void pass_pointers(std::vector<button> *presses,
-						   std::vector<button> *releases, int *cursor_x,
-						   int *cursor_y);
+		void pass_pointers(vec_button *presses, vec_button *releases,
+						   int *cursor_x, int *cursor_y);
 		virtual int initial_tick() = 0;
 		virtual int tick(int status) = 0;
 		virtual int draw() = 0;

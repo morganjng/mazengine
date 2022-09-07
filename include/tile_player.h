@@ -1,5 +1,5 @@
-#ifndef PLAYER_H_
-#define PLAYER_H_
+#ifndef TILE_PLAYER_H_
+#define TILE_PLAYER_H_
 
 #include "mazengine.h"
 #include "tile_renderer.h"
@@ -41,8 +41,7 @@ namespace mazengine {
 			directions[3] = false;
 		}
 
-		void tick(std::vector<mazengine::button> *presses,
-				  std::vector<mazengine::button> *releases);
+		void tick(vec_button *presses, vec_button *releases);
 	};
 
 }; // namespace mazengine

@@ -43,8 +43,8 @@ int engine::start() {
 
 	int cursor_x = 0;
 	int cursor_y = 0;
-	std::vector<button> presses;
-	std::vector<button> releases;
+	vec_button presses;
+	vec_button releases;
 
 	// TODO set up a settings thing here
 
@@ -129,15 +129,13 @@ int engine::start() {
 	return tick_val;
 }
 
-void game::pass_pointers(std::vector<button> *presses,
-						 std::vector<button> *releases, int *cursor_x,
-						 int *cursor_y) {
+void game::pass_pointers(vec_button *presses, vec_button *releases,
+						 int *cursor_x, int *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;
 }
 
-void io::pass_pointers(std::vector<button> *presses,
-					   std::vector<button> *releases, int *cursor_x,
+void io::pass_pointers(vec_button *presses, vec_button *releases, int *cursor_x,
 					   int *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;

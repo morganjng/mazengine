@@ -2,8 +2,7 @@
 
 using namespace mazengine;
 
-void tile_player::tick(std::vector<button> *presses,
-					   std::vector<button> *releases) {
+void tile_player::tick(vec_button *presses, vec_button *releases) {
 	for (button press : *presses) {
 		if (press < 4) {
 			directions[press] = true;

@@ -33,7 +33,7 @@ namespace mazengine {
 		SDL_Surface *internal_surface;
 		SDL_Renderer *renderer;
 		SDL_Rect render_rect;
-		std::vector<std::string> tileset_names;
+		vec_string tileset_names;
 		std::map<std::string, tile_set *> tilesets;
 		int tile_width;
 		int tile_height;
@@ -55,7 +55,7 @@ namespace mazengine {
 			render_rect.h = tile_height * tile_size_y;
 			tilesets = std::map<std::string, tile_set *>();
 			// std::cout << img_node << std::endl;
-			tileset_names = img_node["names"].as<std::vector<std::string>>();
+			tileset_names = img_node["names"].as<vec_string>();
 			for (std::string name : tileset_names) {
 				tilesets[name] = new tile_set(
 					img_path + img_node[name]["path"].as<std::string>(),
