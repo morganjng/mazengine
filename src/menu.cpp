@@ -84,6 +84,20 @@ int menu::initial_tick() {
 			func_index++;
 		}
 
+		func_string = widget["no_click"].as<std::string>();
+		if (func_string != "none") {
+			reactions.push_back(parse(func_string, widget_index));
+			w_temp->no_click = func_index;
+			func_index++;
+		}
+
+		func_string = widget["no_hover"].as<std::string>();
+		if (func_string != "none") {
+			reactions.push_back(parse(func_string, widget_index));
+			w_temp->no_hover = func_index;
+			func_index++;
+		}
+
 		widgets.push_back(w_temp);
 	}
 
@@ -94,13 +108,46 @@ int menu::initial_tick() {
 }
 
 int menu::tick(int status) {
-	/*
-	for (button press : *presses) {
+	SDL_Point mouse_location;
+	// std::cout << "?" << std::endl;
+	mouse_location.x = int(*cursor_x * internal_width);
+	mouse_location.y = int(*cursor_y * internal_height);
+	int rv = STATUS_OK;
+	// std::cout << "starting for" << std::endl;
+	for (menu_widget *widget : widgets) {
+		// std::cout << "ticking widg " << widget->name << std::endl;
+		bool in_rect = SDL_PointInRect(&mouse_location, widget->get_rect());
+		for (button press : *presses) {
+			switch (press) {
+				case MOUSE_MOTION:
+					if (in_rect && widget->on_hover != -1) {
+						rv = reaction(widget->on_hover);
+					} else if (!in_rect && widget->on_hover != -1) {
+						rv = reaction(widget->no_hover);
+					}
+					break;
+				case MOUSE_CLICK:
+					if (in_rect && widget->on_click != -1) {
+						rv = reaction(widget->on_click);
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		for (button release : *releases) {
+			switch (release) {
+				case MOUSE_CLICK:
+					if (in_rect && widget->no_click != -1) {
+						rv = reaction(widget->no_click);
+					}
+					break;
+				default:
+					break;
+			}
+		}
 	}
-	for (button release : *releases) {
-	}
-	*/
-	return STATUS_OK;
+	return rv;
 }
 
 int menu::draw() {
@@ -126,24 +173,42 @@ int menu::present() {
 	return STATUS_OK;
 }
 
-int menu::reaction(int index) { return STATUS_OK; }
+int menu::reaction(int index) {
+	if (size_t(index) >= reactions.size()) {
+		std::cout << index << " OUT OF RANGE" << std::endl;
+		return STATUS_OK;
+	}
+	auto func = *reactions[index];
+	return func(STATUS_OK);
+}
 
 func_t *menu::parse(std::string str, int iv) {
-	vec_string temp_v;
-	size_t start = 0;
-	size_t end;
-	while (true) {
-		end = str.find(" ", start);
-		temp_v.push_back(str.substr(start, end));
-		start = end + 1;
-		end = str.length();
-		if (start >= end) {
-			break;
+	vec_string temp_v = *new vec_string();
+	size_t length = str.length();
+	std::string temp;
+	for (size_t i = 0; i < length; i++) {
+		if (str[i] != ' ') {
+			temp.push_back(str[i]);
+		} else if (str[i] == ' ') {
+			temp_v.push_back(std::string(temp));
+			temp.erase(0, str.length());
 		}
 	}
+	temp_v.push_back(temp);
+	std::cout << str << std::endl;
+	for (std::string s : temp_v) {
+		std::cout << "[\"" << s << "\"]";
+	}
+	std::cout << std::endl;
 	if (temp_v[0] == "set") {
 		if (temp_v[1] == "widget") {
-			return nullptr; // TODO
+			if (temp_v[3] == "texture") {
+				return new func_t{[this, temp_v](int s) -> int {
+					this->widgets[std::stoi(temp_v[2])]->texture_idx =
+						std::stoi(temp_v[4]);
+					return STATUS_OK;
+				}};
+			}
 		}
 	}
 	if (temp_v[0] == "up") {

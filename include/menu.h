@@ -17,6 +17,8 @@ namespace mazengine {
 		std::string name;
 		int on_click;
 		int on_hover;
+		int no_click;
+		int no_hover;
 		menu_widget(std::string _name, int x, int y, int _width, int _height,
 					std::vector<SDL_Surface *> _textures) {
 			name = _name;
@@ -28,6 +30,8 @@ namespace mazengine {
 			texture_idx = 0;
 			on_click = -1;
 			on_hover = -1;
+			no_click = -1;
+			no_click = -1;
 		};
 		int texture_idx;
 		SDL_Rect *get_rect();

@@ -63,14 +63,17 @@ namespace mazengine {
 	protected:
 		vec_button *presses;
 		vec_button *releases;
-		int *cursor_x;
-		int *cursor_y;
+		double *cursor_x;
+		double *cursor_y;
 
 	public:
+		int *window_width;
+		int *window_height;
+
 		io(){};
 		virtual int read_settings() = 0;
 		void pass_pointers(vec_button *presses, vec_button *releases,
-						   int *cursor_x, int *cursor_y);
+						   double *cursor_x, double *cursor_y);
 		virtual int parse(SDL_Event *event) = 0;
 	};
 
@@ -78,8 +81,8 @@ namespace mazengine {
 	protected:
 		vec_button *presses;
 		vec_button *releases;
-		int *cursor_x;
-		int *cursor_y;
+		double *cursor_x;
+		double *cursor_y;
 		int internal_width;
 		int internal_height;
 
@@ -91,7 +94,7 @@ namespace mazengine {
 			name = "UNSET";
 		};
 		void pass_pointers(vec_button *presses, vec_button *releases,
-						   int *cursor_x, int *cursor_y);
+						   double *cursor_x, double *cursor_y);
 		virtual int initial_tick() = 0;
 		virtual int tick(int status) = 0;
 		virtual int draw() = 0;
