@@ -38,8 +38,11 @@ int u_game::draw() { return games[cursor]->draw(); }
 int u_game::present() { return games[cursor]->present(); }
 
 int u_game::reaction(int index) {
-	if (index == -1) {
+	if (index == ENGINE_KILL) {
 		return ENGINE_KILL;
+	}
+	if (index > 0) {
+		cursor = index - 1;
 	}
 	return STATUS_OK;
 }
