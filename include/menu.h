@@ -39,7 +39,7 @@ namespace mazengine {
 		std::vector<menu_widget *> widgets;
 		SDL_Surface *internal_surface;
 		vec_func reactions;
-		std::function<int()> *parse(std::string str, int iv);
+		func_t *parse(std::string str, int iv);
 
 	public:
 		menu() {

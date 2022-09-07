@@ -85,8 +85,6 @@ int menu::initial_tick() {
 		}
 
 		widgets.push_back(w_temp);
-
-		widget_index++;
 	}
 
 	std::cout << "Finished loading widgets for " << name << widgets.size()
@@ -130,4 +128,28 @@ int menu::present() {
 
 int menu::reaction(int index) { return STATUS_OK; }
 
-std::function<int()> *menu::parse(std::string str, int iv) { return nullptr; };
+func_t *menu::parse(std::string str, int iv) {
+	vec_string temp_v;
+	size_t start = 0;
+	size_t end;
+	while (true) {
+		end = str.find(" ", start);
+		temp_v.push_back(str.substr(start, end));
+		start = end + 1;
+		end = str.length();
+		if (start >= end) {
+			break;
+		}
+	}
+	if (temp_v[0] == "set") {
+		if (temp_v[1] == "widget") {
+			return nullptr; // TODO
+		}
+	}
+	if (temp_v[0] == "up") {
+		return new func_t(
+			[temp_v](int s) -> int { return std::stoi(temp_v[1]); });
+	}
+
+	return nullptr;
+}
