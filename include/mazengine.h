@@ -12,7 +12,7 @@
 #define ENGINE_KILL -1
 #define UNSET_VALUE_ERROR -2
 
-typedef std::vector<std::function<int()>> vec_func;
+typedef std::vector<std::function<int()> *> vec_func;
 typedef std::vector<std::string> vec_string;
 
 namespace mazengine {

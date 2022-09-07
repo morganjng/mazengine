@@ -1,3 +1,4 @@
+#include "mazengine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_render.h>
 #include <iostream>
@@ -33,13 +34,18 @@ int menu::initial_tick() {
 											32, 0, 0, 0, 0);
 
 	widgets = *new std::vector<menu_widget *>();
+	reactions = *new vec_func();
 
 	std::string img_prefix = mz["img_path"].as<std::string>();
 
 	// std::cout << data_yaml << std::endl;
 
-	for (std::string widget_name :
-		 data_yaml["widget_names"].as<std::vector<std::string>>()) {
+	menu_widget *w_temp = nullptr;
+
+	int func_index = 0;
+	int widget_index = 0;
+
+	for (std::string widget_name : data_yaml["widget_names"].as<vec_string>()) {
 		std::vector<SDL_Surface *> *textures = new std::vector<SDL_Surface *>();
 		YAML::Node widget = data_yaml["widgets"][widget_name];
 
@@ -56,11 +62,31 @@ int menu::initial_tick() {
 				  << widget["height"].as<double>() * internal_height
 				  << std::endl;
 
-		widgets.push_back(new menu_widget(
+		w_temp = new menu_widget(
 			widget_name, widget["x"].as<double>() * internal_width,
 			widget["y"].as<double>() * internal_height,
 			widget["width"].as<double>() * internal_width,
-			widget["height"].as<double>() * internal_height, *textures));
+			widget["height"].as<double>() * internal_height, *textures);
+
+		std::string func_string = "none";
+
+		func_string = widget["on_click"].as<std::string>();
+		if (func_string != "none") {
+			reactions.push_back(parse(func_string, widget_index));
+			w_temp->on_click = func_index;
+			func_index++;
+		}
+
+		func_string = widget["on_hover"].as<std::string>();
+		if (func_string != "none") {
+			reactions.push_back(parse(func_string, widget_index));
+			w_temp->on_hover = func_index;
+			func_index++;
+		}
+
+		widgets.push_back(w_temp);
+
+		widget_index++;
 	}
 
 	std::cout << "Finished loading widgets for " << name << widgets.size()
@@ -103,3 +129,5 @@ int menu::present() {
 }
 
 int menu::reaction(int index) { return STATUS_OK; }
+
+std::function<int()> *menu::parse(std::string str, int iv) { return nullptr; };
