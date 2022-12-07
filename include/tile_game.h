@@ -20,7 +20,7 @@ namespace mazengine {
 		std::string following_key;
 		TileEntity *following;
 		TileRenderer *tiles;
-		tile_map *current_map;
+		TileMap *current_map;
 		YAML::Node map_yaml;
 		int tile_size;
 		int tile_width;

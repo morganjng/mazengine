@@ -16,7 +16,7 @@ int UGame::InitialTick() {
 	int rv = STATUS_OK;
 	for (int i = 0; i < int(games.size()); i++) {
 		games[i]->renderer = renderer;
-		games[i]->pass_pointers(presses, releases, cursor_x, cursor_y);
+		games[i]->PassPointers(presses, releases, cursor_x, cursor_y);
 		rv = games[i]->InitialTick();
 		if (rv != STATUS_OK) {
 			return rv;

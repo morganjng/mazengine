@@ -23,8 +23,8 @@ int TileGame::InitialTick() {
 	map_key = player->map_key;
 	map_yaml = YAML::LoadFile(data_path + "map.yaml");
 	current_map =
-		new tile_map(data_path + map_yaml[map_key]["path"].as<std::string>(),
-					 map_yaml[map_key]["name"].as<std::string>(), renderer);
+		new TileMap(data_path + map_yaml[map_key]["path"].as<std::string>(),
+					map_yaml[map_key]["name"].as<std::string>(), renderer);
 
 	return STATUS_OK;
 }

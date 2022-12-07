@@ -1,7 +1,7 @@
-#include <tile_map.h>
+#include <TileMap.h>
 
 using namespace mazengine;
 
-std::vector<TileLayer> *tile_map::get_layers() { return &layers; }
+std::vector<TileLayer> *TileMap::get_layers() { return &layers; }
 
-std::vector<TileEntity> *tile_map::get_objects() { return &objects; }
+std::vector<TileEntity> *TileMap::get_objects() { return &objects; }

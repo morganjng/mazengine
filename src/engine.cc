@@ -8,12 +8,12 @@
 
 using namespace mazengine;
 
-int Engine::set_io(IO *io) {
+int Engine::SetIO(IO *io) {
 	_io = io;
 	return 1;
 }
 
-int Engine::set_game(Game *game) {
+int Engine::SetGame(Game *game) {
 	_game = game;
 	return 1;
 }
@@ -80,8 +80,8 @@ int Engine::Start() {
 
 	_game->renderer = renderer;
 
-	_game->pass_pointers(&presses, &releases, &cursor_x, &cursor_y);
-	_io->pass_pointers(&presses, &releases, &cursor_x, &cursor_y);
+	_game->PassPointers(&presses, &releases, &cursor_x, &cursor_y);
+	_io->PassPointers(&presses, &releases, &cursor_x, &cursor_y);
 	_io->window_width = &window_width;
 	_io->window_height = &window_height;
 
@@ -155,16 +155,16 @@ int Engine::Start() {
 	return tick_val;
 }
 
-void Game::pass_pointers(ButtonVector *presses, ButtonVector *releases,
-						 double *cursor_x, double *cursor_y) {
+void Game::PassPointers(ButtonVector *presses, ButtonVector *releases,
+						double *cursor_x, double *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;
 	this->cursor_x = cursor_x;
 	this->cursor_y = cursor_y;
 }
 
-void IO::pass_pointers(ButtonVector *presses, ButtonVector *releases,
-					   double *cursor_x, double *cursor_y) {
+void IO::PassPointers(ButtonVector *presses, ButtonVector *releases,
+					  double *cursor_x, double *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;
 	this->cursor_x = cursor_x;

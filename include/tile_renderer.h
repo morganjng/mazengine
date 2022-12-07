@@ -1,3 +1,7 @@
+/*
+ * Header file for tile games
+ */
+
 #ifndef TILE_SET_H_
 #define TILE_SET_H_
 

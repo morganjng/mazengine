@@ -1,3 +1,7 @@
+/*
+ * Map data class for tile based games
+ */
+
 #ifndef TILE_MAP_H_
 #define TILE_MAP_H_
 
@@ -11,7 +15,7 @@
 
 namespace mazengine {
 
-	class tile_map {
+	class TileMap {
 	private:
 		std::vector<TileLayer> layers;
 		std::vector<TileEntity> objects;
@@ -21,8 +25,7 @@ namespace mazengine {
 
 	public:
 		int bg_color;
-		tile_map(std::string path, std::string map_key,
-				 SDL_Renderer *renderer) {
+		TileMap(std::string path, std::string map_key, SDL_Renderer *renderer) {
 			this->map_key = map_key;
 			map_node = YAML::LoadFile(path)[map_key];
 			bg_color = map_node["bg_color"].as<int>();

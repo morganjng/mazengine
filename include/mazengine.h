@@ -1,3 +1,7 @@
+/*
+ * Definitions for all necessary classes for the engine to operate.
+ */
+
 #ifndef MAZENGINE_H_
 #define MAZENGINE_H_
 
@@ -12,12 +16,9 @@
 #define ENGINE_KILL -1
 #define UNSET_VALUE_ERROR -2
 
-typedef std::vector<std::function<int(int)> *> FuncVector;
-typedef std::function<int(int)> Func;
-typedef std::vector<std::string> StringVector;
-
 namespace mazengine {
 
+	/* Enum for input types */
 	enum Button {
 		UP,
 		DOWN,
@@ -32,12 +33,19 @@ namespace mazengine {
 		MOUSE_MOTION
 	};
 
+	/* Typedefs for long, frequently used types */
 	typedef std::vector<Button> ButtonVector;
+	typedef std::vector<std::function<int(int)> *> FuncVector;
+	typedef std::function<int(int)> Func;
+	typedef std::vector<std::string> StringVector;
 
+	/* Forward declarations of each class so they can reference eachother */
 	class Engine;
 	class IO;
 	class Game;
 
+	/* The engine class represents a wrapper for the game - controls how it
+	 * ticks, when it ticks, and when it draws */
 	class Engine {
 	protected:
 		IO *_io;
@@ -54,11 +62,13 @@ namespace mazengine {
 			_io = nullptr;
 			_game = nullptr;
 		};
-		int set_io(IO *io);
-		int set_game(Game *game);
+		int SetIO(IO *io);
+		int SetGame(Game *game);
 		int Start();
 	};
 
+	/* IO class represents how the program should read in inputs, and how it
+	 * should parse those into output buttons */
 	class IO {
 	protected:
 		ButtonVector *presses;
@@ -72,11 +82,13 @@ namespace mazengine {
 
 		IO(){};
 		virtual int ReadSettings() = 0;
-		void pass_pointers(ButtonVector *presses, ButtonVector *releases,
-						   double *cursor_x, double *cursor_y);
+		void PassPointers(ButtonVector *presses, ButtonVector *releases,
+						  double *cursor_x, double *cursor_y);
 		virtual int Parse(SDL_Event *event) = 0;
 	};
 
+	/* Game class encompasses the rest of the game -- entities, how to draw, etc
+	 */
 	class Game {
 	protected:
 		ButtonVector *presses;
@@ -93,8 +105,8 @@ namespace mazengine {
 			renderer = nullptr;
 			name = "UNSET";
 		};
-		void pass_pointers(ButtonVector *presses, ButtonVector *releases,
-						   double *cursor_x, double *cursor_y);
+		void PassPointers(ButtonVector *presses, ButtonVector *releases,
+						  double *cursor_x, double *cursor_y);
 		virtual int InitialTick() = 0;
 		virtual int Tick(int status) = 0;
 		virtual int Draw() = 0;

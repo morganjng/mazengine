@@ -1,3 +1,7 @@
+/*
+ * UGame: A union of multiple other games, think a set of switching scenes
+ */
+
 #ifndef U_GAME_H_
 #define U_GAME_H_
 
