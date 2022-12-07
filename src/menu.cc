@@ -76,44 +76,29 @@ int Menu::InitialTick() {
 
 		func_string = widget["on_click"].as<std::string>();
 		if (func_string != "none") {
-<<<<<<< HEAD:src/menu.cpp
-			reactions.push_back(parse(func_string, func_index));
-=======
 			reactions.push_back(Parse(func_string, widget_index));
->>>>>>> ec954ab (refactoring -> cc and better capitalization):src/menu.cc
 			w_temp->on_click = func_index;
 			func_index++;
 		}
 
 		func_string = widget["on_hover"].as<std::string>();
 		if (func_string != "none") {
-<<<<<<< HEAD:src/menu.cpp
-			reactions.push_back(parse(func_string, func_index));
-=======
-			reactions.push_back(Parse(func_string, widget_index));
->>>>>>> ec954ab (refactoring -> cc and better capitalization):src/menu.cc
+			reactions.push_back(Parse(func_string, func_index));
 			w_temp->on_hover = func_index;
 			func_index++;
 		}
 
 		func_string = widget["no_click"].as<std::string>();
 		if (func_string != "none") {
-<<<<<<< HEAD:src/menu.cpp
-			reactions.push_back(parse(func_string, func_index));
-=======
-			reactions.push_back(Parse(func_string, widget_index));
->>>>>>> ec954ab (refactoring -> cc and better capitalization):src/menu.cc
+			reactions.push_back(Parse(func_string, func_index));
 			w_temp->no_click = func_index;
 			func_index++;
 		}
 
 		func_string = widget["no_hover"].as<std::string>();
 		if (func_string != "none") {
-<<<<<<< HEAD:src/menu.cpp
-			reactions.push_back(parse(func_string, func_index));
-=======
-			reactions.push_back(Parse(func_string, widget_index));
->>>>>>> ec954ab (refactoring -> cc and better capitalization):src/menu.cc
+			reactions.push_back(Parse(func_string, func_index));
+
 			w_temp->no_hover = func_index;
 			func_index++;
 		}
@@ -127,28 +112,16 @@ int Menu::InitialTick() {
 	return STATUS_OK;
 }
 
-<<<<<<< HEAD:src/menu.cpp
-int menu::tick(int status) {
-	// std::cout << "Presses size: " << presses->size()
-	// 		  << " Releases size: " << releases->size() << std::endl;
-=======
 int Menu::Tick(int status) {
->>>>>>> ec954ab (refactoring -> cc and better capitalization):src/menu.cc
 	SDL_Point mouse_location;
 	mouse_location.x = int(*cursor_x * internal_width);
 	mouse_location.y = int(*cursor_y * internal_height);
 	int rv = STATUS_OK;
-<<<<<<< HEAD:src/menu.cpp
-	for (menu_widget *widget : widgets) {
-		bool in_rect = SDL_PointInRect(&mouse_location, widget->get_rect());
-		for (button press : *presses) {
-=======
 	// std::cout << "starting for" << std::endl;
 	for (MenuWidget *widget : widgets) {
 		// std::cout << "ticking widg " << widget->name << std::endl;
 		bool in_rect = SDL_PointInRect(&mouse_location, widget->Rect());
 		for (Button press : *presses) {
->>>>>>> ec954ab (refactoring -> cc and better capitalization):src/menu.cc
 			switch (press) {
 				case MOUSE_MOTION:
 					if (in_rect && widget->on_hover != -1) {
@@ -204,17 +177,11 @@ int Menu::Present() {
 	return STATUS_OK;
 }
 
-<<<<<<< HEAD:src/menu.cpp
-int menu::reaction(int index) {
-	// std::cout << index << " REACTION " << reactions.size() << std::endl;
-
-=======
 int Menu::React(int index) {
 	if (size_t(index) >= reactions.size()) {
 		std::cout << index << " OUT OF RANGE" << std::endl;
 		return STATUS_OK;
 	}
->>>>>>> ec954ab (refactoring -> cc and better capitalization):src/menu.cc
 	auto func = *reactions[index];
 	return func(STATUS_OK);
 }
