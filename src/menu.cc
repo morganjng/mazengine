@@ -76,7 +76,7 @@ int Menu::InitialTick() {
 
 		func_string = widget["on_click"].as<std::string>();
 		if (func_string != "none") {
-			reactions.push_back(Parse(func_string, widget_index));
+			reactions.push_back(Parse(func_string, func_index));
 			w_temp->on_click = func_index;
 			func_index++;
 		}

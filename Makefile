@@ -16,7 +16,7 @@ LIBS = $(shell pkg-config --libs --cflags sdl2 SDL2_mixer SDL2_image yaml-cpp nc
 
 HEADERS = include/*.h
 
-SRCS = src/*.cpp
+SRCS = src/*.cc
 
 INCLUDES = --include-directory=include/
 
