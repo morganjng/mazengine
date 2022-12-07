@@ -6,23 +6,23 @@
 
 namespace mazengine {
 
-	class u_game : public game {
+	class UGame : public Game {
 	private:
-		std::vector<game *> games;
+		std::vector<Game *> games;
 
 	public:
 		int cursor;
-		int push_game(game *game);
-		u_game() {
+		int PushGame(Game *game);
+		UGame() {
 			renderer = nullptr;
 			name = "UNSET";
 			cursor = 0;
 		};
-		int initial_tick();
-		int tick(int status);
-		int draw();
-		int present();
-		int reaction(int index);
+		int InitialTick();
+		int Tick(int status);
+		int Draw();
+		int Present();
+		int React(int index);
 	};
 
 }; // namespace mazengine

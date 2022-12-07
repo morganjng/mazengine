@@ -4,7 +4,7 @@
 
 using namespace mazengine;
 
-int tile_game::initial_tick() {
+int TileGame::InitialTick() {
 	if (name == "UNSET" || renderer == nullptr) {
 		std::cout << "name not yet set" << std::endl;
 		return UNSET_VALUE_ERROR;
@@ -14,7 +14,7 @@ int tile_game::initial_tick() {
 	img_path = mz["img_path"].as<std::string>();
 	data_path = mz["data_path"].as<std::string>();
 
-	this->tiles = new tile_renderer(
+	this->tiles = new TileRenderer(
 		renderer, img_path, YAML::LoadFile(data_path + "img.yaml")["tilesets"],
 		tile_width, tile_height, tile_size, tile_size);
 
@@ -29,24 +29,24 @@ int tile_game::initial_tick() {
 	return STATUS_OK;
 }
 
-int tile_game::tick(int status) {
+int TileGame::Tick(int status) {
 	int rv = STATUS_OK;
-	std::vector<tile_entity> *objs = current_map->get_objects();
-	std::vector<void (*)(button, int *)> funcs;
-	player->tick(presses, releases);
-	for (button press : *presses) {
+	std::vector<TileEntity> *objs = current_map->get_objects();
+	std::vector<void (*)(Button, int *)> funcs;
+	player->Tick(presses, releases);
+	for (Button press : *presses) {
 		if (press == KILL) {
 			return ENGINE_KILL;
 		}
-		for (tile_entity obj : *objs) {
+		for (TileEntity obj : *objs) {
 			funcs = *obj.get_press_hooks();
 			for (auto func : funcs) {
 				func(press, &rv);
 			}
 		}
 	}
-	for (button release : *releases) {
-		for (tile_entity obj : *objs) {
+	for (Button release : *releases) {
+		for (TileEntity obj : *objs) {
 			funcs = *obj.get_release_hooks();
 			for (auto func : funcs) {
 				func(release, &rv);
@@ -56,21 +56,21 @@ int tile_game::tick(int status) {
 	return rv;
 }
 
-int tile_game::draw() {
-	tiles->clear(current_map->bg_color);
+int TileGame::Draw() {
+	tiles->Clear(current_map->bg_color);
 	// std::cout << SDL_GetError() << std::endl;
-	std::vector<tile_layer> *layers = current_map->get_layers();
-	for (tile_layer layer : *layers) {
-		tiles->draw_layer(&layer, player->position_x - player->center_offset_x,
+	std::vector<TileLayer> *layers = current_map->get_layers();
+	for (TileLayer layer : *layers) {
+		tiles->Draw_layer(&layer, player->position_x - player->center_offset_x,
 						  player->position_y - player->center_offset_y);
 	}
-	tiles->draw_sprite(
+	tiles->DrawSprite(
 		player->key, player->id,
 		((tile_width + 3) / 2) * tile_size +
 			(player->position_x - player->center_offset_x) % tile_size,
 		((tile_height + 3) / 2) * tile_size +
 			(player->position_y - player->center_offset_y) % tile_size);
-	tiles->draw_to_renderer(
+	tiles->Draw_to_renderer(
 		(player->position_x - player->center_offset_x) % tile_size,
 		(player->position_y - player->center_offset_y) % tile_size);
 	/* DRAW DEBUG
@@ -82,9 +82,9 @@ int tile_game::draw() {
 	return STATUS_OK;
 }
 
-int tile_game::present() {
-	tiles->present();
+int TileGame::Present() {
+	tiles->Present();
 	return STATUS_OK;
 }
 
-int tile_game::reaction(int idx) { return STATUS_OK; }
+int TileGame::React(int idx) { return STATUS_OK; }

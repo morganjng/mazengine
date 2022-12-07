@@ -7,11 +7,11 @@
 
 using namespace mazengine;
 
-SDL_Rect *menu_widget::get_rect() { return &rect; }
+SDL_Rect *MenuWidget::Rect() { return &rect; }
 
-SDL_Surface *menu_widget::get_texture() { return textures[texture_idx]; }
+SDL_Surface *MenuWidget::Texture() { return textures[texture_idx]; }
 
-int menu::initial_tick() {
+int Menu::InitialTick() {
 	if (name == "UNSET") {
 		return UNSET_VALUE_ERROR;
 	}
@@ -33,19 +33,20 @@ int menu::initial_tick() {
 	internal_surface = SDL_CreateRGBSurface(0, internal_width, internal_height,
 											32, 0, 0, 0, 0);
 
-	widgets = *new std::vector<menu_widget *>();
-	reactions = *new vec_func();
+	widgets = *new std::vector<MenuWidget *>();
+	reactions = *new FuncVector();
 
 	std::string img_prefix = mz["img_path"].as<std::string>();
 
 	// std::cout << data_yaml << std::endl;
 
-	menu_widget *w_temp = nullptr;
+	MenuWidget *w_temp = nullptr;
 
 	int func_index = 0;
 	int widget_index = 0;
 
-	for (std::string widget_name : data_yaml["widget_names"].as<vec_string>()) {
+	for (std::string widget_name :
+		 data_yaml["widget_names"].as<StringVector>()) {
 		std::vector<SDL_Surface *> *textures = new std::vector<SDL_Surface *>();
 		YAML::Node widget = data_yaml["widgets"][widget_name];
 
@@ -62,7 +63,7 @@ int menu::initial_tick() {
 				  << widget["height"].as<double>() * internal_height
 				  << std::endl;
 
-		w_temp = new menu_widget(
+		w_temp = new MenuWidget(
 			widget_name, widget["x"].as<double>() * internal_width,
 			widget["y"].as<double>() * internal_height,
 			widget["width"].as<double>() * internal_width,
@@ -72,28 +73,28 @@ int menu::initial_tick() {
 
 		func_string = widget["on_click"].as<std::string>();
 		if (func_string != "none") {
-			reactions.push_back(parse(func_string, widget_index));
+			reactions.push_back(Parse(func_string, widget_index));
 			w_temp->on_click = func_index;
 			func_index++;
 		}
 
 		func_string = widget["on_hover"].as<std::string>();
 		if (func_string != "none") {
-			reactions.push_back(parse(func_string, widget_index));
+			reactions.push_back(Parse(func_string, widget_index));
 			w_temp->on_hover = func_index;
 			func_index++;
 		}
 
 		func_string = widget["no_click"].as<std::string>();
 		if (func_string != "none") {
-			reactions.push_back(parse(func_string, widget_index));
+			reactions.push_back(Parse(func_string, widget_index));
 			w_temp->no_click = func_index;
 			func_index++;
 		}
 
 		func_string = widget["no_hover"].as<std::string>();
 		if (func_string != "none") {
-			reactions.push_back(parse(func_string, widget_index));
+			reactions.push_back(Parse(func_string, widget_index));
 			w_temp->no_hover = func_index;
 			func_index++;
 		}
@@ -107,39 +108,39 @@ int menu::initial_tick() {
 	return STATUS_OK;
 }
 
-int menu::tick(int status) {
+int Menu::Tick(int status) {
 	SDL_Point mouse_location;
 	// std::cout << "?" << std::endl;
 	mouse_location.x = int(*cursor_x * internal_width);
 	mouse_location.y = int(*cursor_y * internal_height);
 	int rv = STATUS_OK;
 	// std::cout << "starting for" << std::endl;
-	for (menu_widget *widget : widgets) {
+	for (MenuWidget *widget : widgets) {
 		// std::cout << "ticking widg " << widget->name << std::endl;
-		bool in_rect = SDL_PointInRect(&mouse_location, widget->get_rect());
-		for (button press : *presses) {
+		bool in_rect = SDL_PointInRect(&mouse_location, widget->Rect());
+		for (Button press : *presses) {
 			switch (press) {
 				case MOUSE_MOTION:
 					if (in_rect && widget->on_hover != -1) {
-						rv = reaction(widget->on_hover);
+						rv = React(widget->on_hover);
 					} else if (!in_rect && widget->on_hover != -1) {
-						rv = reaction(widget->no_hover);
+						rv = React(widget->no_hover);
 					}
 					break;
 				case MOUSE_CLICK:
 					if (in_rect && widget->on_click != -1) {
-						rv = reaction(widget->on_click);
+						rv = React(widget->on_click);
 					}
 					break;
 				default:
 					break;
 			}
 		}
-		for (button release : *releases) {
+		for (Button release : *releases) {
 			switch (release) {
 				case MOUSE_CLICK:
 					if (in_rect && widget->no_click != -1) {
-						rv = reaction(widget->no_click);
+						rv = React(widget->no_click);
 					}
 					break;
 				default:
@@ -150,15 +151,15 @@ int menu::tick(int status) {
 	return rv;
 }
 
-int menu::draw() {
-	// std::cout << "Starting " << name << " draw function" << std::endl;
+int Menu::Draw() {
+	// std::cout << "Starting " << name << " Draw function" << std::endl;
 	SDL_FillRect(internal_surface, NULL, 0);
-	for (menu_widget *widget : widgets) {
-		if (widget->get_texture() == NULL || widget->get_texture() == nullptr) {
+	for (MenuWidget *widget : widgets) {
+		if (widget->Texture() == NULL || widget->Texture() == nullptr) {
 			std::cout << widget->name << " nullptr" << std::endl;
 		}
-		SDL_BlitScaled(widget->get_texture(), NULL, internal_surface,
-					   widget->get_rect());
+		SDL_BlitScaled(widget->Texture(), NULL, internal_surface,
+					   widget->Rect());
 	}
 	// std::cout << SDL_GetError() << std::endl;
 	SDL_Texture *texture =
@@ -168,12 +169,12 @@ int menu::draw() {
 	return STATUS_OK;
 }
 
-int menu::present() {
+int Menu::Present() {
 	SDL_RenderPresent(renderer);
 	return STATUS_OK;
 }
 
-int menu::reaction(int index) {
+int Menu::React(int index) {
 	if (size_t(index) >= reactions.size()) {
 		std::cout << index << " OUT OF RANGE" << std::endl;
 		return STATUS_OK;
@@ -182,8 +183,8 @@ int menu::reaction(int index) {
 	return func(STATUS_OK);
 }
 
-func_t *menu::parse(std::string str, int iv) {
-	vec_string temp_v = *new vec_string();
+Func *Menu::Parse(std::string str, int iv) {
+	StringVector temp_v = *new StringVector();
 	size_t length = str.length();
 	std::string temp;
 	for (size_t i = 0; i < length; i++) {
@@ -203,7 +204,7 @@ func_t *menu::parse(std::string str, int iv) {
 	if (temp_v[0] == "set") {
 		if (temp_v[1] == "widget") {
 			if (temp_v[3] == "texture") {
-				return new func_t{[this, temp_v](int s) -> int {
+				return new Func{[this, temp_v](int s) -> int {
 					this->widgets[std::stoi(temp_v[2])]->texture_idx =
 						std::stoi(temp_v[4]);
 					return STATUS_OK;
@@ -212,7 +213,7 @@ func_t *menu::parse(std::string str, int iv) {
 		}
 	}
 	if (temp_v[0] == "up") {
-		return new func_t(
+		return new Func(
 			[temp_v](int s) -> int { return std::stoi(temp_v[1]); });
 	}
 

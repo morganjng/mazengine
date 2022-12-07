@@ -9,21 +9,21 @@
 
 namespace mazengine {
 
-	class io_2d_no_mouse : public io {
+	class IO2dNoMouse : public IO {
 	private:
 		std::string settings_path;
-		std::map<SDL_Keycode, button> *controls;
-		std::map<SDL_Keycode, button>::iterator iter;
+		std::map<SDL_Keycode, Button> *controls;
+		std::map<SDL_Keycode, Button>::iterator iter;
 
 	public:
-		io_2d_no_mouse() {
+		IO2dNoMouse() {
 			settings_path = "UNSET";
 			controls = nullptr;
 		};
-		void set_controls_map(std::map<SDL_Keycode, button> *contr);
+		void set_controls_map(std::map<SDL_Keycode, Button> *contr);
 		void set_settings_path(std::string path);
-		int read_settings();
-		int parse(SDL_Event *event);
+		int ReadSettings();
+		int Parse(SDL_Event *event);
 	};
 
 }; // namespace mazengine
