@@ -11,15 +11,15 @@
 
 namespace mazengine {
 
-	class tile_game : public game {
+	class TileGame : public Game {
 	private:
 		std::string data_path;
 		std::string img_path;
 		std::string audio_path;
 		std::string map_key;
 		std::string following_key;
-		tile_entity *following;
-		tile_renderer *tiles;
+		TileEntity *following;
+		TileRenderer *tiles;
 		tile_map *current_map;
 		YAML::Node map_yaml;
 		int tile_size;
@@ -28,7 +28,7 @@ namespace mazengine {
 		tile_player *player;
 
 	public:
-		tile_game(int tile_sz, int tile_w, int tile_h) {
+		TileGame(int tile_sz, int tile_w, int tile_h) {
 			data_path = "UNSET";
 			img_path = "UNSET";
 			audio_path = "UNSET";
@@ -41,11 +41,11 @@ namespace mazengine {
 			internal_width = tile_w * tile_sz;
 			internal_height = tile_h * tile_sz;
 		}
-		int initial_tick();
-		int tick(int status);
-		int draw();
-		int present();
-		int reaction(int idx);
+		int InitialTick();
+		int Tick(int status);
+		int Draw();
+		int Present();
+		int React(int idx);
 	};
 
 }; // namespace mazengine

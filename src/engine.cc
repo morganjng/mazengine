@@ -8,17 +8,17 @@
 
 using namespace mazengine;
 
-int engine::set_io(io *io) {
+int Engine::set_io(IO *io) {
 	_io = io;
 	return 1;
 }
 
-int engine::set_game(game *game) {
+int Engine::set_game(Game *game) {
 	_game = game;
 	return 1;
 }
 
-int engine::start() {
+int Engine::Start() {
 	if (_io == nullptr || _game == nullptr) {
 		std::cout
 			<< "null game or xput. please initialize this before starting "
@@ -32,7 +32,7 @@ int engine::start() {
 		return ENGINE_KILL;
 	}
 
-	if (_io->read_settings() == UNSET_VALUE_ERROR) {
+	if (_io->ReadSettings() == UNSET_VALUE_ERROR) {
 		std::cout << "Failed to read settings" << std::endl;
 		return UNSET_VALUE_ERROR;
 	}
@@ -43,8 +43,8 @@ int engine::start() {
 
 	double cursor_x = 0;
 	double cursor_y = 0;
-	vec_button presses;
-	vec_button releases;
+	ButtonVector presses;
+	ButtonVector releases;
 
 	// TODO set up a settings thing here
 
@@ -85,10 +85,10 @@ int engine::start() {
 	_io->window_width = &window_width;
 	_io->window_height = &window_height;
 
-	tick_val = _game->initial_tick();
+	tick_val = _game->InitialTick();
 
 	if (tick_val != STATUS_OK) {
-		std::cout << "Something failed in _game->initial_tick" << std::endl;
+		std::cout << "Something failed in _game->InitialTick" << std::endl;
 		return tick_val;
 	}
 
@@ -103,16 +103,16 @@ int engine::start() {
 		releases.clear();
 
 		while (SDL_PollEvent(&event)) {
-			_io->parse(&event);
+			_io->Parse(&event);
 		}
 
 		parse_time = std::chrono::system_clock::now();
 
-		tick_val = _game->tick(STATUS_OK);
+		tick_val = _game->Tick(STATUS_OK);
 
 		tick_time = std::chrono::system_clock::now();
 
-		_game->draw();
+		_game->Draw();
 
 		end_time = std::chrono::system_clock::now();
 
@@ -124,7 +124,7 @@ int engine::start() {
 					  << std::endl;
 		}
 
-		_game->present();
+		_game->Present();
 
 		if (tick_val == ENGINE_KILL) {
 			running = 0;
@@ -155,7 +155,7 @@ int engine::start() {
 	return tick_val;
 }
 
-void game::pass_pointers(vec_button *presses, vec_button *releases,
+void Game::pass_pointers(ButtonVector *presses, ButtonVector *releases,
 						 double *cursor_x, double *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;
@@ -163,7 +163,7 @@ void game::pass_pointers(vec_button *presses, vec_button *releases,
 	this->cursor_y = cursor_y;
 }
 
-void io::pass_pointers(vec_button *presses, vec_button *releases,
+void IO::pass_pointers(ButtonVector *presses, ButtonVector *releases,
 					   double *cursor_x, double *cursor_y) {
 	this->presses = presses;
 	this->releases = releases;

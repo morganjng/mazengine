@@ -12,13 +12,13 @@
 #define ENGINE_KILL -1
 #define UNSET_VALUE_ERROR -2
 
-typedef std::vector<std::function<int(int)> *> vec_func;
-typedef std::function<int(int)> func_t;
-typedef std::vector<std::string> vec_string;
+typedef std::vector<std::function<int(int)> *> FuncVector;
+typedef std::function<int(int)> Func;
+typedef std::vector<std::string> StringVector;
 
 namespace mazengine {
 
-	enum button {
+	enum Button {
 		UP,
 		DOWN,
 		LEFT,
@@ -32,37 +32,37 @@ namespace mazengine {
 		MOUSE_MOTION
 	};
 
-	typedef std::vector<button> vec_button;
+	typedef std::vector<Button> ButtonVector;
 
-	class engine;
-	class io;
-	class game;
+	class Engine;
+	class IO;
+	class Game;
 
-	class engine {
+	class Engine {
 	protected:
-		io *_io;
-		game *_game;
+		IO *_io;
+		Game *_game;
 		int window_width;
 		int window_height;
 		std::string name;
 
 	public:
-		engine(int width, int height, std::string name) {
+		Engine(int width, int height, std::string name) {
 			window_width = width;
 			window_height = height;
 			this->name = name;
 			_io = nullptr;
 			_game = nullptr;
 		};
-		int set_io(io *io);
-		int set_game(game *game);
-		int start();
+		int set_io(IO *io);
+		int set_game(Game *game);
+		int Start();
 	};
 
-	class io {
+	class IO {
 	protected:
-		vec_button *presses;
-		vec_button *releases;
+		ButtonVector *presses;
+		ButtonVector *releases;
 		double *cursor_x;
 		double *cursor_y;
 
@@ -70,17 +70,17 @@ namespace mazengine {
 		int *window_width;
 		int *window_height;
 
-		io(){};
-		virtual int read_settings() = 0;
-		void pass_pointers(vec_button *presses, vec_button *releases,
+		IO(){};
+		virtual int ReadSettings() = 0;
+		void pass_pointers(ButtonVector *presses, ButtonVector *releases,
 						   double *cursor_x, double *cursor_y);
-		virtual int parse(SDL_Event *event) = 0;
+		virtual int Parse(SDL_Event *event) = 0;
 	};
 
-	class game {
+	class Game {
 	protected:
-		vec_button *presses;
-		vec_button *releases;
+		ButtonVector *presses;
+		ButtonVector *releases;
 		double *cursor_x;
 		double *cursor_y;
 		int internal_width;
@@ -89,17 +89,17 @@ namespace mazengine {
 	public:
 		std::string name;
 		SDL_Renderer *renderer;
-		game() {
+		Game() {
 			renderer = nullptr;
 			name = "UNSET";
 		};
-		void pass_pointers(vec_button *presses, vec_button *releases,
+		void pass_pointers(ButtonVector *presses, ButtonVector *releases,
 						   double *cursor_x, double *cursor_y);
-		virtual int initial_tick() = 0;
-		virtual int tick(int status) = 0;
-		virtual int draw() = 0;
-		virtual int present() = 0;
-		virtual int reaction(int) = 0;
+		virtual int InitialTick() = 0;
+		virtual int Tick(int status) = 0;
+		virtual int Draw() = 0;
+		virtual int Present() = 0;
+		virtual int React(int) = 0;
 	};
 
 } // namespace mazengine

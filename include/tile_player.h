@@ -22,7 +22,7 @@ namespace mazengine {
 		int id;
 		std::string key;
 		std::string map_key;
-		tile_set *tileset;
+		TileSet *tileset;
 
 		tile_player(std::string data_path) {
 			YAML::Node data = YAML::LoadFile(data_path + "player.yaml");
@@ -41,7 +41,7 @@ namespace mazengine {
 			directions[3] = false;
 		}
 
-		void tick(vec_button *presses, vec_button *releases);
+		void Tick(ButtonVector *presses, ButtonVector *releases);
 	};
 
 }; // namespace mazengine

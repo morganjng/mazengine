@@ -7,7 +7,7 @@
 
 namespace mazengine {
 
-	class menu_widget {
+	class MenuWidget {
 	protected:
 		SDL_Rect rect;
 		std::vector<SDL_Surface *> textures;
@@ -19,8 +19,8 @@ namespace mazengine {
 		int on_hover;
 		int no_click;
 		int no_hover;
-		menu_widget(std::string _name, int x, int y, int _width, int _height,
-					std::vector<SDL_Surface *> _textures) {
+		MenuWidget(std::string _name, int x, int y, int _width, int _height,
+				   std::vector<SDL_Surface *> _textures) {
 			name = _name;
 			rect.w = _width;
 			rect.h = _height;
@@ -34,27 +34,27 @@ namespace mazengine {
 			no_click = -1;
 		};
 		int texture_idx;
-		SDL_Rect *get_rect();
-		SDL_Surface *get_texture();
+		SDL_Rect *Rect();
+		SDL_Surface *Texture();
 	};
 
-	class menu : public game {
+	class Menu : public Game {
 	protected:
-		std::vector<menu_widget *> widgets;
+		std::vector<MenuWidget *> widgets;
 		SDL_Surface *internal_surface;
-		vec_func reactions;
-		func_t *parse(std::string str, int iv);
+		FuncVector reactions;
+		Func *Parse(std::string str, int iv);
 
 	public:
-		menu() {
+		Menu() {
 			renderer = nullptr;
 			name = "UNSET";
 		};
-		int initial_tick();
-		int tick(int status);
-		int draw();
-		int present();
-		int reaction(int index);
+		int InitialTick();
+		int Tick(int status);
+		int Draw();
+		int Present();
+		int React(int index);
 	};
 
 }; // namespace mazengine

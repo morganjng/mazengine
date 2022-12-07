@@ -6,24 +6,24 @@
 
 namespace mazengine {
 
-	class tile_entity {
+	class TileEntity {
 	private:
-		std::vector<void (*)(button, int *)> press_hooks;
-		std::vector<void (*)(button, int *)> release_hooks;
+		std::vector<void (*)(Button, int *)> press_hooks;
+		std::vector<void (*)(Button, int *)> release_hooks;
 
 	public:
-		tile_entity() {
-			press_hooks = *new std::vector<void (*)(button, int *)>();
-			release_hooks = *new std::vector<void (*)(button, int *)>();
+		TileEntity() {
+			press_hooks = *new std::vector<void (*)(Button, int *)>();
+			release_hooks = *new std::vector<void (*)(Button, int *)>();
 			type = "UNSET";
 			id = -1;
 			x = -1;
 			y = -1;
 		};
 
-		tile_entity(std::string type, std::string key, int id, int x, int y) {
-			press_hooks = *new std::vector<void (*)(button, int *)>();
-			release_hooks = *new std::vector<void (*)(button, int *)>();
+		TileEntity(std::string type, std::string key, int id, int x, int y) {
+			press_hooks = *new std::vector<void (*)(Button, int *)>();
+			release_hooks = *new std::vector<void (*)(Button, int *)>();
 			this->type = type;
 			this->key = key;
 			this->id = id;
@@ -35,10 +35,10 @@ namespace mazengine {
 		int id;
 		int x;
 		int y;
-		int push_press_hook(void func(button press, int *rv));
-		int push_release_hook(void func(button release, int *rv));
-		std::vector<void (*)(button, int *)> *get_press_hooks();
-		std::vector<void (*)(button, int *)> *get_release_hooks();
+		int push_press_hook(void func(Button press, int *rv));
+		int push_release_hook(void func(Button release, int *rv));
+		std::vector<void (*)(Button, int *)> *get_press_hooks();
+		std::vector<void (*)(Button, int *)> *get_release_hooks();
 	};
 }; // namespace mazengine
 

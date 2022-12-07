@@ -3,13 +3,13 @@
 
 using namespace mazengine;
 
-void tile_renderer::clear(int color) {
+void TileRenderer::Clear(int color) {
 	SDL_FillRect(internal_surface, NULL, color);
 	// std::cout << SDL_GetError() << std::endl;
 };
 
-void tile_renderer::draw_sprite(std::string key, int id, int x, int y) {
-	tile_set *set = tilesets[key];
+void TileRenderer::DrawSprite(std::string key, int id, int x, int y) {
+	TileSet *set = tilesets[key];
 	SDL_Rect dest_rect;
 	SDL_Rect src_rect;
 	dest_rect.x = x;
@@ -29,11 +29,11 @@ void tile_renderer::draw_sprite(std::string key, int id, int x, int y) {
 					&dest_rect);
 }
 
-void tile_renderer::draw_layer(tile_layer *layer, int player_position_x,
-							   int player_position_y) {
+void TileRenderer::Draw_layer(TileLayer *layer, int player_position_x,
+							  int player_position_y) {
 	int offset_x = player_position_x / tile_size_x - (tile_width + 4 - 1) / 2;
 	int offset_y = player_position_y / tile_size_y - (tile_height + 4 - 1) / 2;
-	tile_set *layer_set = tilesets[layer->tile_type];
+	TileSet *layer_set = tilesets[layer->tile_type];
 	SDL_Rect dest_rect;
 	dest_rect.x = 0;
 	dest_rect.y = 0;
@@ -72,8 +72,8 @@ void tile_renderer::draw_layer(tile_layer *layer, int player_position_x,
 	}
 };
 
-void tile_renderer::draw_to_renderer(int player_position_x,
-									 int player_position_y) {
+void TileRenderer::Draw_to_renderer(int player_position_x,
+									int player_position_y) {
 	render_rect.x =
 		player_position_x % tile_size_x + tile_size_x + tile_size_x / 2;
 	render_rect.y = player_position_y % tile_size_y + 3 * tile_size_y;
@@ -83,7 +83,7 @@ void tile_renderer::draw_to_renderer(int player_position_x,
 	SDL_DestroyTexture(text);
 }
 
-void tile_renderer::present() { SDL_RenderPresent(renderer); };
+void TileRenderer::Present() { SDL_RenderPresent(renderer); };
 
 // tile_set *tile_renderer::get_tile_set(std::string key) { return
 // tilesets[key]; }

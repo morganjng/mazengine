@@ -13,8 +13,8 @@ namespace mazengine {
 
 	class tile_map {
 	private:
-		std::vector<tile_layer> layers;
-		std::vector<tile_entity> objects;
+		std::vector<TileLayer> layers;
+		std::vector<TileEntity> objects;
 		std::string map_key;
 		YAML::Node map_node;
 		int layer_count;
@@ -26,18 +26,18 @@ namespace mazengine {
 			this->map_key = map_key;
 			map_node = YAML::LoadFile(path)[map_key];
 			bg_color = map_node["bg_color"].as<int>();
-			layers = std::vector<tile_layer>();
-			objects = std::vector<tile_entity>();
+			layers = std::vector<TileLayer>();
+			objects = std::vector<TileEntity>();
 			layer_count = map_node["layers"]["count"].as<int>();
 			for (int i = 0; i < layer_count; i++) {
-				layers.push_back(tile_layer(map_node["layers"][i]));
+				layers.push_back(TileLayer(map_node["layers"][i]));
 				// std::cout << i << std::endl;
 			}
 			// std::cout << map_node["objects"] << std::endl;
 			std::vector<std::string> object_names =
 				map_node["objects"]["names"].as<std::vector<std::string>>();
 			for (std::string name : object_names) {
-				objects.push_back(*new tile_entity(
+				objects.push_back(*new TileEntity(
 					map_node["objects"][name]["type"].as<std::string>(),
 					map_node["objects"][name]["key"].as<std::string>(),
 					map_node["objects"][name]["id"].as<int>(),
@@ -45,8 +45,8 @@ namespace mazengine {
 					map_node["objects"][name]["y"].as<int>()));
 			}
 		};
-		std::vector<tile_layer> *get_layers();
-		std::vector<tile_entity> *get_objects();
+		std::vector<TileLayer> *get_layers();
+		std::vector<TileEntity> *get_objects();
 	};
 
 }; // namespace mazengine

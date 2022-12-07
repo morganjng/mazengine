@@ -3,12 +3,12 @@
 
 using namespace mazengine;
 
-int u_game::push_game(game *_game) {
+int UGame::PushGame(Game *_game) {
 	games.push_back(_game);
 	return STATUS_OK;
 }
 
-int u_game::initial_tick() {
+int UGame::InitialTick() {
 	if (name == "UNSET" || renderer == nullptr) {
 		return UNSET_VALUE_ERROR;
 	}
@@ -17,7 +17,7 @@ int u_game::initial_tick() {
 	for (int i = 0; i < int(games.size()); i++) {
 		games[i]->renderer = renderer;
 		games[i]->pass_pointers(presses, releases, cursor_x, cursor_y);
-		rv = games[i]->initial_tick();
+		rv = games[i]->InitialTick();
 		if (rv != STATUS_OK) {
 			return rv;
 		}
@@ -25,19 +25,19 @@ int u_game::initial_tick() {
 	return STATUS_OK;
 }
 
-int u_game::tick(int status) {
-	int rv = games[cursor]->tick(cursor);
+int UGame::Tick(int status) {
+	int rv = games[cursor]->Tick(cursor);
 	if (rv != STATUS_OK) {
-		return reaction(rv);
+		return React(rv);
 	}
 	return STATUS_OK;
 }
 
-int u_game::draw() { return games[cursor]->draw(); }
+int UGame::Draw() { return games[cursor]->Draw(); }
 
-int u_game::present() { return games[cursor]->present(); }
+int UGame::Present() { return games[cursor]->Present(); }
 
-int u_game::reaction(int index) {
+int UGame::React(int index) {
 	if (index == ENGINE_KILL) {
 		return ENGINE_KILL;
 	}

@@ -2,13 +2,13 @@
 
 using namespace mazengine;
 
-void tile_player::tick(vec_button *presses, vec_button *releases) {
-	for (button press : *presses) {
+void tile_player::Tick(ButtonVector *presses, ButtonVector *releases) {
+	for (Button press : *presses) {
 		if (press < 4) {
 			directions[press] = true;
 		}
 	}
-	for (button release : *releases) {
+	for (Button release : *releases) {
 		if (release < 4) {
 			directions[release] = false;
 		}
