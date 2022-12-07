@@ -1,4 +1,4 @@
-#include <TileMap.h>
+#include <tile_map.h>
 
 using namespace mazengine;
 
