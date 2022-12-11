@@ -1,5 +1,5 @@
+#include "mazengine/tile_renderer.h"
 #include <SDL_render.h>
-#include <tile_renderer.h>
 
 using namespace mazengine;
 

@@ -1,8 +1,8 @@
-#include "mazengine.h"
+#include "mazengine/menu.h"
+#include "mazengine/mazengine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_render.h>
 #include <iostream>
-#include <menu.h>
 #include <yaml-cpp/node/parse.h>
 
 using namespace mazengine;

@@ -1,6 +1,6 @@
+#include "mazengine/tile_game.h"
 #include <SDL2/SDL.h>
 #include <iostream>
-#include <tile_game.h>
 
 using namespace mazengine;
 

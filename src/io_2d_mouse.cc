@@ -1,7 +1,7 @@
+#include "mazengine/io_2d_mouse.h"
 #include "SDL_events.h"
-#include "mazengine.h"
+#include "mazengine/mazengine.h"
 #include <SDL_keycode.h>
-#include <io_2d_mouse.h>
 #include <iostream>
 #include <string>
 #include <yaml-cpp/yaml.h>

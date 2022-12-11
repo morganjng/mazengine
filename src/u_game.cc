@@ -1,5 +1,5 @@
-#include "mazengine.h"
-#include <u_game.h>
+#include "mazengine/u_game.h"
+#include "mazengine/mazengine.h"
 
 using namespace mazengine;
 
