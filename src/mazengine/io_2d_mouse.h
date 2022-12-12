@@ -2,6 +2,7 @@
 #define IO_2D_MOUSE_H_
 
 #include "mazengine.h"
+#include <yaml-cpp/yaml.h>
 
 namespace mazengine {
 	class IO2dMouse : public IO {
@@ -12,11 +13,10 @@ namespace mazengine {
 
 	public:
 		IO2dMouse() {
-			settings_path = "UNSET";
-			controls = nullptr;
+			YAML::Node mzy = YAML::LoadFile("Mazzycat");
+			settings_path = mzy["settings_path"].as<String>();
+			controls = new std::map<SDL_Keycode, Button>;
 		};
-		void set_controls_map(std::map<SDL_Keycode, Button> *contr);
-		void set_settings_path(String path);
 		int ReadSettings();
 		int Parse(SDL_Event *event);
 	};

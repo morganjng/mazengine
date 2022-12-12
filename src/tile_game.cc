@@ -9,7 +9,7 @@ int TileGame::InitialTick() {
 		std::cout << "name not yet set" << std::endl;
 		return UNSET_VALUE_ERROR;
 	}
-	YAML::Node mz = YAML::LoadFile("mazzycat");
+	YAML::Node mz = YAML::LoadFile("Mazzycat");
 	audio_path = mz["audio_path"].as<String>();
 	img_path = mz["img_path"].as<String>();
 	data_path = mz["data_path"].as<String>();

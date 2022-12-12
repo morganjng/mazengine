@@ -19,7 +19,7 @@ int Menu::InitialTick() {
 		return UNSET_VALUE_ERROR;
 	}
 
-	YAML::Node mz = YAML::LoadFile("mazzycat");
+	YAML::Node mz = YAML::LoadFile("Mazzycat");
 
 	YAML::Node data_yaml =
 		YAML::LoadFile(mz["data_path"].as<String>() + name + ".yaml");

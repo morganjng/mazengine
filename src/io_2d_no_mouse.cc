@@ -7,12 +7,6 @@
 
 using namespace mazengine;
 
-void IO2dNoMouse::set_settings_path(String path) { settings_path = path; }
-
-void IO2dNoMouse::set_controls_map(std::map<SDL_Keycode, Button> *contr) {
-	controls = contr;
-}
-
 int IO2dNoMouse::ReadSettings() {
 	if (settings_path == "UNSET") {
 		return UNSET_VALUE_ERROR;

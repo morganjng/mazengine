@@ -8,12 +8,6 @@
 
 using namespace mazengine;
 
-void IO2dMouse::set_settings_path(String path) { settings_path = path; }
-
-void IO2dMouse::set_controls_map(std::map<SDL_Keycode, Button> *contr) {
-	controls = contr;
-}
-
 int IO2dMouse::ReadSettings() {
 	if (settings_path == "UNSET") {
 		return UNSET_VALUE_ERROR;
