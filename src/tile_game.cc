@@ -10,9 +10,9 @@ int TileGame::InitialTick() {
 		return UNSET_VALUE_ERROR;
 	}
 	YAML::Node mz = YAML::LoadFile("mazzycat");
-	audio_path = mz["audio_path"].as<std::string>();
-	img_path = mz["img_path"].as<std::string>();
-	data_path = mz["data_path"].as<std::string>();
+	audio_path = mz["audio_path"].as<String>();
+	img_path = mz["img_path"].as<String>();
+	data_path = mz["data_path"].as<String>();
 
 	this->tiles = new TileRenderer(
 		renderer, img_path, YAML::LoadFile(data_path + "img.yaml")["tilesets"],
@@ -23,8 +23,8 @@ int TileGame::InitialTick() {
 	map_key = player->map_key;
 	map_yaml = YAML::LoadFile(data_path + "map.yaml");
 	current_map =
-		new TileMap(data_path + map_yaml[map_key]["path"].as<std::string>(),
-					map_yaml[map_key]["name"].as<std::string>(), renderer);
+		new TileMap(data_path + map_yaml[map_key]["path"].as<String>(),
+					map_yaml[map_key]["name"].as<String>(), renderer);
 
 	return STATUS_OK;
 }

@@ -34,10 +34,11 @@ namespace mazengine {
 	};
 
 	/* Typedefs for long, frequently used types */
+	typedef std::string String;
 	typedef std::vector<Button> ButtonVector;
 	typedef std::vector<std::function<int(int)> *> FuncVector;
 	typedef std::function<int(int)> Func;
-	typedef std::vector<std::string> StringVector;
+	typedef std::vector<String> StringVector;
 
 	/* Forward declarations of each class so they can reference eachother */
 	class Engine;
@@ -52,10 +53,10 @@ namespace mazengine {
 		Game *_game;
 		int window_width;
 		int window_height;
-		std::string name;
+		String name;
 
 	public:
-		Engine(int width, int height, std::string name) {
+		Engine(int width, int height, String name) {
 			window_width = width;
 			window_height = height;
 			this->name = name;
@@ -99,7 +100,7 @@ namespace mazengine {
 		int internal_height;
 
 	public:
-		std::string name;
+		String name;
 		SDL_Renderer *renderer;
 		Game() {
 			renderer = nullptr;

@@ -8,7 +8,7 @@ void TileRenderer::Clear(int color) {
 	// std::cout << SDL_GetError() << std::endl;
 };
 
-void TileRenderer::DrawSprite(std::string key, int id, int x, int y) {
+void TileRenderer::DrawSprite(String key, int id, int x, int y) {
 	TileSet *set = tilesets[key];
 	SDL_Rect dest_rect;
 	SDL_Rect src_rect;
@@ -85,5 +85,5 @@ void TileRenderer::Draw_to_renderer(int player_position_x,
 
 void TileRenderer::Present() { SDL_RenderPresent(renderer); };
 
-// tile_set *tile_renderer::get_tile_set(std::string key) { return
+// tile_set *tile_renderer::get_tile_set(String key) { return
 // tilesets[key]; }

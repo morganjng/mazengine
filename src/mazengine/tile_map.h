@@ -19,13 +19,13 @@ namespace mazengine {
 	private:
 		std::vector<TileLayer> layers;
 		std::vector<TileEntity> objects;
-		std::string map_key;
+		String map_key;
 		YAML::Node map_node;
 		int layer_count;
 
 	public:
 		int bg_color;
-		TileMap(std::string path, std::string map_key, SDL_Renderer *renderer) {
+		TileMap(String path, String map_key, SDL_Renderer *renderer) {
 			this->map_key = map_key;
 			map_node = YAML::LoadFile(path)[map_key];
 			bg_color = map_node["bg_color"].as<int>();
@@ -37,12 +37,12 @@ namespace mazengine {
 				// std::cout << i << std::endl;
 			}
 			// std::cout << map_node["objects"] << std::endl;
-			std::vector<std::string> object_names =
-				map_node["objects"]["names"].as<std::vector<std::string>>();
-			for (std::string name : object_names) {
+			std::vector<String> object_names =
+				map_node["objects"]["names"].as<std::vector<String>>();
+			for (String name : object_names) {
 				objects.push_back(*new TileEntity(
-					map_node["objects"][name]["type"].as<std::string>(),
-					map_node["objects"][name]["key"].as<std::string>(),
+					map_node["objects"][name]["type"].as<String>(),
+					map_node["objects"][name]["key"].as<String>(),
 					map_node["objects"][name]["id"].as<int>(),
 					map_node["objects"][name]["x"].as<int>(),
 					map_node["objects"][name]["y"].as<int>()));

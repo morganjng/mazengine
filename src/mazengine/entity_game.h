@@ -2,13 +2,23 @@
 #define ENTITY_GAME_H_
 
 #include "mazengine.h"
+#include <yaml-cpp/yaml.h>
 
 namespace mazengine {
+	class Entity;
+	class EntityGame;
 
-	class EntityGame : public Game {};
+	typedef std::vector<Entity> EntityVector;
 
-	class
+	class EntityGame : public Game {
+	protected:
+		EntityVector *entities;
 
+	public:
+		EntityGame(YAML::Node game_data) { entities = new EntityVector; };
+	};
+
+	class Entity {};
 }; // namespace mazengine
 
 #endif // ENTITY_GAME_H_

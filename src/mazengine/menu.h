@@ -15,15 +15,15 @@ namespace mazengine {
 	protected:
 		SDL_Rect rect;
 		std::vector<SDL_Surface *> textures;
-		std::string function;
+		String function;
 
 	public:
-		std::string name;
+		String name;
 		int on_click;
 		int on_hover;
 		int no_click;
 		int no_hover;
-		MenuWidget(std::string _name, int x, int y, int _width, int _height,
+		MenuWidget(String _name, int x, int y, int _width, int _height,
 				   std::vector<SDL_Surface *> _textures) {
 			name = _name;
 			rect.w = _width;
@@ -47,7 +47,7 @@ namespace mazengine {
 		std::vector<MenuWidget *> widgets;
 		SDL_Surface *internal_surface;
 		FuncVector reactions;
-		Func *Parse(std::string str, int iv);
+		Func *Parse(String str, int iv);
 
 	public:
 		Menu() {

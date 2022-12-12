@@ -21,7 +21,7 @@ namespace mazengine {
 			y = -1;
 		};
 
-		TileEntity(std::string type, std::string key, int id, int x, int y) {
+		TileEntity(String type, String key, int id, int x, int y) {
 			press_hooks = *new std::vector<void (*)(Button, int *)>();
 			release_hooks = *new std::vector<void (*)(Button, int *)>();
 			this->type = type;
@@ -30,8 +30,8 @@ namespace mazengine {
 			this->x = x;
 			this->y = y;
 		};
-		std::string type;
-		std::string key;
+		String type;
+		String key;
 		int id;
 		int x;
 		int y;

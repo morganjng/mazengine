@@ -13,11 +13,11 @@ namespace mazengine {
 
 	class TileGame : public Game {
 	private:
-		std::string data_path;
-		std::string img_path;
-		std::string audio_path;
-		std::string map_key;
-		std::string following_key;
+		String data_path;
+		String img_path;
+		String audio_path;
+		String map_key;
+		String following_key;
 		TileEntity *following;
 		TileRenderer *tiles;
 		TileMap *current_map;

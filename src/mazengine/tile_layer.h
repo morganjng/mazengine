@@ -10,7 +10,7 @@ namespace mazengine {
 	class TileLayer {
 	public:
 		std::vector<std::vector<int>> tile_ids;
-		std::string tile_type;
+		String tile_type;
 		int height;
 		int width;
 		TileLayer(YAML::Node tiles) {
@@ -21,7 +21,7 @@ namespace mazengine {
 			for (int i = 0; i < height; i++) {
 				tile_ids.push_back(tiles["tiles"][i].as<std::vector<int>>());
 			}
-			tile_type = tiles["type"].as<std::string>();
+			tile_type = tiles["type"].as<String>();
 		}
 	};
 

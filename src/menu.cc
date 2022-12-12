@@ -22,7 +22,7 @@ int Menu::InitialTick() {
 	YAML::Node mz = YAML::LoadFile("mazzycat");
 
 	YAML::Node data_yaml =
-		YAML::LoadFile(mz["data_path"].as<std::string>() + name + ".yaml");
+		YAML::LoadFile(mz["data_path"].as<String>() + name + ".yaml");
 
 	internal_width = data_yaml["width"].as<int>();
 	internal_height = data_yaml["height"].as<int>();
@@ -36,7 +36,7 @@ int Menu::InitialTick() {
 	widgets = *new std::vector<MenuWidget *>();
 	reactions = *new FuncVector();
 
-	std::string img_prefix = mz["img_path"].as<std::string>();
+	String img_prefix = mz["img_path"].as<String>();
 
 	// std::cout << data_yaml << std::endl;
 
@@ -45,13 +45,12 @@ int Menu::InitialTick() {
 	int func_index = 0;
 	// int widget_index = 0;
 
-	for (std::string widget_name :
-		 data_yaml["widget_names"].as<StringVector>()) {
+	for (String widget_name : data_yaml["widget_names"].as<StringVector>()) {
 		std::vector<SDL_Surface *> *textures = new std::vector<SDL_Surface *>();
 		YAML::Node widget = data_yaml["widgets"][widget_name];
 
-		for (std::string img_path :
-			 widget["texture_paths"].as<std::vector<std::string>>()) {
+		for (String img_path :
+			 widget["texture_paths"].as<std::vector<String>>()) {
 			std::cout << img_prefix << img_path << std::endl;
 			textures->push_back(IMG_Load((img_prefix + img_path).c_str()));
 		}
@@ -72,30 +71,30 @@ int Menu::InitialTick() {
 			widget["width"].as<double>() * internal_width,
 			widget["height"].as<double>() * internal_height, *textures);
 
-		std::string func_string = "none";
+		String func_string = "none";
 
-		func_string = widget["on_click"].as<std::string>();
+		func_string = widget["on_click"].as<String>();
 		if (func_string != "none") {
 			reactions.push_back(Parse(func_string, func_index));
 			w_temp->on_click = func_index;
 			func_index++;
 		}
 
-		func_string = widget["on_hover"].as<std::string>();
+		func_string = widget["on_hover"].as<String>();
 		if (func_string != "none") {
 			reactions.push_back(Parse(func_string, func_index));
 			w_temp->on_hover = func_index;
 			func_index++;
 		}
 
-		func_string = widget["no_click"].as<std::string>();
+		func_string = widget["no_click"].as<String>();
 		if (func_string != "none") {
 			reactions.push_back(Parse(func_string, func_index));
 			w_temp->no_click = func_index;
 			func_index++;
 		}
 
-		func_string = widget["no_hover"].as<std::string>();
+		func_string = widget["no_hover"].as<String>();
 		if (func_string != "none") {
 			reactions.push_back(Parse(func_string, func_index));
 
@@ -186,22 +185,22 @@ int Menu::React(int index) {
 	return func(STATUS_OK);
 }
 
-Func *Menu::Parse(std::string str, int iv) {
+Func *Menu::Parse(String str, int iv) {
 	StringVector temp_v = *new StringVector();
 	size_t length = str.length();
-	std::string temp;
+	String temp;
 	for (size_t i = 0; i < length; i++) {
 		if (str[i] != ' ') {
 			temp.push_back(str[i]);
 		} else if (str[i] == ' ') {
-			temp_v.push_back(std::string(temp));
+			temp_v.push_back(String(temp));
 			temp.erase(0, str.length());
 		}
 	}
 	temp_v.push_back(temp);
 	/*
 	std::cout << iv << ": ";
-	for (std::string s : temp_v) {
+	for (String s : temp_v) {
 		std::cout << "[\"" << s << "\"]";
 	}
 	std::cout << std::endl;

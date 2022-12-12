@@ -11,7 +11,7 @@ namespace mazengine {
 
 	class IO2dNoMouse : public IO {
 	private:
-		std::string settings_path;
+		String settings_path;
 		std::map<SDL_Keycode, Button> *controls;
 		std::map<SDL_Keycode, Button>::iterator iter;
 
@@ -21,7 +21,7 @@ namespace mazengine {
 			controls = nullptr;
 		};
 		void set_controls_map(std::map<SDL_Keycode, Button> *contr);
-		void set_settings_path(std::string path);
+		void set_settings_path(String path);
 		int ReadSettings();
 		int Parse(SDL_Event *event);
 	};

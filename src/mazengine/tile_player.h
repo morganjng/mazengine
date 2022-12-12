@@ -20,11 +20,11 @@ namespace mazengine {
 		int center_offset_y;
 		int speed;
 		int id;
-		std::string key;
-		std::string map_key;
+		String key;
+		String map_key;
 		TileSet *tileset;
 
-		tile_player(std::string data_path) {
+		tile_player(String data_path) {
 			YAML::Node data = YAML::LoadFile(data_path + "player.yaml");
 			// std::cout << data << std::endl;
 			position_x = data["position_x"].as<int>();
@@ -33,8 +33,8 @@ namespace mazengine {
 			center_offset_y = data["center_offset_y"].as<int>();
 			speed = data["speed"].as<int>();
 			id = data["id"].as<int>();
-			key = data["key"].as<std::string>();
-			map_key = data["map_key"].as<std::string>();
+			key = data["key"].as<String>();
+			map_key = data["map_key"].as<String>();
 			directions[0] = false;
 			directions[1] = false;
 			directions[2] = false;
