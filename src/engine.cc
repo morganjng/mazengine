@@ -82,6 +82,7 @@ int Engine::Start() {
 
 	_game->PassPointers(&presses, &releases, &cursor_x, &cursor_y);
 	_io->PassPointers(&presses, &releases, &cursor_x, &cursor_y);
+
 	_io->window_width = &window_width;
 	_io->window_height = &window_height;
 

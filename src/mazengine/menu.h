@@ -50,10 +50,7 @@ namespace mazengine {
 		Func *Parse(String str, int iv);
 
 	public:
-		Menu() {
-			renderer = nullptr;
-			name = "UNSET";
-		};
+		Menu(String _name) : Game(_name){};
 		int InitialTick();
 		int Tick(int status);
 		int Draw();

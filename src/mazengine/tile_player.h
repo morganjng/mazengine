@@ -9,7 +9,7 @@
 
 namespace mazengine {
 
-	class tile_player {
+	class TilePlayer {
 	private:
 		bool directions[4];
 
@@ -24,7 +24,7 @@ namespace mazengine {
 		String map_key;
 		TileSet *tileset;
 
-		tile_player(String data_path) {
+		TilePlayer(String data_path) {
 			YAML::Node data = YAML::LoadFile(data_path + "player.yaml");
 			// std::cout << data << std::endl;
 			position_x = data["position_x"].as<int>();

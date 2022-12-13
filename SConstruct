@@ -13,6 +13,7 @@ obj_files = [
     "tile_entity",
     "tile_renderer",
     "io_2d_mouse",
+    "io_mouse",
     "io_2d_no_mouse",
     "tile_game",
     "u_game",

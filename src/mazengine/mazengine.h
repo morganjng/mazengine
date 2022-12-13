@@ -10,6 +10,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <yaml-cpp/node/parse.h>
 #include <yaml-cpp/yaml.h>
 
 #define STATUS_OK 0
@@ -63,6 +64,14 @@ namespace mazengine {
 			_io = nullptr;
 			_game = nullptr;
 		};
+		Engine() {
+			_io = nullptr;
+			_game = nullptr;
+			YAML::Node mz = YAML::LoadFile("Mazzycat");
+			window_width = mz["window_width"].as<int>();
+			window_height = mz["window_height"].as<int>();
+			name = mz["name"].as<String>();
+		};
 		int SetIO(IO *io);
 		int SetGame(Game *game);
 		int Start();
@@ -102,9 +111,9 @@ namespace mazengine {
 	public:
 		String name;
 		SDL_Renderer *renderer;
-		Game() {
+		Game(String _name) {
 			renderer = nullptr;
-			name = "UNSET";
+			name = _name;
 		};
 		void PassPointers(ButtonVector *presses, ButtonVector *releases,
 						  double *cursor_x, double *cursor_y);

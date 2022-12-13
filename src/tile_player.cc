@@ -2,7 +2,7 @@
 
 using namespace mazengine;
 
-void tile_player::Tick(ButtonVector *presses, ButtonVector *releases) {
+void TilePlayer::Tick(ButtonVector *presses, ButtonVector *releases) {
 	for (Button press : *presses) {
 		if (press < 4) {
 			directions[press] = true;

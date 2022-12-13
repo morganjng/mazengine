@@ -25,21 +25,24 @@ namespace mazengine {
 		int tile_size;
 		int tile_width;
 		int tile_height;
-		tile_player *player;
+		TilePlayer *player;
 
 	public:
-		TileGame(int tile_sz, int tile_w, int tile_h) {
-			data_path = "UNSET";
-			img_path = "UNSET";
-			audio_path = "UNSET";
+		TileGame(int tile_sz, int tile_w, int tile_h, String _name)
+			: Game(_name) {
+			YAML::Node mz = YAML::LoadFile("Mazzycat");
+			data_path = mz["data_path"].as<String>();
+			img_path = mz["img_path"].as<String>();
+			audio_path = mz["audio_path"].as<String>();
+			YAML::Node data = YAML::LoadFile(data_path + _name + ".yaml");
 			following = nullptr;
 			current_map = nullptr;
 			tiles = nullptr;
-			tile_size = tile_sz;
-			tile_width = tile_w;
-			tile_height = tile_h;
-			internal_width = tile_w * tile_sz;
-			internal_height = tile_h * tile_sz;
+			tile_size = data["tile_size"].as<int>();
+			tile_width = data["tile_width"].as<int>();
+			tile_height = data["tile_height"].as<int>();
+			internal_width = tile_width * tile_size;
+			internal_height = tile_height * tile_size;
 		}
 		int InitialTick();
 		int Tick(int status);

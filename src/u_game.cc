@@ -9,7 +9,7 @@ int UGame::PushGame(Game *_game) {
 }
 
 int UGame::InitialTick() {
-	if (name == "UNSET" || renderer == nullptr) {
+	if (name == "UNSET" || renderer == nullptr || games.size() == 0) {
 		return UNSET_VALUE_ERROR;
 	}
 
