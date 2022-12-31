@@ -46,6 +46,38 @@ namespace mazengine {
 	class IO;
 	class Game;
 
+	class Mazzydata {
+	public:
+		Mazzydata(String name, int window_width, int window_height,
+				  int framerate, String data_path, String img_path,
+				  String audio_path, String settings_path) {
+			this->name = name;
+			this->window_width = window_width;
+			this->window_height = window_height;
+			this->framerate = framerate;
+			this->data_path = data_path;
+			this->img_path = img_path;
+			this->audio_path = audio_path;
+			this->settings_path = settings_path;
+		}
+		String name;
+		int window_width;
+		int window_height;
+		int framerate;
+		String data_path;
+		String img_path;
+		String audio_path;
+		String settings_path;
+	};
+
+	class Mazzycat {
+	private:
+		static Mazzydata *data;
+
+	public:
+		static Mazzydata *getData();
+	};
+
 	/* The engine class represents a wrapper for the game - controls how it
 	 * ticks, when it ticks, and when it draws */
 	class Engine {
@@ -54,22 +86,17 @@ namespace mazengine {
 		Game *_game;
 		int window_width;
 		int window_height;
+		int framerate;
 		String name;
 
 	public:
-		Engine(int width, int height, String name) {
-			window_width = width;
-			window_height = height;
-			this->name = name;
-			_io = nullptr;
-			_game = nullptr;
-		};
 		Engine() {
 			_io = nullptr;
 			_game = nullptr;
 			YAML::Node mz = YAML::LoadFile("Mazzycat");
 			window_width = mz["window_width"].as<int>();
 			window_height = mz["window_height"].as<int>();
+			this->framerate = mz["framerate"].as<int>();
 			name = mz["name"].as<String>();
 		};
 		int SetIO(IO *io);

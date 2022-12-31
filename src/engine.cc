@@ -67,6 +67,8 @@ int Engine::Start() {
 	int tick_val = 0;
 	int frame_count = 0;
 
+	std::cout << "Initializing chronology" << std::endl;
+
 	std::chrono::system_clock::time_point start_time =
 		std::chrono::system_clock::now();
 	std::chrono::system_clock::time_point end_time =
@@ -76,7 +78,7 @@ int Engine::Start() {
 	std::chrono::system_clock::time_point tick_time =
 		std::chrono::system_clock::now();
 	std::chrono::milliseconds none(0);
-	std::chrono::milliseconds tick_rate(20);
+	std::chrono::milliseconds tick_rate(1000 / this->framerate);
 
 	_game->renderer = renderer;
 

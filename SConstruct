@@ -18,6 +18,7 @@ obj_files = [
     "tile_game",
     "u_game",
     "tile_map",
+    "mazzycat",
 ]
 
 cflags = [
