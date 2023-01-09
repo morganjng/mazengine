@@ -1,0 +1,1 @@
+#include "mazengine/igame.h"

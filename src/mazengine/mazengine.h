@@ -110,18 +110,20 @@ namespace mazengine {
 	 */
 	class Game {
 	protected:
+		int internal_width;
+		int internal_height;
+		Game *parent;
+
+	public:
 		ButtonVector *presses;
 		ButtonVector *releases;
 		double *cursor_x;
 		double *cursor_y;
-		int internal_width;
-		int internal_height;
-
-	public:
 		String name;
 		SDL_Renderer *renderer;
 		Game(String _name) {
 			renderer = nullptr;
+			parent = nullptr;
 			name = _name;
 		};
 		void PassPointers(ButtonVector *presses, ButtonVector *releases,
