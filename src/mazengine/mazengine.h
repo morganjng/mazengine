@@ -49,10 +49,8 @@ namespace mazengine {
 	class Game;
 
 	class Mazzycat {
-	private:
-		static std::vector<YAML::Node> mazzycat;
-
 	public:
+		static std::vector<YAML::Node> data;
 		static void Init();
 		static String GetName();
 		static IntPair GetWindowSize();

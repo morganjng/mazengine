@@ -1,4 +1,4 @@
-#include "mazengine/u_game.h"
+#include "mazengine/ugame.h"
 #include "mazengine/mazengine.h"
 
 using namespace mazengine;
@@ -44,5 +44,6 @@ int UGame::React(int index) {
 	if (index > 0) {
 		cursor = index - 1;
 	}
+	games[cursor]->Tick(cursor);
 	return STATUS_OK;
 }

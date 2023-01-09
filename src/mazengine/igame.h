@@ -8,7 +8,7 @@ namespace mazengine {
 	class IGame : public Game {
 	protected:
 		std::vector<Object *> objects;
-		std::vector<SDL_Texture> background;
+		std::vector<SDL_Texture *> background;
 		int background_idx = -1;
 
 	public:

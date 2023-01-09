@@ -6,7 +6,6 @@ bin_dir = "bin/"
 build_dir = "build/"
 
 obj_files = [
-    "dev",
     "menu",
     "tile_player",
     "engine",
@@ -16,9 +15,10 @@ obj_files = [
     "io_mouse",
     "io_2d_no_mouse",
     "tile_game",
-    "u_game",
+    "ugame",
     "tile_map",
     "mazzycat",
+    "igame",
 ]
 
 cflags = [

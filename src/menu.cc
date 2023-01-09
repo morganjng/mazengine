@@ -198,13 +198,6 @@ Func *Menu::Parse(String str, int iv) {
 		}
 	}
 	temp_v.push_back(temp);
-	/*
-	std::cout << iv << ": ";
-	for (String s : temp_v) {
-		std::cout << "[\"" << s << "\"]";
-	}
-	std::cout << std::endl;
-	*/
 	if (temp_v[0] == "set") {
 		if (temp_v[1] == "widget") {
 			if (temp_v[3] == "texture") {
