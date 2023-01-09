@@ -11,8 +11,8 @@ namespace mazengine {
 	public:
 		static Object *Get(String key, Game *parent);
 		Object(Game *parent) { this->parent = parent; }
-		int Tick(int status);
-		int Draw();
+		virtual int Tick(int status) = 0;
+		virtual int Draw() = 0;
 	};
 } // namespace mazengine
 
