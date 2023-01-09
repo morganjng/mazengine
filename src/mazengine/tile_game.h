@@ -30,10 +30,10 @@ namespace mazengine {
 	public:
 		TileGame(int tile_sz, int tile_w, int tile_h, String _name)
 			: Game(_name) {
-			YAML::Node mz = YAML::LoadFile("Mazzycat");
-			data_path = mz["data_path"].as<String>();
-			img_path = mz["img_path"].as<String>();
-			audio_path = mz["audio_path"].as<String>();
+			auto paths = Mazzycat::GetPaths();
+			data_path = paths["data"];
+			img_path = paths["img"];
+			audio_path = paths["audio"];
 			YAML::Node data = YAML::LoadFile(data_path + _name + ".yaml");
 			following = nullptr;
 			current_map = nullptr;

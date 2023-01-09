@@ -40,42 +40,24 @@ namespace mazengine {
 	typedef std::vector<std::function<int(int)> *> FuncVector;
 	typedef std::function<int(int)> Func;
 	typedef std::vector<String> StringVector;
+	typedef std::pair<int, int> IntPair;
+	typedef std::map<String, String> StringMap;
 
 	/* Forward declarations of each class so they can reference eachother */
 	class Engine;
 	class IO;
 	class Game;
 
-	class Mazzydata {
-	public:
-		Mazzydata(String name, int window_width, int window_height,
-				  int framerate, String data_path, String img_path,
-				  String audio_path, String settings_path) {
-			this->name = name;
-			this->window_width = window_width;
-			this->window_height = window_height;
-			this->framerate = framerate;
-			this->data_path = data_path;
-			this->img_path = img_path;
-			this->audio_path = audio_path;
-			this->settings_path = settings_path;
-		}
-		String name;
-		int window_width;
-		int window_height;
-		int framerate;
-		String data_path;
-		String img_path;
-		String audio_path;
-		String settings_path;
-	};
-
 	class Mazzycat {
 	private:
-		static Mazzydata *data;
+		static std::vector<YAML::Node> mazzycat;
 
 	public:
-		static Mazzydata *getData();
+		static void Init();
+		static String GetName();
+		static IntPair GetWindowSize();
+		static int GetFramerate();
+		static StringMap GetPaths();
 	};
 
 	/* The engine class represents a wrapper for the game - controls how it
@@ -93,11 +75,11 @@ namespace mazengine {
 		Engine() {
 			_io = nullptr;
 			_game = nullptr;
-			YAML::Node mz = YAML::LoadFile("Mazzycat");
-			window_width = mz["window_width"].as<int>();
-			window_height = mz["window_height"].as<int>();
-			this->framerate = mz["framerate"].as<int>();
-			name = mz["name"].as<String>();
+			name = Mazzycat::GetName();
+			IntPair dims = Mazzycat::GetWindowSize();
+			window_width = dims.first;
+			window_height = dims.second;
+			framerate = Mazzycat::GetFramerate();
 		};
 		int SetIO(IO *io);
 		int SetGame(Game *game);
