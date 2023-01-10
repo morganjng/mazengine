@@ -14,6 +14,8 @@ ButtonVector *IO::releases = nullptr;
 double *IO::cursor_x = nullptr;
 double *IO::cursor_y = nullptr;
 
+int Game::Command(String command) { return 0; }
+
 int Engine::SetIO(IO *io) {
 	_io = io;
 	return 1;

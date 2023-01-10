@@ -124,6 +124,7 @@ namespace mazengine {
 			internal_surface = SDL_CreateRGBSurface(
 				0, internal_width, internal_height, 32, 0, 0, 0, 0);
 		};
+		int Command(String command);
 		// void PassPointers(ButtonVector *presses, ButtonVector *releases,
 		// 				  double *cursor_x, double *cursor_y);
 		virtual int InitialTick() = 0;
