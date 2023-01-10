@@ -17,7 +17,9 @@ namespace mazengine {
 	public:
 		int cursor;
 		int PushGame(Game *game);
-		UGame(String _name) : Game(_name) { cursor = 0; };
+		UGame(String _name, Game *_parent) : Game(_name, _parent) {
+			cursor = 0;
+		};
 		int InitialTick();
 		int Tick(int status);
 		int Draw();

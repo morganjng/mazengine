@@ -1,18 +1,31 @@
 #ifndef IGAME_H_
 #define IGAME_H_
 
+#include "SDL_render.h"
+#include "element.h"
+#include "elements.h"
 #include "mazengine.h"
-#include "object.h"
 
 namespace mazengine {
 	class IGame : public Game {
 	protected:
-		std::vector<Object *> objects;
-		std::vector<SDL_Texture *> background;
+		std::vector<Element *> elements;
+		std::vector<SDL_Surface *> backgrounds;
+		YAML::Node data;
 		int background_idx = -1;
 
 	public:
-		IGame(String _name) : Game(_name) {}
+		IGame(String _name, Game *_parent) : Game(_name, _parent) {
+			data =
+				YAML::LoadFile(Mazzycat::GetPaths()["data"] + _name + ".yaml");
+			for (String val : data["elements"].as<StringVector>()) {
+				elements.push_back(Elements::Get(val, this));
+			}
+			for (String val : data["backgrounds"].as<StringVector>()) {
+				backgrounds.push_back(
+					IMG_Load((Mazzycat::GetPaths()["img"] + val).c_str()));
+			}
+		}
 		int InitialTick();
 		int Tick(int status);
 		int Draw();

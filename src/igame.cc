@@ -1,26 +1,28 @@
 #include "mazengine/igame.h"
 
 namespace mazengine {
-	int IGame::InitialTick() {
-		return 0; // TODO
-	}
+	int IGame::InitialTick() { return 0; }
 
 	int IGame::Tick(int status) {
-		for (Object *obj : objects) {
-			obj->Tick(status);
+		for (Element *elem : elements) {
+			if (elem != nullptr) {
+				elem->Tick(status);
+			}
 		}
 		return 0;
 	}
 
 	int IGame::Draw() {
-		for (Object *obj : objects) {
-			obj->Draw();
+		for (Element *elem : elements) {
+			if (elem != nullptr) {
+				elem->Draw();
+			}
 		}
 		return 0;
 	}
 
 	int IGame::Present() {
-		SDL_RenderPresent(renderer);
+		SDL_RenderPresent(Engine::renderer);
 		return 0;
 	}
 

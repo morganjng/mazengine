@@ -70,8 +70,10 @@ namespace mazengine {
 		String name;
 
 	public:
+		static SDL_Renderer *renderer;
 		Engine() {
 			_io = nullptr;
+			renderer = nullptr;
 			_game = nullptr;
 			name = Mazzycat::GetName();
 			IntPair dims = Mazzycat::GetWindowSize();
@@ -87,45 +89,43 @@ namespace mazengine {
 	/* IO class represents how the program should read in inputs, and how it
 	 * should parse those into output buttons */
 	class IO {
-	protected:
-		ButtonVector *presses;
-		ButtonVector *releases;
-		double *cursor_x;
-		double *cursor_y;
-
 	public:
+		static ButtonVector *presses;
+		static ButtonVector *releases;
+		static double *cursor_x;
+		static double *cursor_y;
 		int *window_width;
 		int *window_height;
 
 		IO(){};
 		virtual int ReadSettings() = 0;
-		void PassPointers(ButtonVector *presses, ButtonVector *releases,
-						  double *cursor_x, double *cursor_y);
+		// void PassPointers(ButtonVector *presses, ButtonVector *releases,
+		// 				  double *cursor_x, double *cursor_y);
 		virtual int Parse(SDL_Event *event) = 0;
 	};
 
 	/* Game class encompasses the rest of the game -- entities, how to draw, etc
 	 */
 	class Game {
-	protected:
+	public:
+		SDL_Surface *internal_surface;
 		int internal_width;
 		int internal_height;
 		Game *parent;
 
-	public:
-		ButtonVector *presses;
-		ButtonVector *releases;
-		double *cursor_x;
-		double *cursor_y;
 		String name;
-		SDL_Renderer *renderer;
-		Game(String _name) {
-			renderer = nullptr;
-			parent = nullptr;
+		Game(String _name, Game *_parent) {
+			parent = _parent;
 			name = _name;
+			YAML::Node data =
+				YAML::LoadFile(Mazzycat::GetPaths()["data"] + _name + ".yaml");
+			internal_width = data["width"].as<int>();
+			internal_height = data["height"].as<int>();
+			internal_surface = SDL_CreateRGBSurface(
+				0, internal_width, internal_height, 32, 0, 0, 0, 0);
 		};
-		void PassPointers(ButtonVector *presses, ButtonVector *releases,
-						  double *cursor_x, double *cursor_y);
+		// void PassPointers(ButtonVector *presses, ButtonVector *releases,
+		// 				  double *cursor_x, double *cursor_y);
 		virtual int InitialTick() = 0;
 		virtual int Tick(int status) = 0;
 		virtual int Draw() = 0;

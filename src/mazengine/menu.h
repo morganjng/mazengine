@@ -50,7 +50,7 @@ namespace mazengine {
 		Func *Parse(String str, int iv);
 
 	public:
-		Menu(String _name) : Game(_name){};
+		Menu(String _name, Game *_parent) : Game(_name, _parent){};
 		int InitialTick();
 		int Tick(int status);
 		int Draw();

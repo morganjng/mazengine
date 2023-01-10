@@ -9,14 +9,12 @@ int UGame::PushGame(Game *_game) {
 }
 
 int UGame::InitialTick() {
-	if (name == "UNSET" || renderer == nullptr || games.size() == 0) {
+	if (name == "UNSET" || games.size() == 0) {
 		return UNSET_VALUE_ERROR;
 	}
 
 	int rv = STATUS_OK;
 	for (int i = 0; i < int(games.size()); i++) {
-		games[i]->renderer = renderer;
-		games[i]->PassPointers(presses, releases, cursor_x, cursor_y);
 		rv = games[i]->InitialTick();
 		if (rv != STATUS_OK) {
 			return rv;

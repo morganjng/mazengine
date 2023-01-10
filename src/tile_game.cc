@@ -5,14 +5,15 @@
 using namespace mazengine;
 
 int TileGame::InitialTick() {
-	if (name == "UNSET" || renderer == nullptr) {
+	if (name == "UNSET" || Engine::renderer == nullptr) {
 		std::cout << "name not yet set" << std::endl;
 		return UNSET_VALUE_ERROR;
 	}
 
-	this->tiles = new TileRenderer(
-		renderer, img_path, YAML::LoadFile(data_path + "img.yaml")["tilesets"],
-		tile_width, tile_height, tile_size, tile_size);
+	this->tiles =
+		new TileRenderer(Engine::renderer, img_path,
+						 YAML::LoadFile(data_path + "img.yaml")["tilesets"],
+						 tile_width, tile_height, tile_size, tile_size);
 
 	player = new TilePlayer(data_path);
 
@@ -20,7 +21,7 @@ int TileGame::InitialTick() {
 	map_yaml = YAML::LoadFile(data_path + "map.yaml");
 	current_map =
 		new TileMap(data_path + map_yaml[map_key]["path"].as<String>(),
-					map_yaml[map_key]["name"].as<String>(), renderer);
+					map_yaml[map_key]["name"].as<String>(), Engine::renderer);
 
 	return STATUS_OK;
 }
@@ -29,8 +30,8 @@ int TileGame::Tick(int status) {
 	int rv = STATUS_OK;
 	std::vector<TileEntity> *objs = current_map->get_objects();
 	std::vector<void (*)(Button, int *)> funcs;
-	player->Tick(presses, releases);
-	for (Button press : *presses) {
+	player->Tick(IO::presses, IO::releases);
+	for (Button press : *IO::presses) {
 		if (press == KILL) {
 			return ENGINE_KILL;
 		}
@@ -41,7 +42,7 @@ int TileGame::Tick(int status) {
 			}
 		}
 	}
-	for (Button release : *releases) {
+	for (Button release : *IO::releases) {
 		for (TileEntity obj : *objs) {
 			funcs = *obj.get_release_hooks();
 			for (auto func : funcs) {

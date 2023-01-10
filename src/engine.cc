@@ -8,6 +8,12 @@
 
 using namespace mazengine;
 
+SDL_Renderer *Engine::renderer = nullptr;
+ButtonVector *IO::presses = nullptr;
+ButtonVector *IO::releases = nullptr;
+double *IO::cursor_x = nullptr;
+double *IO::cursor_y = nullptr;
+
 int Engine::SetIO(IO *io) {
 	_io = io;
 	return 1;
@@ -37,21 +43,20 @@ int Engine::Start() {
 		return UNSET_VALUE_ERROR;
 	}
 
-	SDL_Renderer *renderer = NULL;
 	SDL_Window *window = NULL;
 	SDL_Event event;
 
-	double cursor_x = 0;
-	double cursor_y = 0;
-	ButtonVector presses;
-	ButtonVector releases;
+	IO::presses = new ButtonVector;
+	IO::releases = new ButtonVector;
+	IO::cursor_x = new double;
+	IO::cursor_y = new double;
 
 	// TODO set up a settings thing here
 
 	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED,
 							  SDL_WINDOWPOS_CENTERED, window_width,
 							  window_height, SDL_WINDOW_OPENGL);
-	renderer = SDL_CreateRenderer(window, -1, 0);
+	Engine::renderer = SDL_CreateRenderer(window, -1, 0);
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
 
@@ -59,7 +64,7 @@ int Engine::Start() {
 		std::cout << "Window creation failed" << std::endl;
 		return 2;
 	}
-	if (renderer == NULL) {
+	if (Engine::renderer == NULL) {
 		std::cout << "Renderer creation failed" << std::endl;
 	}
 
@@ -80,11 +85,6 @@ int Engine::Start() {
 	std::chrono::milliseconds none(0);
 	std::chrono::milliseconds tick_rate(1000 / this->framerate);
 
-	_game->renderer = renderer;
-
-	_game->PassPointers(&presses, &releases, &cursor_x, &cursor_y);
-	_io->PassPointers(&presses, &releases, &cursor_x, &cursor_y);
-
 	_io->window_width = &window_width;
 	_io->window_height = &window_height;
 
@@ -100,10 +100,10 @@ int Engine::Start() {
 	while (running == 1) {
 		start_time = std::chrono::system_clock::now();
 
-		SDL_RenderClear(renderer);
+		SDL_RenderClear(Engine::renderer);
 
-		presses.clear();
-		releases.clear();
+		IO::presses->clear();
+		IO::releases->clear();
 
 		while (SDL_PollEvent(&event)) {
 			_io->Parse(&event);
@@ -158,18 +158,18 @@ int Engine::Start() {
 	return tick_val;
 }
 
-void Game::PassPointers(ButtonVector *presses, ButtonVector *releases,
-						double *cursor_x, double *cursor_y) {
-	this->presses = presses;
-	this->releases = releases;
-	this->cursor_x = cursor_x;
-	this->cursor_y = cursor_y;
-}
+// void Game::PassPointers(ButtonVector *presses, ButtonVector *releases,
+// 						double *cursor_x, double *cursor_y) {
+// 	this->presses = presses;
+// 	this->releases = releases;
+// 	this->cursor_x = cursor_x;
+// 	this->cursor_y = cursor_y;
+// }
 
-void IO::PassPointers(ButtonVector *presses, ButtonVector *releases,
-					  double *cursor_x, double *cursor_y) {
-	this->presses = presses;
-	this->releases = releases;
-	this->cursor_x = cursor_x;
-	this->cursor_y = cursor_y;
-}
+// void IO::PassPointers(ButtonVector *presses, ButtonVector *releases,
+// 					  double *cursor_x, double *cursor_y) {
+// 	this->presses = presses;
+// 	this->releases = releases;
+// 	this->cursor_x = cursor_x;
+// 	this->cursor_y = cursor_y;
+// }

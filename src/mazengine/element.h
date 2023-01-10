@@ -1,15 +1,15 @@
-#ifndef OBJECT_H_
-#define OBJECT_H_
+#ifndef ELEMENT_H_
+#define ELEMENT_H_
 
 #include "mazengine.h"
 
 namespace mazengine {
-	class Object {
+	class Element {
 	protected:
 		Game *parent;
 
 	public:
-		Object(Game *parent) { this->parent = parent; }
+		Element(Game *parent) { this->parent = parent; }
 		virtual int Tick(int status) = 0;
 		virtual int Draw() = 0;
 	};

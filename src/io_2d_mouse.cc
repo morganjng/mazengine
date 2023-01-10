@@ -36,33 +36,33 @@ int IO2dMouse::ReadSettings() {
 
 int IO2dMouse::Parse(SDL_Event *event) {
 	if (event->type == SDL_QUIT) {
-		presses->push_back(KILL);
+		IO::presses->push_back(KILL);
 		return ENGINE_KILL;
 	}
 	if (event->type == SDL_KEYDOWN) {
 		iter = controls->find(event->key.keysym.sym);
 		if (iter != controls->end()) {
-			presses->push_back(controls->at(event->key.keysym.sym));
+			IO::presses->push_back(controls->at(event->key.keysym.sym));
 		}
 		return STATUS_OK;
 	}
 	if (event->type == SDL_KEYUP) {
 		iter = controls->find(event->key.keysym.sym);
 		if (iter != controls->end()) {
-			releases->push_back(controls->at(event->key.keysym.sym));
+			IO::releases->push_back(controls->at(event->key.keysym.sym));
 		}
 		return STATUS_OK;
 	}
 	if (event->type == SDL_MOUSEBUTTONDOWN) {
-		presses->push_back(MOUSE_CLICK);
+		IO::presses->push_back(MOUSE_CLICK);
 	}
 	if (event->type == SDL_MOUSEMOTION) {
-		presses->push_back(MOUSE_MOTION);
-		*cursor_x = double(event->motion.x) / double(*window_width);
-		*cursor_y = double(event->motion.y) / double(*window_height);
+		IO::presses->push_back(MOUSE_MOTION);
+		*IO::cursor_x = double(event->motion.x) / double(*window_width);
+		*IO::cursor_y = double(event->motion.y) / double(*window_height);
 	}
 	if (event->type == SDL_MOUSEBUTTONUP) {
-		releases->push_back(MOUSE_CLICK);
+		IO::releases->push_back(MOUSE_CLICK);
 	}
 	return STATUS_OK;
 }

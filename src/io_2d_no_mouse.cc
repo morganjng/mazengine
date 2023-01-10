@@ -35,20 +35,20 @@ int IO2dNoMouse::ReadSettings() {
 
 int IO2dNoMouse::Parse(SDL_Event *event) {
 	if (event->type == SDL_QUIT) {
-		presses->push_back(KILL);
+		IO::presses->push_back(KILL);
 		return ENGINE_KILL;
 	}
 	if (event->type == SDL_KEYDOWN) {
 		iter = controls->find(event->key.keysym.sym);
 		if (iter != controls->end()) {
-			presses->push_back(controls->at(event->key.keysym.sym));
+			IO::presses->push_back(controls->at(event->key.keysym.sym));
 		}
 		return STATUS_OK;
 	}
 	if (event->type == SDL_KEYUP) {
 		iter = controls->find(event->key.keysym.sym);
 		if (iter != controls->end()) {
-			releases->push_back(controls->at(event->key.keysym.sym));
+			IO::releases->push_back(controls->at(event->key.keysym.sym));
 		}
 		return STATUS_OK;
 	}

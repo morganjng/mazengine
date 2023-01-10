@@ -28,8 +28,9 @@ namespace mazengine {
 		TilePlayer *player;
 
 	public:
-		TileGame(int tile_sz, int tile_w, int tile_h, String _name)
-			: Game(_name) {
+		TileGame(int tile_sz, int tile_w, int tile_h, String _name,
+				 Game *_parent)
+			: Game(_name, _parent) {
 			auto paths = Mazzycat::GetPaths();
 			data_path = paths["data"];
 			img_path = paths["img"];
