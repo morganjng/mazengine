@@ -1,6 +1,8 @@
 #include "mazengine/ugame.h"
 #include "mazengine/mazengine.h"
 
+#include <iostream>
+
 using namespace mazengine;
 
 int UGame::PushGame(Game *_game) {
@@ -9,14 +11,15 @@ int UGame::PushGame(Game *_game) {
 }
 
 int UGame::InitialTick() {
-	if (name == "UNSET" || games.size() == 0) {
-		return UNSET_VALUE_ERROR;
-	}
-
 	int rv = STATUS_OK;
 	for (int i = 0; i < int(games.size()); i++) {
-		rv = games[i]->InitialTick();
+		if (games[i] != nullptr) {
+			std::cout << "Initializing game " << games[i]->name << std::endl;
+			rv = games[i]->InitialTick();
+		}
 		if (rv != STATUS_OK) {
+			std::cout << "Initializing game " << games[i]->name
+					  << " failed with code " << rv << std::endl;
 			return rv;
 		}
 	}

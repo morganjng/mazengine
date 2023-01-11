@@ -11,7 +11,7 @@
 namespace mazengine {
 
 	class UGame : public Game {
-	private:
+	protected:
 		std::vector<Game *> games;
 
 	public:
