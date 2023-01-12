@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 #include <SDL_image.h>
 #include <functional>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <yaml-cpp/node/parse.h>
@@ -111,17 +112,17 @@ namespace mazengine {
 		int internal_width;
 		int internal_height;
 		Game *parent;
-		YAML::Node data;
 
 		String name;
 		Game(String _name, Game *_parent) {
 			parent = _parent;
 			name = _name;
-			data =
+			YAML::Node data =
 				YAML::LoadFile(Mazzycat::GetPaths()["data"] + _name + ".yaml");
 			internal_width = data["width"].as<int>();
 			internal_height = data["height"].as<int>();
-		};
+		}
+
 		int Command(StringVector command);
 		virtual int InitialTick() = 0;
 		virtual int Tick(int status) = 0;
