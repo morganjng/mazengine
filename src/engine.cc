@@ -2,6 +2,7 @@
 #include "mazengine/mazengine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL_ttf.h>
 #include <chrono>
 #include <iostream>
 #include <thread>
@@ -14,110 +15,6 @@ ButtonVector *IO::presses = nullptr;
 ButtonVector *IO::releases = nullptr;
 double *IO::cursor_x = nullptr;
 double *IO::cursor_y = nullptr;
-
-void LoadingScreen(int window_width, int window_height) {
-	SDL_SetRenderDrawColor(Engine::renderer, 0x40, 0xc0, 0x57, 255);
-	SDL_RenderFillRect(Engine::renderer, NULL);
-
-	SDL_SetRenderDrawColor(Engine::renderer, 0x00, 0x00, 0x00, 255);
-
-	SDL_Rect rect;
-	rect.x = int(0.2 * window_width);
-	rect.y = int(0.2 * window_height);
-	rect.w = int(0.6 * window_width);
-	rect.h = int(0.6 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	SDL_SetRenderDrawColor(Engine::renderer, 0x40, 0xc0, 0x57, 255);
-	rect.x = int(0.4 * window_width);
-	rect.y = int(0.2 * window_height);
-	rect.w = int(0.2 * window_width);
-	rect.h = int(0.2 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	rect.x = int(0.3 * window_width);
-	rect.y = int(0.45 * window_height);
-	rect.w = int(0.2 * window_width);
-	rect.h = int(0.2 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	rect.x = int(0.6 * window_width);
-	rect.y = int(0.45 * window_height);
-	rect.w = int(0.15 * window_width);
-	rect.h = int(0.15 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	rect.x = int(0.3 * window_width);
-	rect.y = int(0.65 * window_height);
-	rect.w = int(0.3 * window_width);
-	rect.h = int(0.1 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	SDL_SetRenderDrawColor(Engine::renderer, 0x00, 0x00, 0x00, 255);
-
-	rect.x = int(0.3 * window_width);
-	rect.y = int(0.65 * window_height);
-	rect.w = int(0.05 * window_width);
-	rect.h = int(0.025 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	rect.x = int(0.6 * window_width);
-	rect.y = int(0.65 * window_height);
-	rect.w = int(0.05 * window_width);
-	rect.h = int(0.025 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	rect.x = int(0.45 * window_width);
-	rect.y = int((0.75 - 0.025) * window_height);
-	rect.w = int(0.05 * window_width);
-	rect.h = int(0.025 * window_height);
-	SDL_RenderFillRect(Engine::renderer, &rect);
-
-	std::vector<SDL_Vertex> verts = {
-		{
-			SDL_FPoint{float(0.2 * window_width), float(0.2 * window_height)},
-			SDL_Color{0x40, 0xc0, 0x57, 255},
-			SDL_FPoint{0},
-		},
-		{
-			SDL_FPoint{float(0.4 * window_width), float(0.2 * window_height)},
-			SDL_Color{0x40, 0xc0, 0x57, 255},
-			SDL_FPoint{0},
-		},
-		{
-			SDL_FPoint{float(0.4 * window_width), float(0.4 * window_height)},
-			SDL_Color{0x40, 0xc0, 0x57, 255},
-			SDL_FPoint{0},
-		},
-	};
-
-	SDL_SetRenderDrawColor(Engine::renderer, 0x40, 0xc0, 0x57, 255);
-
-	SDL_RenderGeometry(Engine::renderer, nullptr, verts.data(), 3, nullptr, 0);
-
-	verts = {
-		{
-			SDL_FPoint{float(0.6 * window_width), float(0.4 * window_height)},
-			SDL_Color{0x40, 0xc0, 0x57, 255},
-			SDL_FPoint{0},
-		},
-		{
-			SDL_FPoint{float(0.6 * window_width), float(0.2 * window_height)},
-			SDL_Color{0x40, 0xc0, 0x57, 255},
-			SDL_FPoint{0},
-		},
-		{
-			SDL_FPoint{float(0.8 * window_width), float(0.2 * window_height)},
-			SDL_Color{0x40, 0xc0, 0x57, 255},
-			SDL_FPoint{0},
-		},
-	};
-
-	SDL_RenderGeometry(Engine::renderer, nullptr, verts.data(), 3, nullptr, 0);
-
-	SDL_RenderPresent(Engine::renderer);
-	SDL_SetRenderDrawColor(Engine::renderer, 0x00, 0x00, 0x00, 255);
-}
 
 int Game::Command(StringVector command) { return 0; }
 
@@ -175,9 +72,9 @@ int Engine::Start() {
 		std::cout << "Renderer creation failed" << std::endl;
 	}
 
-	LoadingScreen(window_width, window_height);
+	// add loading screen here soon
 
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+	// std::this_thread::sleep_for(std::chrono::seconds(3));
 
 	int running = 1;
 	int tick_val = 0;

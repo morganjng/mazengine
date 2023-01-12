@@ -108,25 +108,21 @@ namespace mazengine {
 	 */
 	class Game {
 	public:
-		SDL_Surface *internal_surface;
 		int internal_width;
 		int internal_height;
 		Game *parent;
+		YAML::Node data;
 
 		String name;
 		Game(String _name, Game *_parent) {
 			parent = _parent;
 			name = _name;
-			YAML::Node data =
+			data =
 				YAML::LoadFile(Mazzycat::GetPaths()["data"] + _name + ".yaml");
 			internal_width = data["width"].as<int>();
 			internal_height = data["height"].as<int>();
-			internal_surface = SDL_CreateRGBSurface(
-				0, internal_width, internal_height, 32, 0, 0, 0, 0);
 		};
 		int Command(StringVector command);
-		// void PassPointers(ButtonVector *presses, ButtonVector *releases,
-		// 				  double *cursor_x, double *cursor_y);
 		virtual int InitialTick() = 0;
 		virtual int Tick(int status) = 0;
 		virtual int Draw() = 0;

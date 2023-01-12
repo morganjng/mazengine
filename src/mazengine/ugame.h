@@ -19,6 +19,7 @@ namespace mazengine {
 		int PushGame(Game *game);
 		UGame(String _name, Game *_parent) : Game(_name, _parent) {
 			cursor = 0;
+			games.clear();
 		};
 		int InitialTick();
 		int Tick(int status);

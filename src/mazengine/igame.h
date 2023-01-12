@@ -10,7 +10,7 @@ namespace mazengine {
 	class IGame : public Game {
 	protected:
 		std::vector<Element *> elements;
-		std::vector<SDL_Surface *> backgrounds;
+		std::vector<SDL_Texture *> backgrounds;
 		YAML::Node data;
 		int background_idx = -1;
 
@@ -22,8 +22,9 @@ namespace mazengine {
 				elements.push_back(Elements::Get(val, this));
 			}
 			for (String val : data["backgrounds"].as<StringVector>()) {
-				backgrounds.push_back(
-					IMG_Load((Mazzycat::GetPaths()["img"] + val).c_str()));
+				backgrounds.push_back(IMG_LoadTexture(
+					Engine::renderer,
+					(Mazzycat::GetPaths()["img"] + val).c_str()));
 			}
 		}
 		int InitialTick();
