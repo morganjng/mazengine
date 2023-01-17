@@ -5,6 +5,10 @@ include_dir = "include/"
 bin_dir = "bin/"
 build_dir = "build/"
 
+env = Environment()
+env.Tool("compilation_db")
+env.CompilationDatabase()
+
 obj_files = [
     "menu",
     "tile_player",
@@ -22,6 +26,7 @@ obj_files = [
 ]
 
 cflags = [
+    "-O2",
     "-Wall",
     "-Werror",
     "-I/usr/include/SDL2",
@@ -32,6 +37,7 @@ cflags = [
     "-lSDL2_mixer",
     "-lSDL2_image",
     "-lSDL2",
+    "-fPIC",
 ]
 
 # StaticObject(target=build_dir + "test.o", source = test_file)
@@ -41,7 +47,7 @@ _src = ""
 for f in obj_files:
     _target = bin_dir + f + ".o"
     _src = src_dir + f + ".cc"
-    SharedObject(target=_target, source=_src, CCFLAGS=cflags)
+    env.SharedObject(target=_target, source=_src, CCFLAGS=cflags)
 
 # for f in test_files:
 #     StaticObject(target=build_dir + f + ".o", source=src_dir + f + ".cc")
@@ -54,6 +60,6 @@ for f in obj_files:
 # )
 
 
-SharedLibrary(
+env.SharedLibrary(
     target=bin_dir + "mazengine.so", source=["bin/" + o + ".o" for o in obj_files]
 )
