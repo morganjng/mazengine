@@ -18,6 +18,8 @@
 #define ENGINE_KILL -1
 #define UNSET_VALUE_ERROR -2
 
+#define MZ mazengine::Engine
+
 namespace mazengine {
 
 	/* Enum for input types */
@@ -65,13 +67,14 @@ namespace mazengine {
 	protected:
 		IO *_io;
 		Game *_game;
-		int window_width;
-		int window_height;
-		int framerate;
-		String name;
 
 	public:
 		static SDL_Renderer *renderer;
+		static int window_width;
+		static int window_height;
+		static int framerate;
+		static String name;
+
 		Engine() {
 			_io = nullptr;
 			renderer = nullptr;

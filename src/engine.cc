@@ -15,6 +15,10 @@ ButtonVector *IO::presses = nullptr;
 ButtonVector *IO::releases = nullptr;
 double *IO::cursor_x = nullptr;
 double *IO::cursor_y = nullptr;
+int Engine::window_width = -1;
+int Engine::window_height = -1;
+int Engine::framerate = 1;
+String Engine::name = "Mazengine Game";
 
 int Game::Command(StringVector command) { return 0; }
 
@@ -108,6 +112,7 @@ int Engine::Start() {
 	while (running == 1) {
 		start_time = std::chrono::system_clock::now();
 
+		SDL_SetRenderDrawColor(Engine::renderer, 0, 0, 0, 0);
 		SDL_RenderClear(Engine::renderer);
 
 		IO::presses->clear();

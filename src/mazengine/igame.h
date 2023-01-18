@@ -13,9 +13,9 @@ namespace mazengine {
 	protected:
 		std::vector<Element *> elements;
 		std::vector<SDL_Texture *> backgrounds;
-		int background_idx = -1;
 
 	public:
+		int background_idx = -1;
 		IGame(String _name, Game *_parent) : Game(_name, _parent) {}
 		int InitialTick();
 		int Tick(int status);

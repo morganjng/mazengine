@@ -24,8 +24,9 @@ namespace mazengine {
 	}
 
 	int IGame::Draw() {
-		for (SDL_Texture *background : backgrounds) {
-			SDL_RenderCopy(Engine::renderer, background, NULL, NULL);
+		if (background_idx != -1) {
+			SDL_RenderCopy(Engine::renderer, backgrounds[background_idx], NULL,
+						   NULL);
 		}
 		for (Element *elem : elements) {
 			if (elem != nullptr) {
