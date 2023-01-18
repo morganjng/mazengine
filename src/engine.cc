@@ -19,6 +19,35 @@ int Engine::window_width = -1;
 int Engine::window_height = -1;
 int Engine::framerate = 1;
 String Engine::name = "Mazengine Game";
+std::vector<Future *> Engine::futures = *new std::vector<Future *>;
+
+void Future::Load() {
+	this->texture = IMG_LoadTexture(Engine::renderer, this->path.c_str());
+	if (this->texture == NULL) {
+		std::cout << "Loading Future " << this->path << " failed, SDL error "
+				  << SDL_GetError() << std::endl;
+	}
+}
+
+void Engine::LoadFutures() {
+	for (auto future : futures) {
+		if (future != nullptr && future->texture == nullptr) {
+			future->Load();
+		}
+	}
+}
+
+void Engine::Draw(Future *future, SDL_Rect *src, SDL_Rect *dest) {
+	if (future->texture == nullptr) {
+		future->Load();
+	}
+	int rv = SDL_RenderCopy(Engine::renderer, future->texture, src, dest);
+	if (rv != 0) {
+		std::cout << "Rendering texture " << future->path
+				  << " failed with value " << rv << " SDL error "
+				  << SDL_GetError() << std::endl;
+	}
+}
 
 int Game::Command(StringVector command) { return 0; }
 
@@ -78,8 +107,6 @@ int Engine::Start() {
 
 	// add loading screen here soon
 
-	// std::this_thread::sleep_for(std::chrono::seconds(3));
-
 	int running = 1;
 	int tick_val = 0;
 	int frame_count = 0;
@@ -100,12 +127,12 @@ int Engine::Start() {
 	_io->window_width = &window_width;
 	_io->window_height = &window_height;
 
-	tick_val = _game->InitialTick();
+	LoadFutures();
 
-	if (tick_val != STATUS_OK) {
-		std::cout << "Something failed in _game->InitialTick" << std::endl;
-		return tick_val;
-	}
+	// if (tick_val != STATUS_OK) {
+	// 	std::cout << "Something failed in _game->InitialTick" << std::endl;
+	// 	return tick_val;
+	// }
 
 	std::cout << "Starting " << name << " engine loop" << std::endl;
 

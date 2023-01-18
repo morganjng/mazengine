@@ -10,21 +10,21 @@ int UGame::PushGame(Game *_game) {
 	return STATUS_OK;
 }
 
-int UGame::InitialTick() {
-	int rv = STATUS_OK;
-	for (int i = 0; i < int(games.size()); i++) {
-		if (games[i] != nullptr) {
-			std::cout << "Initializing game " << games[i]->name << std::endl;
-			rv = games[i]->InitialTick();
-		}
-		if (rv != STATUS_OK) {
-			std::cout << "Initializing game " << games[i]->name
-					  << " failed with code " << rv << std::endl;
-			return rv;
-		}
-	}
-	return STATUS_OK;
-}
+// int UGame::InitialTick() {
+// 	int rv = STATUS_OK;
+// 	for (int i = 0; i < int(games.size()); i++) {
+// 		if (games[i] != nullptr) {
+// 			std::cout << "Initializing game " << games[i]->name << std::endl;
+// 			rv = games[i]->InitialTick();
+// 		}
+// 		if (rv != STATUS_OK) {
+// 			std::cout << "Initializing game " << games[i]->name
+// 					  << " failed with code " << rv << std::endl;
+// 			return rv;
+// 		}
+// 	}
+// 	return STATUS_OK;
+// }
 
 int UGame::Tick(int status) {
 	int rv = games[cursor]->Tick(cursor);

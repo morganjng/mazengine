@@ -4,27 +4,27 @@
 
 using namespace mazengine;
 
-int TileGame::InitialTick() {
-	if (name == "UNSET" || Engine::renderer == nullptr) {
-		std::cout << "name not yet set" << std::endl;
-		return UNSET_VALUE_ERROR;
-	}
+// int TileGame::InitialTick() {
+// 	if (name == "UNSET" || Engine::renderer == nullptr) {
+// 		std::cout << "name not yet set" << std::endl;
+// 		return UNSET_VALUE_ERROR;
+// 	}
 
-	this->tiles =
-		new TileRenderer(Engine::renderer, img_path,
-						 YAML::LoadFile(data_path + "img.yaml")["tilesets"],
-						 tile_width, tile_height, tile_size, tile_size);
+// 	this->tiles =
+// 		new TileRenderer(Engine::renderer, img_path,
+// 						 YAML::LoadFile(data_path + "img.yaml")["tilesets"],
+// 						 tile_width, tile_height, tile_size, tile_size);
 
-	player = new TilePlayer(data_path);
+// 	player = new TilePlayer(data_path);
 
-	map_key = player->map_key;
-	map_yaml = YAML::LoadFile(data_path + "map.yaml");
-	current_map =
-		new TileMap(data_path + map_yaml[map_key]["path"].as<String>(),
-					map_yaml[map_key]["name"].as<String>(), Engine::renderer);
+// 	map_key = player->map_key;
+// 	map_yaml = YAML::LoadFile(data_path + "map.yaml");
+// 	current_map =
+// 		new TileMap(data_path + map_yaml[map_key]["path"].as<String>(),
+// 					map_yaml[map_key]["name"].as<String>(), Engine::renderer);
 
-	return STATUS_OK;
-}
+// 	return STATUS_OK;
+// }
 
 int TileGame::Tick(int status) {
 	int rv = STATUS_OK;

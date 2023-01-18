@@ -50,6 +50,7 @@ namespace mazengine {
 	class Engine;
 	class IO;
 	class Game;
+	class Future;
 
 	class Mazzycat {
 	public:
@@ -74,11 +75,13 @@ namespace mazengine {
 		static int window_height;
 		static int framerate;
 		static String name;
+		static std::vector<Future *> futures;
 
 		Engine() {
 			_io = nullptr;
 			renderer = nullptr;
 			_game = nullptr;
+			futures.clear();
 			name = Mazzycat::GetName();
 			IntPair dims = Mazzycat::GetWindowSize();
 			window_width = dims.first;
@@ -88,6 +91,8 @@ namespace mazengine {
 		int SetIO(IO *io);
 		int SetGame(Game *game);
 		int Start();
+		static void LoadFutures();
+		static void Draw(Future *future, SDL_Rect *src, SDL_Rect *dest);
 	};
 
 	/* IO class represents how the program should read in inputs, and how it
@@ -127,11 +132,22 @@ namespace mazengine {
 		}
 
 		int Command(StringVector command);
-		virtual int InitialTick() = 0;
 		virtual int Tick(int status) = 0;
 		virtual int Draw() = 0;
 		virtual int Present() = 0;
 		virtual int React(int) = 0;
+	};
+
+	class Future {
+	public:
+		SDL_Texture *texture;
+		String path;
+		Future(std::string path) {
+			this->path = path;
+			texture = nullptr;
+			Engine::futures.push_back(this);
+		}
+		void Load();
 	};
 
 } // namespace mazengine

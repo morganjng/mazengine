@@ -12,12 +12,20 @@ namespace mazengine {
 	class IGame : public Game {
 	protected:
 		std::vector<Element *> elements;
-		std::vector<SDL_Texture *> backgrounds;
+		std::vector<Future *> backgrounds;
 
 	public:
 		int background_idx = -1;
-		IGame(String _name, Game *_parent) : Game(_name, _parent) {}
-		int InitialTick();
+		IGame(String _name, Game *_parent) : Game(_name, _parent) {
+			YAML::Node data =
+				YAML::LoadFile(Mazzycat::GetPaths()["data"] + name + ".yaml");
+			for (String val : data["elements"].as<StringVector>()) {
+				elements.push_back(Elements::Get(val, this));
+			}
+			for (String val : data["backgrounds"].as<StringVector>()) {
+				backgrounds.push_back(new Future(val));
+			}
+		}
 		int Tick(int status);
 		int Draw();
 		int Present();

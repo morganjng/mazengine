@@ -21,7 +21,6 @@ namespace mazengine {
 			cursor = 0;
 			games.clear();
 		};
-		int InitialTick();
 		int Tick(int status);
 		int Draw();
 		int Present();

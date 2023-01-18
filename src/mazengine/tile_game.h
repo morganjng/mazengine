@@ -45,7 +45,6 @@ namespace mazengine {
 			internal_width = tile_width * tile_size;
 			internal_height = tile_height * tile_size;
 		}
-		int InitialTick();
 		int Tick(int status);
 		int Draw();
 		int Present();
