@@ -22,14 +22,14 @@ namespace mazengine {
 				switch (press) {
 					case MOUSE_MOTION:
 						if (in_rect) {
-							rv = Command(&widget->on_hover);
+							rv = Command(&widget->on_hover, 0);
 						} else {
-							rv = Command(&widget->no_hover);
+							rv = Command(&widget->no_hover, 0);
 						}
 						break;
 					case MOUSE_CLICK:
 						if (in_rect) {
-							rv = Command(&widget->on_click);
+							rv = Command(&widget->on_click, 0);
 						}
 						break;
 					default:
@@ -40,7 +40,7 @@ namespace mazengine {
 				switch (release) {
 					case MOUSE_CLICK:
 						if (in_rect) {
-							rv = Command(&widget->no_click);
+							rv = Command(&widget->no_click, 0);
 						}
 						break;
 					default:
@@ -51,27 +51,18 @@ namespace mazengine {
 		return rv;
 	}
 
-	int Menu::Command(StringVector *command) {
-		if (command->size() <= 0) {
+	int Menu::Command(StringVector *command, size_t offset) {
+		if (command->size() <= 0 || command->size() <= offset) {
 			return STATUS_OK;
 		}
-		if (command->at(0) == "up") {
-			for (unsigned int i = 0; i < command->size() - 1; i++) {
-				(*command)[i] = (*command)[i + 1];
-			}
-			command->pop_back();
-			// std::cout << "Calling ";
-			// for (unsigned int i = 0; i < command->size(); i++) {
-			// 	std::cout << command->at(i) << ", ";
-			// }
-			// std::cout << " for " << parent->name << std::endl;
-			return parent->Command(command);
+		if (command->at(offset) == "up") {
+			return parent->Command(command, offset + 1);
 		}
-		if (command->size() >= 5 && (*command)[0] == "set") {
-			if ((*command)[1] == "widget") {
-				if ((*command)[3] == "texture") {
-					widgets[std::stoi(command->at(2))]->texture_idx =
-						std::stoi(command->at(4));
+		if (command->size() >= 5 + offset && (*command)[offset] == "set") {
+			if ((*command)[offset + 1] == "widget") {
+				if ((*command)[offset + 3] == "texture") {
+					widgets[std::stoi(command->at(offset + 2))]->texture_idx =
+						std::stoi(command->at(offset + 4));
 				}
 			}
 		}

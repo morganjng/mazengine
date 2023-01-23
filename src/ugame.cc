@@ -17,22 +17,18 @@ int UGame::Tick(int status) {
 
 int UGame::Draw() { return games[cursor]->Draw(); }
 
-int UGame::Command(StringVector *command) {
-	for (unsigned i = 0; i < command->size(); i++) {
-		std::cout << command->at(i) << ", ";
-	}
-	std::cout << std::endl;
-	if (command->size() <= 0) {
+int UGame::Command(StringVector *command, size_t offset) {
+	if (command->size() <= offset) {
 		return 0;
 	}
-	if (command->at(0) == "kill") {
+	if (command->at(offset) == "kill") {
 		return ENGINE_KILL;
 	}
-	if (command->at(0) == "game") {
+	if (command->at(offset) == "game") {
 		if (command->size() == 1) {
 			return STATUS_OK;
 		} else {
-			cursor = std::stoi(command->at(1));
+			cursor = std::stoi(command->at(offset + 1));
 		}
 	}
 	return STATUS_OK;

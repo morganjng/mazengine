@@ -190,7 +190,7 @@ namespace mazengine {
 		 * @param command Vector of String commands to be parsed by this
 		 * function.
 		 *  */
-		virtual int Command(StringVector *command) = 0;
+		virtual int Command(StringVector *command, size_t offset) = 0;
 		/**
 		 * Update state of this Game based on current status.
 		 * @param status Current status of Engine/parent/etc.

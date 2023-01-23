@@ -42,27 +42,6 @@ namespace mazengine {
 			this->on_hover = on_hover;
 			this->no_click = no_click;
 			this->no_hover = no_hover;
-			std::cout << "Widget name: " << _name << std::endl;
-			std::cout << "on_click: ";
-			for (unsigned int i = 0; i < on_click.size(); i++) {
-				std::cout << on_click[i] << ", ";
-			}
-			std::cout << std::endl;
-			std::cout << "on_hover: ";
-			for (unsigned int i = 0; i < on_hover.size(); i++) {
-				std::cout << on_hover[i] << ", ";
-			}
-			std::cout << std::endl;
-			std::cout << "no_click: ";
-			for (unsigned int i = 0; i < no_click.size(); i++) {
-				std::cout << no_click[i] << ", ";
-			}
-			std::cout << std::endl;
-			std::cout << "no_hover: ";
-			for (unsigned int i = 0; i < no_hover.size(); i++) {
-				std::cout << no_hover[i] << ", ";
-			}
-			std::cout << std::endl;
 		};
 		int texture_idx;		/**< Current index of texture. */
 		SDL_Rect *Rect();		/**< Getter for location. */
@@ -123,9 +102,10 @@ namespace mazengine {
 				widgets.push_back(w_temp);
 			}
 		};
-		int Tick(int status);				/**< Update state. */
-		int Draw();							/**< Draw state. */
-		int Command(StringVector *command); /**< Command implementation. */
+		int Tick(int status); /**< Update state. */
+		int Draw();			  /**< Draw state. */
+		int Command(StringVector *command,
+					size_t offset); /**< Command implementation. */
 	};
 
 }; // namespace mazengine
