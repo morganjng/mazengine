@@ -14,17 +14,24 @@
 #include <yaml-cpp/yaml.h>
 
 namespace mazengine {
-
+	/**
+	 * Map of tiles for TileGames. Encompasses layers and objects to be
+	 * displayed on the map.
+	 * */
 	class TileMap {
 	private:
-		std::vector<TileLayer> layers;
-		std::vector<TileEntity> objects;
-		String map_key;
-		YAML::Node map_node;
-		int layer_count;
+		std::vector<TileLayer> layers;	 /**< All layers. */
+		std::vector<TileEntity> objects; /**< All objects. */
+		String map_key;					 /**< Current map name. */
+		YAML::Node map_node;			 /**< Data for current map. */
+		int layer_count; /**< Amount of layers being displayed. */
 
 	public:
-		int bg_color;
+		int bg_color; /**< RGBA color for background. */
+		/**
+		 * TileMap constructor. Takes path to yaml file and loads in all data.
+		 * Needs reconfiguring.
+		 * */
 		TileMap(String path, String map_key, SDL_Renderer *renderer) {
 			this->map_key = map_key;
 			map_node = YAML::LoadFile(path)[map_key];
@@ -48,8 +55,8 @@ namespace mazengine {
 					map_node["objects"][name]["y"].as<int>()));
 			}
 		};
-		std::vector<TileLayer> *get_layers();
-		std::vector<TileEntity> *get_objects();
+		std::vector<TileLayer> *get_layers();	/**< Getter for layers. */
+		std::vector<TileEntity> *get_objects(); /**< Getter for objects. */
 	};
 
 }; // namespace mazengine

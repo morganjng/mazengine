@@ -15,9 +15,14 @@
 #include <yaml-cpp/yaml.h>
 
 namespace mazengine {
-
+	/**
+	 * Set of tiles. One SDL_Surface worth of textures.
+	 * */
 	class TileSet {
 	public:
+		/**
+		 * Constructor for TileSet.
+		 * */
 		TileSet(String path, int w, int h, int size_x, int size_y) {
 			texture = IMG_Load(path.c_str());
 			width = w;
@@ -25,26 +30,29 @@ namespace mazengine {
 			tile_size_x = size_x;
 			tile_size_y = size_y;
 		}
-		SDL_Surface *texture;
-		int width;
-		int height;
-		int tile_size_x;
-		int tile_size_y;
+		SDL_Surface *texture; /**< Self explanatory. */
+		int width;			  /**< Self explanatory. */
+		int height;			  /**< Self explanatory. */
+		int tile_size_x;	  /**< Self explanatory. */
+		int tile_size_y;	  /**< Self explanatory. */
 	};
 
 	class TileRenderer {
 	private:
-		SDL_Surface *internal_surface;
-		SDL_Renderer *renderer;
-		SDL_Rect render_rect;
-		StringVector tileset_names;
-		std::map<String, TileSet *> tilesets;
-		int tile_width;
-		int tile_height;
-		int tile_size_x;
-		int tile_size_y;
+		SDL_Surface *internal_surface;		  /**< Self explanatory. */
+		SDL_Renderer *renderer;				  /**< Self explanatory. */
+		SDL_Rect render_rect;				  /**< Self explanatory. */
+		StringVector tileset_names;			  /**< Self explanatory. */
+		std::map<String, TileSet *> tilesets; /**< Self explanatory. */
+		int tile_width;						  /**< Self explanatory. */
+		int tile_height;					  /**< Self explanatory. */
+		int tile_size_x;					  /**< Self explanatory. */
+		int tile_size_y;					  /**< Self explanatory. */
 
 	public:
+		/**
+		 * Constructor for TileRenderer.
+		 * */
 		TileRenderer(SDL_Renderer *rend, String img_path, YAML::Node img_node,
 					 int tile_width, int tile_height, int tile_size_x,
 					 int tile_size_y) {
@@ -72,12 +80,16 @@ namespace mazengine {
 				0, 4 * tile_size_x + tile_width * tile_size_x,
 				4 * tile_size_y + tile_height * tile_size_y, 32, 0, 0, 0, 0);
 		};
-		void Clear(int color);
-		void Draw_layer(TileLayer *layer, int offset_x, int offset_y);
-		void DrawSprite(String key, int id, int x, int y);
-		void Draw_to_renderer(int px_offset_x, int px_offset_y);
-		void Present();
-		// tile_set *get_tile_set(String key);
+		void Clear(int color); /**< Clear renderer with color. */
+		void Draw_layer(
+			TileLayer *layer, int offset_x,
+			int offset_y); /**< Draw certain layer at specific offset. */
+		void DrawSprite(String key, int id, int x,
+						int y); /**< Draw specific sprite at location. */
+		void Draw_to_renderer(
+			int px_offset_x,
+			int px_offset_y); /**< Draw everything to renderer. */
+		void Present();		  /**< To be deprecated. */
 	};
 
 }; // namespace mazengine

@@ -11,3 +11,5 @@ Mazengine comes with a certain set of classes defined that act as games, and all
 
 * Where should I go next?
 Go read the docs! If they're extant, you should learn what you need in there.
+
+* Yay new chair :) i will now be able to work without my back killing me :3

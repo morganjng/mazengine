@@ -10,24 +10,29 @@
 #include <yaml-cpp/yaml.h>
 
 namespace mazengine {
-
+	/**
+	 * TileGame object. Needs reconfiguring.
+	 * */
 	class TileGame : public Game {
 	private:
-		String data_path;
-		String img_path;
-		String audio_path;
-		String map_key;
-		String following_key;
-		TileEntity *following;
-		TileRenderer *tiles;
-		TileMap *current_map;
-		YAML::Node map_yaml;
-		int tile_size;
-		int tile_width;
-		int tile_height;
-		TilePlayer *player;
+		String data_path;	   /**< Path for data files. */
+		String img_path;	   /**< Path for image files. */
+		String audio_path;	   /**< Path for audio files. */
+		String map_key;		   /**< Current map key. */
+		String following_key;  /**< Key for entity being followed. */
+		TileEntity *following; /**< Entity being followed. */
+		TileRenderer *tiles;   /**< TileRenderer object. */
+		TileMap *current_map;  /**< Current map object. */
+		YAML::Node map_yaml;   /**< YAML data. */
+		int tile_size;		   /**< ? */
+		int tile_width;		   /**< Tile width. */
+		int tile_height;	   /**< Tile height. */
+		TilePlayer *player;	   /**< Player object. */
 
 	public:
+		/**
+		 * Constructor for TileGame.
+		 * */
 		TileGame(int tile_sz, int tile_w, int tile_h, String _name,
 				 Game *_parent)
 			: Game(_name, _parent) {
@@ -45,10 +50,10 @@ namespace mazengine {
 			internal_width = tile_width * tile_size;
 			internal_height = tile_height * tile_size;
 		}
-		int Tick(int status);
-		int Draw();
-		int Present();
-		int React(int idx);
+		int Tick(int status); /**< Tick game. */
+		int Draw();			  /**< Draw game. */
+		int Present();		  /**< To be deprecated. */
+		int React(int idx);	  /**< To be deprecated. */
 	};
 
 }; // namespace mazengine

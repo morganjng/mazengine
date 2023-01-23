@@ -34,4 +34,6 @@
 # dont get doxxed
 compile_commands.json
 
+doxygen/
+
 .cache

@@ -13,16 +13,20 @@ namespace mazengine {
 
 	class MenuWidget {
 	protected:
-		SDL_Rect rect;
-		std::vector<SDL_Surface *> textures;
-		String function;
+		SDL_Rect rect; /**< Location on screen. */
+		std::vector<SDL_Surface *>
+			textures;	 /**< Vector of textures to display. */
+		String function; /**< Function from yaml. */
 
 	public:
-		String name;
-		int on_click;
-		int on_hover;
-		int no_click;
-		int no_hover;
+		String name;  /**< Name of widget. */
+		int on_click; /**< Function for click. */
+		int on_hover; /**< Function for hover. */
+		int no_click; /**< Function for not-clicking. */
+		int no_hover; /**< Function for not-hovering. */
+		/**
+		 * Widget constructor. Sets all necessary values.
+		 * */
 		MenuWidget(String _name, int x, int y, int _width, int _height,
 				   std::vector<SDL_Surface *> _textures) {
 			name = _name;
@@ -37,19 +41,24 @@ namespace mazengine {
 			no_click = -1;
 			no_click = -1;
 		};
-		int texture_idx;
-		SDL_Rect *Rect();
-		SDL_Surface *Texture();
+		int texture_idx;		/**< Current index of texture. */
+		SDL_Rect *Rect();		/**< Getter for location. */
+		SDL_Surface *Texture(); /**< Getter for texture. */
 	};
 
 	class Menu : public Game {
 	protected:
-		std::vector<MenuWidget *> widgets;
-		SDL_Surface *internal_surface;
-		FuncVector reactions;
-		Func *Parse(String str, int iv);
+		std::vector<MenuWidget *> widgets; /**< All widgets. */
+		SDL_Surface *internal_surface;	   /**< Surface to draw to. */
+		FuncVector reactions; /**< Vector of lambdas for interactions. */
+		Func *Parse(String str,
+					int iv); /**< Parse command to lambda function. */
 
 	public:
+		/**
+		 * Menu constructor. Loads list of widgets from .yaml file and populates
+		 * all variables.
+		 * */
 		Menu(String _name, Game *_parent) : Game(_name, _parent) {
 			YAML::Node mz = YAML::LoadFile("Mazzycat");
 
@@ -123,14 +132,11 @@ namespace mazengine {
 
 				widgets.push_back(w_temp);
 			}
-
-			// std::cout << "Finished loading widgets for " << name
-			// 		  << widgets.size() << std::endl;
 		};
-		int Tick(int status);
-		int Draw();
-		int Present();
-		int React(int index);
+		int Tick(int status); /**< Update state. */
+		int Draw();			  /**< Draw state. */
+		int Present();		  /**< Present textures. */
+		int React(int index); /**< React to states. */
 	};
 
 }; // namespace mazengine
