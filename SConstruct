@@ -15,7 +15,6 @@ obj_files = [
     "io_2d_mouse",
     "io_mouse",
     "io_2d_no_mouse",
-    "tile_game",
     "ugame",
     "mazzycat",
     "igame",

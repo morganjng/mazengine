@@ -33,7 +33,7 @@
 
 # dont get doxxed
 compile_commands.json
-.sconsgin.dblite
+.sconsign.dblite
 
 doxygen/
 
