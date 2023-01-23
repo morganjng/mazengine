@@ -11,16 +11,12 @@ env.CompilationDatabase()
 
 obj_files = [
     "menu",
-    "tile_player",
     "engine",
-    "tile_entity",
-    "tile_renderer",
     "io_2d_mouse",
     "io_mouse",
     "io_2d_no_mouse",
     "tile_game",
     "ugame",
-    "tile_map",
     "mazzycat",
     "igame",
 ]
