@@ -38,8 +38,6 @@ namespace mazengine {
 		}
 		int Tick(int status); /**< Update state of elements and this. */
 		int Draw();			  /**< Draw current state of elements in order. */
-		int Present();		  /**< Will be deprecated. */
-		int React(int val);	  /**< Will be deprecated. */
 	};
 } // namespace mazengine
 

@@ -35,11 +35,4 @@ namespace mazengine {
 		return 0;
 	}
 
-	int IGame::Present() {
-		SDL_RenderPresent(Engine::renderer);
-		return 0;
-	}
-
-	int IGame::React(int val) { return 0; }
-
 } // namespace mazengine

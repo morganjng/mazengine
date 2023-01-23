@@ -18,6 +18,7 @@ obj_files = [
     "ugame",
     "mazzycat",
     "igame",
+    "future"
 ]
 
 cflags = [

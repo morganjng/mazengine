@@ -28,10 +28,9 @@ namespace mazengine {
 			cursor = 0;
 			games.clear();
 		};
-		int Tick(int status); /**< Tick current game. */
-		int Draw();			  /**< Draw current game. */
-		int Present();		  /**< To be deprecated. */
-		int React(int index); /**< To be deprecated. */
+		int Tick(int status);				/**< Tick current game. */
+		int Draw();							/**< Draw current game. */
+		int Command(StringVector *command); /**< Command implementation. */
 	};
 
 }; // namespace mazengine

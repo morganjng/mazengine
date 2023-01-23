@@ -19,16 +19,18 @@ namespace mazengine {
 		String function; /**< Function from yaml. */
 
 	public:
-		String name;  /**< Name of widget. */
-		int on_click; /**< Function for click. */
-		int on_hover; /**< Function for hover. */
-		int no_click; /**< Function for not-clicking. */
-		int no_hover; /**< Function for not-hovering. */
+		String name;		   /**< Name of widget. */
+		StringVector on_click; /**< Function for click. */
+		StringVector on_hover; /**< Function for hover. */
+		StringVector no_click; /**< Function for not-clicking. */
+		StringVector no_hover; /**< Function for not-hovering. */
 		/**
 		 * Widget constructor. Sets all necessary values.
 		 * */
 		MenuWidget(String _name, int x, int y, int _width, int _height,
-				   std::vector<SDL_Surface *> _textures) {
+				   std::vector<SDL_Surface *> _textures, StringVector on_click,
+				   StringVector on_hover, StringVector no_click,
+				   StringVector no_hover) {
 			name = _name;
 			rect.w = _width;
 			rect.h = _height;
@@ -36,10 +38,31 @@ namespace mazengine {
 			rect.y = y;
 			textures = _textures;
 			texture_idx = 0;
-			on_click = -1;
-			on_hover = -1;
-			no_click = -1;
-			no_click = -1;
+			this->on_click = on_click;
+			this->on_hover = on_hover;
+			this->no_click = no_click;
+			this->no_hover = no_hover;
+			std::cout << "Widget name: " << _name << std::endl;
+			std::cout << "on_click: ";
+			for (unsigned int i = 0; i < on_click.size(); i++) {
+				std::cout << on_click[i] << ", ";
+			}
+			std::cout << std::endl;
+			std::cout << "on_hover: ";
+			for (unsigned int i = 0; i < on_hover.size(); i++) {
+				std::cout << on_hover[i] << ", ";
+			}
+			std::cout << std::endl;
+			std::cout << "no_click: ";
+			for (unsigned int i = 0; i < no_click.size(); i++) {
+				std::cout << no_click[i] << ", ";
+			}
+			std::cout << std::endl;
+			std::cout << "no_hover: ";
+			for (unsigned int i = 0; i < no_hover.size(); i++) {
+				std::cout << no_hover[i] << ", ";
+			}
+			std::cout << std::endl;
 		};
 		int texture_idx;		/**< Current index of texture. */
 		SDL_Rect *Rect();		/**< Getter for location. */
@@ -50,9 +73,6 @@ namespace mazengine {
 	protected:
 		std::vector<MenuWidget *> widgets; /**< All widgets. */
 		SDL_Surface *internal_surface;	   /**< Surface to draw to. */
-		FuncVector reactions; /**< Vector of lambdas for interactions. */
-		Func *Parse(String str,
-					int iv); /**< Parse command to lambda function. */
 
 	public:
 		/**
@@ -72,13 +92,10 @@ namespace mazengine {
 				0, internal_width, internal_height, 32, 0, 0, 0, 0);
 
 			widgets = *new std::vector<MenuWidget *>();
-			reactions = *new FuncVector();
 
 			String img_prefix = mz["img_path"].as<String>();
 
 			MenuWidget *w_temp = nullptr;
-
-			int func_index = 0;
 
 			for (String widget_name :
 				 data_yaml["widget_names"].as<StringVector>()) {
@@ -97,46 +114,18 @@ namespace mazengine {
 					widget_name, widget["x"].as<double>() * internal_width,
 					widget["y"].as<double>() * internal_height,
 					widget["width"].as<double>() * internal_width,
-					widget["height"].as<double>() * internal_height, *textures);
-
-				String func_string = "none";
-
-				func_string = widget["on_click"].as<String>();
-				if (func_string != "none") {
-					reactions.push_back(Parse(func_string, func_index));
-					w_temp->on_click = func_index;
-					func_index++;
-				}
-
-				func_string = widget["on_hover"].as<String>();
-				if (func_string != "none") {
-					reactions.push_back(Parse(func_string, func_index));
-					w_temp->on_hover = func_index;
-					func_index++;
-				}
-
-				func_string = widget["no_click"].as<String>();
-				if (func_string != "none") {
-					reactions.push_back(Parse(func_string, func_index));
-					w_temp->no_click = func_index;
-					func_index++;
-				}
-
-				func_string = widget["no_hover"].as<String>();
-				if (func_string != "none") {
-					reactions.push_back(Parse(func_string, func_index));
-
-					w_temp->no_hover = func_index;
-					func_index++;
-				}
+					widget["height"].as<double>() * internal_height, *textures,
+					widget["on_click"].as<StringVector>(),
+					widget["on_hover"].as<StringVector>(),
+					widget["no_click"].as<StringVector>(),
+					widget["no_hover"].as<StringVector>());
 
 				widgets.push_back(w_temp);
 			}
 		};
-		int Tick(int status); /**< Update state. */
-		int Draw();			  /**< Draw state. */
-		int Present();		  /**< Present textures. */
-		int React(int index); /**< React to states. */
+		int Tick(int status);				/**< Update state. */
+		int Draw();							/**< Draw state. */
+		int Command(StringVector *command); /**< Command implementation. */
 	};
 
 }; // namespace mazengine
