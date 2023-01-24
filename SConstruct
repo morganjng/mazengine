@@ -18,7 +18,7 @@ obj_files = [
     "ugame",
     "mazzycat",
     "igame",
-    "future"
+    "texture"
 ]
 
 cflags = [
@@ -32,6 +32,7 @@ cflags = [
     "-lyaml-cpp",
     "-lSDL2_mixer",
     "-lSDL2_image",
+    "-lSDL2_ttf",
     "-lSDL2",
     "-fPIC",
 ]

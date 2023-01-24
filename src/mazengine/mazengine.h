@@ -50,11 +50,25 @@ namespace mazengine {
 	typedef std::pair<int, int> IntPair;
 	typedef std::map<String, String> StringMap;
 
+	class Rect {
+	public:
+		int x;
+		int y;
+		int w;
+		int h;
+		Rect(int x, int y, int w, int h) {
+			this->x = x;
+			this->y = y;
+			this->w = w;
+			this->h = h;
+		}
+	};
+
 	/* Forward declarations of each class so they can reference eachother */
 	class Engine;
 	class IO;
 	class Game;
-	class Future;
+	class Texture;
 
 	/**
 	 * Mazzycat provides information about the engine and its settings to
@@ -88,33 +102,27 @@ namespace mazengine {
 		static int
 			framerate; /**< Frames per second of this engine. From Mazzycat. */
 		static String name; /**< Name of this Game. From Mazzycat. */
-		static std::vector<Future *>
-			futures; /**< Registry of Futures. @see Future */
+		static std::vector<Texture *>
+			textures;			  /**< Registry of Textures. @see Texture */
+		static String data_path;  /**< Path to data files. */
+		static String img_path;	  /**< Path to image files. */
+		static String audio_path; /**< Path to audio files. */
 
 		Engine() {
 			_io = nullptr;
 			renderer = nullptr;
 			_game = nullptr;
-			futures.clear();
+			textures.clear();
 			name = Mazzycat::GetName();
 			IntPair dims = Mazzycat::GetWindowSize();
 			window_width = dims.first;
 			window_height = dims.second;
 			framerate = Mazzycat::GetFramerate();
 		};
-		int SetIO(IO *io);		   /**< Sets the IO instance. */
-		int SetGame(Game *game);   /**< Sets the Game instance. */
-		int Start();			   /**< Starts the engine. */
-		static void LoadFutures(); /**< Load all futures that need loading. */
-		/**
-		 * Draws a Future from src to dest.
-		 * @param future Future of texture that is intended to be drawn.
-		 * @param src Rectangle indicating where on future is being copied.
-		 * @param dest Rectangle indicating where on Engine::renderer the
-		 * texture should be drawn.
-		 * @see Future
-		 * */
-		static void Draw(Future *future, SDL_Rect *src, SDL_Rect *dest);
+		int SetIO(IO *io);			/**< Sets the IO instance. */
+		int SetGame(Game *game);	/**< Sets the Game instance. */
+		int Start();				/**< Starts the engine. */
+		static void LoadTextures(); /**< Load all textures that need loading. */
 	};
 
 	/**
@@ -205,23 +213,29 @@ namespace mazengine {
 	 * whatnot. Users should only use raw SDL_Textures or interface with SDL
 	 * directly if they are entirely comfortable with the uncertainties of it.
 	 * */
-	class Future {
+	class Texture {
 	public:
 		SDL_Texture
 			*texture; /**< May be null, but will never be null when drawn. */
 		String path;  /**< Path of the texture intended to be loaded. */
 		/**
-		 * Future constructor. Stores the path and loads texture when there is
-		 * offtime or when a LoadFutures() is called.
+		 * Texture constructor. Stores the path and loads texture when there is
+		 * offtime or when a LoadTextures() is called.
 		 * @param path Path of texture relative to images folder.
 		 * */
-		Future(std::string path) {
+		Texture(std::string path) {
 			this->path = path;
 			texture = nullptr;
-			Engine::futures.push_back(this);
+			Engine::textures.push_back(this);
 		}
 		void Load(); /**< Load the texture if it isn't already loaded. */
+		/**
+		 * Draws Texture from src to dest.
+		 * @param src Rectangle indicating where on texture is being copied.
+		 * @param dest Rectangle indicating where on Engine::renderer the
+		 * texture should be drawn.
+		 * */
+		void Draw(Rect *src, Rect *dest);
 	};
-
 } // namespace mazengine
 #endif

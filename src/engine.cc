@@ -22,23 +22,11 @@ namespace mazengine {
 
 	// int Game::Command(StringVector *command) { return 0; }
 
-	void Engine::LoadFutures() {
-		for (auto future : futures) {
-			if (future != nullptr && future->texture == nullptr) {
-				future->Load();
+	void Engine::LoadTextures() {
+		for (auto texture : textures) {
+			if (texture != nullptr && texture->texture == nullptr) {
+				texture->Load();
 			}
-		}
-	}
-
-	void Engine::Draw(Future *future, SDL_Rect *src, SDL_Rect *dest) {
-		if (future->texture == nullptr) {
-			future->Load();
-		}
-		int rv = SDL_RenderCopy(Engine::renderer, future->texture, src, dest);
-		if (rv != 0) {
-			std::cout << "Rendering texture " << future->path
-					  << " failed with value " << rv << " SDL error "
-					  << SDL_GetError() << std::endl;
 		}
 	}
 
@@ -88,6 +76,17 @@ namespace mazengine {
 
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
 
+		int img_rv = IMG_Init(IMG_INIT_PNG);
+		int ttf_rv = TTF_Init();
+
+		if (img_rv == 0) {
+			std::cout << "Initializing SDL_IMG failed." << std::endl;
+			return img_rv;
+		}
+		if (ttf_rv != 0) {
+			std::cout << "Initializing SDL_TTF failed." << std::endl;
+			return ttf_rv;
+		}
 		if (window == NULL) {
 			std::cout << "Window creation failed" << std::endl;
 			return 2;
@@ -118,7 +117,8 @@ namespace mazengine {
 		_io->window_width = &window_width;
 		_io->window_height = &window_height;
 
-		LoadFutures();
+		LoadTextures();
+		size_t textures_cursor = textures.size();
 
 		std::cout << "Starting " << name << " engine loop" << std::endl;
 
@@ -145,6 +145,15 @@ namespace mazengine {
 
 			end_time = std::chrono::system_clock::now();
 
+			while (textures_cursor < textures.size() &&
+				   tick_rate - (std::chrono::system_clock::now() - start_time) >
+					   none) {
+				if (textures[textures_cursor] != nullptr) {
+					textures[textures_cursor]->Load();
+				}
+				textures_cursor++;
+			}
+
 			if (tick_rate - (end_time - start_time) > none) {
 				std::this_thread::sleep_for(tick_rate -
 											(end_time - start_time));
@@ -167,6 +176,9 @@ namespace mazengine {
 		if (tick_val == 1) {
 			return 0;
 		}
+
+		IMG_Quit();
+		TTF_Quit();
 
 		return tick_val;
 	}

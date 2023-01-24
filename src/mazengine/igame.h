@@ -18,7 +18,7 @@ namespace mazengine {
 		/** Vector of backgrounds. Only
 		 * backgrounds[background_idx] is drawn, and only if
 		 * background_idx != -1. */
-		std::vector<Future *> backgrounds;
+		std::vector<Texture *> backgrounds;
 
 	public:
 		/**
@@ -33,7 +33,7 @@ namespace mazengine {
 			YAML::Node data =
 				YAML::LoadFile(Mazzycat::GetPaths()["data"] + name + ".yaml");
 			for (String val : data["backgrounds"].as<StringVector>()) {
-				backgrounds.push_back(new Future(val));
+				backgrounds.push_back(new Texture(val));
 			}
 		}
 		int Tick(int status); /**< Update state of elements and this. */

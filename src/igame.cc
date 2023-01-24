@@ -12,7 +12,7 @@ namespace mazengine {
 
 	int IGame::Draw() {
 		if (background_idx != -1) {
-			Engine::Draw(backgrounds[background_idx], NULL, NULL);
+			backgrounds[background_idx]->Draw(NULL, NULL);
 		}
 		for (Element *elem : elements) {
 			if (elem != nullptr) {
