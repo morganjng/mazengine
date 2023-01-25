@@ -1,7 +1,10 @@
-#include "mazengine/mazengine.h"
+#include <geometry.h>
+#include <iostream>
+#include <mazengine.h>
+#include <texture.h>
 
 namespace mazengine {
-	std::vector<Texture *> Engine::textures = *new std::vector<Texture *>;
+	std::vector<Texture *> Texture::registry = *new std::vector<Texture *>;
 
 	void Texture::Load() {
 		this->texture = IMG_LoadTexture(Engine::renderer, this->path.c_str());

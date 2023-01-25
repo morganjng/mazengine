@@ -1,5 +1,5 @@
-#ifndef IGAME_H_
-#define IGAME_H_
+#ifndef MAZENGINE_IGAME_H_
+#define MAZENGINE_IGAME_H_
 
 #include "SDL_render.h"
 #include "element.h"
@@ -29,10 +29,11 @@ namespace mazengine {
 		/**
 		 * IGame constructor. Loads backgrounds from file.
 		 * */
-		IGame(String _name, Game *_parent) : Game(_name, _parent) {
+		IGame(std::string _name, Game *_parent) : Game(_name, _parent) {
 			YAML::Node data =
 				YAML::LoadFile(Mazzycat::GetPaths()["data"] + name + ".yaml");
-			for (String val : data["backgrounds"].as<StringVector>()) {
+			for (std::string val :
+				 data["backgrounds"].as<std::vector<std::string>>()) {
 				backgrounds.push_back(new Texture(val));
 			}
 		}

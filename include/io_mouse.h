@@ -1,5 +1,5 @@
-#ifndef IO_MOUSE_H_
-#define IO_MOUSE_H_
+#ifndef MAZENGINE_IO_MOUSE_H_
+#define MAZENGINE_IO_MOUSE_H_
 
 #include "mazengine.h"
 #include <yaml-cpp/node/parse.h>

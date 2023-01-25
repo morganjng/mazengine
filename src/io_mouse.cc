@@ -1,6 +1,6 @@
-#include "mazengine/io_mouse.h"
-#include "mazengine/mazengine.h"
 #include <SDL_events.h>
+#include <io_mouse.h>
+#include <mazengine.h>
 
 using namespace mazengine;
 

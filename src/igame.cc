@@ -1,4 +1,4 @@
-#include "mazengine/igame.h"
+#include "igame.h"
 
 namespace mazengine {
 	int IGame::Tick(int status) {

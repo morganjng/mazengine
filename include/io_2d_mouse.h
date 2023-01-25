@@ -1,30 +1,25 @@
-#ifndef TWODXPUT_NO_MOUSE_H_
-#define TWODXPUT_NO_MOUSE_H_
+#ifndef MAZENGINE_IO_2D_MOUSE_H_
+#define MAZENGINE_IO_2D_MOUSE_H_
 
-#include "SDL_keycode.h"
 #include "mazengine.h"
-#include <map>
-#include <string>
-#include <vector>
+#include <yaml-cpp/yaml.h>
 
 namespace mazengine {
-
-	class IO2dNoMouse : public IO {
+	class IO2dMouse : public IO {
 	private:
-		String settings_path;
+		std::string settings_path;
 		std::map<SDL_Keycode, Button> *controls;
 		std::map<SDL_Keycode, Button>::iterator iter;
 
 	public:
-		IO2dNoMouse() {
+		IO2dMouse() {
 			YAML::Node mzy = YAML::LoadFile("Mazzycat");
-			settings_path = mzy["settings_path"].as<String>();
+			settings_path = mzy["settings_path"].as<std::string>();
 			controls = new std::map<SDL_Keycode, Button>;
 		};
 		int ReadSettings();
 		int Parse(SDL_Event *event);
 	};
-
 }; // namespace mazengine
 
-#endif // TWODXPUT_NO_MOUSE_H_
+#endif

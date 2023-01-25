@@ -1,5 +1,5 @@
-#include "mazengine/ugame.h"
-#include "mazengine/mazengine.h"
+#include <mazengine.h>
+#include <ugame.h>
 
 #include <iostream>
 
@@ -17,7 +17,7 @@ int UGame::Tick(int status) {
 
 int UGame::Draw() { return games[cursor]->Draw(); }
 
-int UGame::Command(StringVector *command, size_t offset) {
+int UGame::Command(std::vector<std::string> *command, size_t offset) {
 	if (command->size() <= offset) {
 		return 0;
 	}

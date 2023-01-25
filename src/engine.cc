@@ -1,32 +1,31 @@
 #include "SDL_render.h"
-#include "mazengine/mazengine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <chrono>
 #include <iostream>
+#include <mazengine.h>
 #include <thread>
 #include <vector>
 
-namespace mazengine {
+#include <texture.h>
 
+namespace mazengine {
 	SDL_Renderer *Engine::renderer = nullptr;
-	ButtonVector *IO::presses = nullptr;
-	ButtonVector *IO::releases = nullptr;
+	std::vector<Button> *IO::presses = nullptr;
+	std::vector<Button> *IO::releases = nullptr;
 	double *IO::cursor_x = nullptr;
 	double *IO::cursor_y = nullptr;
 	int Engine::window_width = -1;
 	int Engine::window_height = -1;
 	int Engine::framerate = 1;
-	String Engine::name = "Mazengine Game";
-	String Engine::data_path = "data/";
-	String Engine::img_path = "img/";
-	String Engine::audio_path = "audio/";
-
-	// int Game::Command(StringVector *command) { return 0; }
+	std::string Engine::name = "Mazengine Game";
+	std::string Engine::data_path = "data/";
+	std::string Engine::img_path = "img/";
+	std::string Engine::audio_path = "audio/";
 
 	void Engine::LoadTextures() {
-		for (auto texture : textures) {
+		for (auto texture : Texture::registry) {
 			if (texture != nullptr && texture->texture == nullptr) {
 				texture->Load();
 			}
@@ -65,8 +64,8 @@ namespace mazengine {
 		SDL_Window *window = NULL;
 		SDL_Event event;
 
-		IO::presses = new ButtonVector;
-		IO::releases = new ButtonVector;
+		IO::presses = new std::vector<Button>;
+		IO::releases = new std::vector<Button>;
 		IO::cursor_x = new double;
 		IO::cursor_y = new double;
 
@@ -127,7 +126,7 @@ namespace mazengine {
 		_io->window_height = &window_height;
 
 		LoadTextures();
-		size_t textures_cursor = textures.size();
+		size_t textures_cursor = Texture::registry.size();
 
 		std::cout << "Starting " << name << " engine loop." << std::endl;
 
@@ -154,11 +153,11 @@ namespace mazengine {
 
 			end_time = std::chrono::system_clock::now();
 
-			while (textures_cursor < textures.size() &&
+			while (textures_cursor < Texture::registry.size() &&
 				   tick_rate - (std::chrono::system_clock::now() - start_time) >
 					   none) {
-				if (textures[textures_cursor] != nullptr) {
-					textures[textures_cursor]->Load();
+				if (Texture::registry[textures_cursor] != nullptr) {
+					Texture::registry[textures_cursor]->Load();
 				}
 				textures_cursor++;
 			}

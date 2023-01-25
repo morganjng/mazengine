@@ -1,8 +1,8 @@
-#include "mazengine/io_2d_mouse.h"
+#include "io_2d_mouse.h"
 #include "SDL_events.h"
-#include "mazengine/mazengine.h"
 #include <SDL_keycode.h>
 #include <iostream>
+#include <mazengine.h>
 #include <string>
 #include <yaml-cpp/yaml.h>
 
@@ -14,23 +14,23 @@ int IO2dMouse::ReadSettings() {
 	}
 	YAML::Node input = YAML::LoadFile(settings_path);
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["up"].as<String>().c_str()), UP));
+		SDL_GetKeyFromName(input["up"].as<std::string>().c_str()), UP));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["down"].as<String>().c_str()), DOWN));
+		SDL_GetKeyFromName(input["down"].as<std::string>().c_str()), DOWN));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["left"].as<String>().c_str()), LEFT));
+		SDL_GetKeyFromName(input["left"].as<std::string>().c_str()), LEFT));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["right"].as<String>().c_str()), RIGHT));
+		SDL_GetKeyFromName(input["right"].as<std::string>().c_str()), RIGHT));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["A"].as<String>().c_str()), A));
+		SDL_GetKeyFromName(input["A"].as<std::string>().c_str()), A));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["B"].as<String>().c_str()), B));
+		SDL_GetKeyFromName(input["B"].as<std::string>().c_str()), B));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["start"].as<String>().c_str()), START));
+		SDL_GetKeyFromName(input["start"].as<std::string>().c_str()), START));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["select"].as<String>().c_str()), SELECT));
+		SDL_GetKeyFromName(input["select"].as<std::string>().c_str()), SELECT));
 	controls->insert(std::pair<SDL_Keycode, Button>(
-		SDL_GetKeyFromName(input["kill"].as<String>().c_str()), KILL));
+		SDL_GetKeyFromName(input["kill"].as<std::string>().c_str()), KILL));
 	return STATUS_OK;
 }
 

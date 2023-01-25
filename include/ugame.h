@@ -2,8 +2,8 @@
  * UGame: A union of multiple other games, think a set of switching scenes
  */
 
-#ifndef UGAME_H_
-#define UGAME_H_
+#ifndef MAZENGINE_UGAME_H_
+#define MAZENGINE_UGAME_H_
 
 #include "mazengine.h"
 #include <vector>
@@ -24,13 +24,13 @@ namespace mazengine {
 		 * and games vector. Represents a union of Games which can switch
 		 * between eachother.
 		 * */
-		UGame(String _name, Game *_parent) : Game(_name, _parent) {
+		UGame(std::string _name, Game *_parent) : Game(_name, _parent) {
 			cursor = 0;
 			games.clear();
 		};
 		int Tick(int status); /**< Tick current game. */
 		int Draw();			  /**< Draw current game. */
-		int Command(StringVector *command,
+		int Command(std::vector<std::string> *command,
 					size_t offset); /**< Command implementation. */
 	};
 

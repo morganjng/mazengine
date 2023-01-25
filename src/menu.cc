@@ -1,8 +1,8 @@
-#include "mazengine/menu.h"
-#include "mazengine/mazengine.h"
+#include "menu.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_render.h>
 #include <iostream>
+#include <mazengine.h>
 #include <yaml-cpp/node/parse.h>
 
 namespace mazengine {
@@ -51,7 +51,7 @@ namespace mazengine {
 		return rv;
 	}
 
-	int Menu::Command(StringVector *command, size_t offset) {
+	int Menu::Command(std::vector<std::string> *command, size_t offset) {
 		if (command->size() <= 0 || command->size() <= offset) {
 			return STATUS_OK;
 		}

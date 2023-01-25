@@ -1,5 +1,5 @@
-#ifndef ELEMENT_H_
-#define ELEMENT_H_
+#ifndef MAZENGINE_ELEMENT_H_
+#define MAZENGINE_ELEMENT_H_
 
 #include "mazengine.h"
 
