@@ -50,12 +50,42 @@ namespace mazengine {
 	typedef std::pair<int, int> IntPair;
 	typedef std::map<String, String> StringMap;
 
-	class Rect {
+	/**
+	 * The Point class is an abstraction away from the SDL point. To be used in
+	 * polygons.
+	 * */
+	class Point {
 	public:
-		int x;
-		int y;
-		int w;
-		int h;
+		int x; /**< X-pos of the point. */
+		int y; /**< Y-pos of the point. */
+		/**
+		 * Point contsructor. Direct analogue to initialization of SDL_Point.
+		 * */
+		Point(int x, int y) {
+			this->x = x;
+			this->y = y;
+		}
+	};
+
+	/**
+	 * Polygon class. To be done. Will eventually lead into a mesh for 3d
+	 * objects.
+	 * */
+	class Polygon {};
+
+	/**
+	 * Abstraction of a rectangle away from the SDL implementation, so that the
+	 * user will not have to interface with any SDL functionality directly.
+	 * */
+	class Rect : public Polygon {
+	public:
+		int x; /**< X-pos of the rectangle. */
+		int y; /**< Y-pos of the rectangle. */
+		int w; /**< Width of the rectangle.*/
+		int h; /**< Height of the rectangle. */
+		/**
+		 * Rectangle contructor. Direct analogue to initialization of SDL_Rect.
+		 * */
 		Rect(int x, int y, int w, int h) {
 			this->x = x;
 			this->y = y;
@@ -107,17 +137,37 @@ namespace mazengine {
 		static String data_path;  /**< Path to data files. */
 		static String img_path;	  /**< Path to image files. */
 		static String audio_path; /**< Path to audio files. */
-
+		/**
+		 * Engine constructor. Sets everything to their default values.
+		 * */
 		Engine() {
+			auto data = YAML::LoadFile("Mazzycat");
+
 			_io = nullptr;
 			renderer = nullptr;
 			_game = nullptr;
 			textures.clear();
-			name = Mazzycat::GetName();
-			IntPair dims = Mazzycat::GetWindowSize();
-			window_width = dims.first;
-			window_height = dims.second;
-			framerate = Mazzycat::GetFramerate();
+
+			if (data["name"]) {
+				name = data["name"].as<String>();
+			}
+
+			window_width = data["window_width"].as<int>();
+			window_height = data["window_height"].as<int>();
+
+			if (data["framerate"]) {
+				framerate = data["framerate"].as<int>();
+			}
+
+			if (data["data_path"]) {
+				data_path = data["data_path"].as<String>();
+			}
+			if (data["img_path"]) {
+				img_path = data["img_path"].as<String>();
+			}
+			if (data["audio_path"]) {
+				audio_path = data["audio_path"].as<String>();
+			}
 		};
 		int SetIO(IO *io);			/**< Sets the IO instance. */
 		int SetGame(Game *game);	/**< Sets the Game instance. */
@@ -236,6 +286,20 @@ namespace mazengine {
 		 * texture should be drawn.
 		 * */
 		void Draw(Rect *src, Rect *dest);
+		bool IsLoaded();
 	};
+
+	/**
+	 * Abstraction of SDL_mixer so that the engine can deal with the
+	 * particulars. TODO.
+	 * */
+	class Audio {};
+
+	/**
+	 * Abstraction of SDL_ttf functions so that the engine can deal with the
+	 * particulars. TODO.
+	 * */
+	class Font {};
+
 } // namespace mazengine
 #endif

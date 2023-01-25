@@ -19,6 +19,9 @@ namespace mazengine {
 	int Engine::window_height = -1;
 	int Engine::framerate = 1;
 	String Engine::name = "Mazengine Game";
+	String Engine::data_path = "data/";
+	String Engine::img_path = "img/";
+	String Engine::audio_path = "audio/";
 
 	// int Game::Command(StringVector *command) { return 0; }
 
@@ -78,9 +81,14 @@ namespace mazengine {
 
 		int img_rv = IMG_Init(IMG_INIT_PNG);
 		int ttf_rv = TTF_Init();
+		int mix_rv = Mix_Init(MIX_INIT_MP3);
 
 		if (img_rv == 0) {
 			std::cout << "Initializing SDL_IMG failed." << std::endl;
+			return img_rv;
+		}
+		if (mix_rv == 0) {
+			std::cout << "Initializing SDL_mixer failed." << std::endl;
 			return img_rv;
 		}
 		if (ttf_rv != 0) {
@@ -88,11 +96,12 @@ namespace mazengine {
 			return ttf_rv;
 		}
 		if (window == NULL) {
-			std::cout << "Window creation failed" << std::endl;
+			std::cout << "Window creation failed." << std::endl;
 			return 2;
 		}
 		if (Engine::renderer == NULL) {
-			std::cout << "Renderer creation failed" << std::endl;
+			std::cout << "Renderer creation failed." << std::endl;
+			return ENGINE_KILL;
 		}
 
 		// add loading screen here soon
@@ -101,7 +110,7 @@ namespace mazengine {
 		int tick_val = 0;
 		int frame_count = 0;
 
-		std::cout << "Initializing chronology" << std::endl;
+		std::cout << "Initializing chronology." << std::endl;
 
 		std::chrono::system_clock::time_point start_time =
 			std::chrono::system_clock::now();
@@ -120,7 +129,7 @@ namespace mazengine {
 		LoadTextures();
 		size_t textures_cursor = textures.size();
 
-		std::cout << "Starting " << name << " engine loop" << std::endl;
+		std::cout << "Starting " << name << " engine loop." << std::endl;
 
 		while (running == 1) {
 			start_time = std::chrono::system_clock::now();
@@ -172,13 +181,9 @@ namespace mazengine {
 			frame_count++;
 		}
 
-		// tick returning 1 means that we recieved an exit code
-		if (tick_val == 1) {
-			return 0;
-		}
-
 		IMG_Quit();
 		TTF_Quit();
+		Mix_Quit();
 
 		return tick_val;
 	}
