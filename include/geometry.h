@@ -1,6 +1,7 @@
 #ifndef MAZENGINE_GEOMETRY_H_
 #define MAZENGINE_GEOMETRY_H_
 
+#include <ostream>
 namespace mazengine {
 	/**
 	 * The Point class is an abstraction away from the SDL point. To be used in
@@ -35,9 +36,9 @@ namespace mazengine {
 		int y; /**< Y-pos of the rectangle. */
 		int w; /**< Width of the rectangle.*/
 		int h; /**< Height of the rectangle. */
-			   /**
-				* Rectangle contructor. Direct analogue to initialization of SDL_Rect.
-				* */
+		/**
+		 * Rectangle contructor. Direct analogue to initialization of SDL_Rect.
+		 * */
 		Rect() {
 			this->x = 0;
 			this->y = 0;
@@ -51,6 +52,8 @@ namespace mazengine {
 			this->h = h;
 		}
 		bool Contains(int x, int y);
+		Rect operator*(double mult);
+		Rect operator*=(double mult);
 	};
 } // namespace mazengine
 
