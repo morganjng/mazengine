@@ -1,7 +1,7 @@
 #+title: MAZENGINE README
 
 * Morgan's AmaZing engine!!! (or MAZzy engine)
-This is a little game engine I've been working on for the past couple of months, and I figured it's beginning to deserve its own repository. This engine is designed first and foremost to be readable and mod-able with less nitty-gritty, low to the metal, coding. Essentially, it is supposed to use as little C++ code as possible, and as much YAML files as are necessary for development. Additionally, I will be providing thorough documentation and perhaps even some literate programming in some of the more code intensive sections of the project.
+This is a little game engine I've been working on for the past couple of months, and I figured it's beginning to deserve its own repository. This engine is designed first and foremost to be readable and mod-able with less nitty-gritty, low to the metal, coding. Essentially, it is supposed to use as little C++ code as possible, and as many YAML files as are necessary for development. Additionally, I will be providing thorough documentation and perhaps even some literate programming in some of the more code intensive sections of the project.
 
 * What is Mazengine?
 Mazengine is a collection of code frameworks and outlines which is intended to be easy to add to without over-complicated code, without overly-deep nested code patterns, and without too much object-oriented abstractions. I'm probably more opinionated and picky than the average programmer, so some other game engines really didn't work for me, so this is my shot at it.
@@ -10,6 +10,4 @@ Mazengine is a collection of code frameworks and outlines which is intended to b
 Mazengine comes with a certain set of classes defined that act as games, and all Mazengine games are /supposed/ to be designed with certain rules in mind. In essence, a Mazengine game is implemented with hefty amounts of YAML, a couple user-defined functions, and an init file which wraps everything together. More on this later.
 
 * Where should I go next?
-Go read the docs! If they're extant, you should learn what you need in there.
-
-* Yay new chair :) i will now be able to work without my back killing me :3
+Generate the Doxygen docs and start reading! The documentation is a little sparse as of now, but I'm working on this alone so it's a bit of a task, but there should be enough for you to get a sense of what is going on.
