@@ -35,9 +35,15 @@ namespace mazengine {
 		int y; /**< Y-pos of the rectangle. */
 		int w; /**< Width of the rectangle.*/
 		int h; /**< Height of the rectangle. */
-		/**
-		 * Rectangle contructor. Direct analogue to initialization of SDL_Rect.
-		 * */
+			   /**
+				* Rectangle contructor. Direct analogue to initialization of SDL_Rect.
+				* */
+		Rect() {
+			this->x = 0;
+			this->y = 0;
+			this->w = 0;
+			this->h = 0;
+		}
 		Rect(int x, int y, int w, int h) {
 			this->x = x;
 			this->y = y;

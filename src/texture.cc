@@ -7,7 +7,8 @@ namespace mazengine {
 	std::vector<Texture *> Texture::registry = *new std::vector<Texture *>;
 
 	void Texture::Load() {
-		this->texture = IMG_LoadTexture(Engine::renderer, this->path.c_str());
+		this->texture = IMG_LoadTexture(
+			Engine::renderer, (Engine::img_path + this->path).c_str());
 		if (this->texture == NULL) {
 			std::cout << "Loading Texture " << this->path
 					  << " failed, SDL error " << SDL_GetError() << std::endl;

@@ -11,14 +11,17 @@
 #include <texture.h>
 
 namespace mazengine {
+	auto data = YAML::LoadFile("Mazzycat");
 	SDL_Renderer *Engine::renderer = nullptr;
 	std::vector<Button> *IO::presses = nullptr;
 	std::vector<Button> *IO::releases = nullptr;
 	double *IO::cursor_x = nullptr;
 	double *IO::cursor_y = nullptr;
-	int Engine::window_width = -1;
-	int Engine::window_height = -1;
-	int Engine::framerate = 1;
+	int Engine::window_width =
+		data["window_width"] ? data["window_width"].as<int>() : -1;
+	int Engine::window_height =
+		data["window_height"] ? data["window_height"].as<int>() : -1;
+	int Engine::framerate = data["framerate"] ? data["framerate"].as<int>() : 1;
 	std::string Engine::name = "Mazengine Game";
 	std::string Engine::data_path = "data/";
 	std::string Engine::img_path = "img/";
