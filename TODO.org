@@ -8,3 +8,7 @@
 * TODO Audio implementation
 * TODO Font implementation
 * TODO Error handling in UGame and IGame
+* TODO Documentation
+** YAML file specifications for different objects
+** Use cases
+** Troubleshooting
