@@ -17,6 +17,9 @@ namespace mazengine {
 	 * */
 	class Texture {
 	public:
+		/**
+		 * Registry of all Textures. 
+		 * */
 		static std::vector<Texture *> registry;
 
 		SDL_Texture
@@ -40,7 +43,6 @@ namespace mazengine {
 		 * texture should be drawn.
 		 * */
 		void Draw(Rect *src, Rect *dest);
-		bool IsLoaded();
 	};
 
 } // namespace mazengine

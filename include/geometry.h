@@ -37,7 +37,7 @@ namespace mazengine {
 		int w; /**< Width of the rectangle.*/
 		int h; /**< Height of the rectangle. */
 		/**
-		 * Rectangle contructor. Direct analogue to initialization of SDL_Rect.
+		 * Empty Rectangle initia/izer. Sets all values to 0.
 		 * */
 		Rect() {
 			this->x = 0;
@@ -45,14 +45,27 @@ namespace mazengine {
 			this->w = 0;
 			this->h = 0;
 		}
+		/**
+		 * Rectangle contructor. Direct analogue to initialization of SDL_Rect.
+		 * */
 		Rect(int x, int y, int w, int h) {
 			this->x = x;
 			this->y = y;
 			this->w = w;
 			this->h = h;
 		}
+		/**
+		 * Checks if the point (x,y) is contained within the Rectangle. Includes
+		 * bounds.
+		 * */
 		bool Contains(int x, int y);
+		/**
+		 * Multiplying all values operator.
+		 * */
 		Rect operator*(double mult);
+		/**
+		 * Multiplication-assignment operator.
+		 * */
 		Rect operator*=(double mult);
 	};
 } // namespace mazengine
