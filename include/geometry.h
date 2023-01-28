@@ -2,6 +2,8 @@
 #define MAZENGINE_GEOMETRY_H_
 
 #include <ostream>
+#include <vector>
+
 namespace mazengine {
 	/**
 	 * The Point class is an abstraction away from the SDL point. To be used in
@@ -18,13 +20,45 @@ namespace mazengine {
 			this->x = x;
 			this->y = y;
 		}
+		static int SquareDistance(int x1, int x2, int y1, int y2);
+		static int Taxicab(int x1, int x2, int y1, int y2);
 	};
 
 	/**
 	 * Polygon class. To be done. Will eventually lead into a mesh for 3d
 	 * objects.
 	 * */
-	class Polygon {};
+	class Polygon {
+	private:
+		/**
+		 * Vector of the points comprising this polygon. Can contain duplicates.
+		 * */
+		std::vector<Point> points;
+
+	public:
+		/**
+		 * Empty constructor.
+		 * */
+		Polygon() {}
+		/**
+		 * Contstructor by providing vector of points.
+		 * */
+		Polygon(std::vector<Point> points) { this->points = points; }
+		/**
+		 * Returns a vector of the points in this polygon.
+		 * */
+		std::vector<Point> GetPoints();
+		/**
+		 * Add a point to the polygon.
+		 * @return 0 if succeeds, other if fails
+		 * */
+		int AddPoint(Point p);
+		/**
+		 * Draws and fills a given Polygon in the RGBA color value provided.
+		 * */
+		static void DrawPolygon(Polygon *polygon, char r, char g, char b,
+								char a);
+	};
 
 	/**
 	 * Abstraction of a rectangle away from the SDL implementation, so that the
@@ -67,6 +101,15 @@ namespace mazengine {
 		 * Multiplication-assignment operator.
 		 * */
 		Rect operator*=(double mult);
+		/**
+		 * Declaring AddPoint so there are no errors here.
+		 * */
+		int AddPoint(Point p);
+		/**
+		 * Draw "between" 2 rects.
+		 * */
+		static void DrawBetween(Rect *rect1, Rect *rect2, char r, char g,
+								char b, char a);
 	};
 } // namespace mazengine
 
