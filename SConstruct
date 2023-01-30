@@ -32,6 +32,7 @@ cflags = [
     "-I/usr/include/SDL2",
     "-D_REENTRANT",
     "-I/usr/include/libpng16",
+    "-I/usr/include/python3.10",
     "-Iinclude",
     "-DHWY_SHARED_DEFINE",
     "-lyaml-cpp",
