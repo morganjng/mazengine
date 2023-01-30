@@ -38,3 +38,6 @@ compile_commands.json
 doxygen/
 
 .cache
+
+build/
+build/*
