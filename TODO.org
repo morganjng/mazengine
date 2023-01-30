@@ -1,5 +1,12 @@
 #+title: Tasks Sheet for Mazengine
 
+* TODO Decide on a scripting language
++ AngelScript - No, not standard
++ Lua - No, 1 indexed
++ Python - Maybe, but the bindings seem difficult to write and are geared towards C, not C++
++ Ruby with Rice - Maybe, but neither of us know Ruby
+  + But this is a learning opportunity
++ JS - no
 * TODO Tile rendering
 * TODO Multiplying/etc. rectangles
 * TODO Generic 2D Polygons
