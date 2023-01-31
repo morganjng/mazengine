@@ -9,6 +9,6 @@ Object test_hello(Object) {
 	return str;
 }
 
-extern "C" void Init_rb_maz() {
+extern "C" void Init_libmaz_rb() {
 	Class rb_cTest = define_class("Test").define_method("hello", &test_hello);
 }
