@@ -64,7 +64,7 @@ namespace mazengine {
 		 * Update state of this Game based on current status.
 		 * @param status Current status of Engine/parent/etc.
 		 *  */
-		virtual int Tick(int status) = 0;
+		virtual int Tick() = 0;
 		virtual int Draw() = 0; /**< Draw current state to Engine renderer. */
 	};
 } // namespace mazengine

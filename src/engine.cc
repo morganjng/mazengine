@@ -149,7 +149,7 @@ namespace mazengine {
 
 			parse_time = std::chrono::system_clock::now();
 
-			tick_val = _game->Tick(STATUS_OK);
+			tick_val = _game->Tick();
 
 			tick_time = std::chrono::system_clock::now();
 

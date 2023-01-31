@@ -28,8 +28,8 @@ namespace mazengine {
 			cursor = 0;
 			games.clear();
 		};
-		int Tick(int status); /**< Tick current game. */
-		int Draw();			  /**< Draw current game. */
+		int Tick(); /**< Tick current game. */
+		int Draw(); /**< Draw current game. */
 		int Command(std::vector<std::string> *command,
 					size_t offset); /**< Command implementation. */
 	};

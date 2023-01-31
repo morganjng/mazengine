@@ -11,7 +11,7 @@ namespace mazengine {
 
 	SDL_Surface *MenuWidget::Texture() { return textures[texture_idx]; }
 
-	int Menu::Tick(int status) {
+	int Menu::Tick() {
 		SDL_Point mouse_location;
 		mouse_location.x = int(*IO::cursor_x * internal_width);
 		mouse_location.y = int(*IO::cursor_y * internal_height);

@@ -1,10 +1,10 @@
 #include "igame.h"
 
 namespace mazengine {
-	int IGame::Tick(int status) {
+	int IGame::Tick() {
 		for (Element *elem : elements) {
 			if (elem != nullptr) {
-				elem->Tick(status);
+				elem->Tick();
 			}
 		}
 		return 0;

@@ -12,7 +12,7 @@ namespace mazengine {
 		/**
 		 * Update state of Element.
 		 * */
-		virtual int Tick(int status) = 0;
+		virtual int Tick() = 0;
 		/**
 		 * Draw Element on screen.
 		 * */

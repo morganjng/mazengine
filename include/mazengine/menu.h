@@ -104,8 +104,8 @@ namespace mazengine {
 				widgets.push_back(w_temp);
 			}
 		};
-		int Tick(int status); /**< Update state. */
-		int Draw();			  /**< Draw state. */
+		int Tick(); /**< Update state. */
+		int Draw(); /**< Draw state. */
 		int Command(std::vector<std::string> *command,
 					size_t offset); /**< Command implementation. */
 	};

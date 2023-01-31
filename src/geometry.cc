@@ -62,7 +62,7 @@ namespace mazengine {
 
 	Rect Rect::operator*=(double mult) { return *this * mult; }
 
-	int Rect::AddPoint(Point p) { return 0; }
+	int Rect::AddPoint(Point) { return 0; }
 
 	void Rect::DrawBetween(Rect *rect1, Rect *rect2, char r, char g, char b,
 						   char a) {

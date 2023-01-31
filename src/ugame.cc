@@ -10,8 +10,8 @@ int UGame::PushGame(Game *_game) {
 	return STATUS_OK;
 }
 
-int UGame::Tick(int status) {
-	int rv = games[cursor]->Tick(cursor);
+int UGame::Tick() {
+	int rv = games[cursor]->Tick();
 	return rv;
 }
 
