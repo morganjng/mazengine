@@ -54,6 +54,7 @@ namespace mazengine {
 	protected:
 		IO *_io;	 /**< IO instance for this Engine. */
 		Game *_game; /**< Game instance for this Engine. */
+		int running;
 
 	public:
 		static SDL_Renderer
@@ -66,6 +67,7 @@ namespace mazengine {
 		static std::string data_path;  /**< Path to data files. */
 		static std::string img_path;   /**< Path to image files. */
 		static std::string audio_path; /**< Path to audio files. */
+		static Engine *engine;
 		/**
 		 * Engine constructor. Sets everything to their default values.
 		 * */
@@ -96,10 +98,15 @@ namespace mazengine {
 			if (data["audio_path"]) {
 				audio_path = data["audio_path"].as<std::string>();
 			}
+
+			engine = this;
 		}
 		int SetIO(IO *io);			/**< Sets the IO instance. */
+		IO *GetIO();				/**< Get current IO. */
 		int SetGame(Game *game);	/**< Sets the Game instance. */
+		Game *GetGame();			/**< Get current game. */
 		int Start();				/**< Starts the engine. */
+		int Stop();					/**< Stop the engine from running. */
 		static void LoadTextures(); /**< Load all textures that need loading. */
 	};
 } // namespace mazengine

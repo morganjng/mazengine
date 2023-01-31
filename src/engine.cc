@@ -26,6 +26,7 @@ namespace mazengine {
 	std::string Engine::data_path = "data/";
 	std::string Engine::img_path = "img/";
 	std::string Engine::audio_path = "audio/";
+	Engine *Engine::engine = nullptr;
 
 	void Engine::LoadTextures() {
 		for (auto texture : Texture::registry) {
@@ -108,7 +109,7 @@ namespace mazengine {
 
 		// add loading screen here soon
 
-		int running = 1;
+		this->running = 1;
 		int tick_val = 0;
 		int frame_count = 0;
 
@@ -189,5 +190,9 @@ namespace mazengine {
 
 		return tick_val;
 	}
+
+	IO *Engine::GetIO() { return this->_io; }
+
+	Game *Engine::GetGame() { return this->_game; }
 
 } // namespace mazengine
