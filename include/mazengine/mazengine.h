@@ -5,8 +5,7 @@
 #ifndef MAZENGINE_H_
 #define MAZENGINE_H_
 
-#define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include <ruby.h>
 
 #include <SDL2/SDL.h>
 #include <SDL_image.h>
@@ -97,33 +96,6 @@ namespace mazengine {
 			if (data["audio_path"]) {
 				audio_path = data["audio_path"].as<std::string>();
 			}
-
-			PyStatus status;
-
-			PyConfig config;
-			PyConfig_InitPythonConfig(&config);
-			config.isolated = 1;
-			config.program_name = NULL;
-
-			status =
-				PyConfig_SetString(&config, &config.program_name, L"mazengine");
-
-			if (PyStatus_Exception(status)) {
-				goto exception;
-			}
-
-			status = Py_InitializeFromConfig(&config);
-
-			if (PyStatus_Exception(status)) {
-				goto exception;
-			}
-
-			return;
-
-		exception:
-			PyConfig_Clear(&config);
-			Py_ExitStatusException(status);
-			exit(240);
 		}
 		int SetIO(IO *io);			/**< Sets the IO instance. */
 		int SetGame(Game *game);	/**< Sets the Game instance. */

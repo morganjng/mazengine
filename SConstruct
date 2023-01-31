@@ -9,6 +9,7 @@ env = Environment()
 env.Tool("compilation_db")
 env.CompilationDatabase()
 
+
 obj_files = [
     "menu",
     "engine",
@@ -22,33 +23,47 @@ obj_files = [
     "game",
     "font",
     "audio",
-    "geometry"
+    "geometry",
+]
+
+include_dirs = [
+    "/usr/include/SDL2",
+    "/usr/include/ruby-3.0.0",
+    "/usr/include/ruby-3.0.0/x86_64-linux",
+    "include/mazengine",
+    "extern/rice/include"
+]
+
+library_deps = [
+    "yaml-cpp",
+    "ruby",
+    "SDL2",
+    "SDL2_mixer",
+    "SDL2_image",
+    "SDL2_ttf",
 ]
 
 cflags = [
     "-O2",
     "-Wall",
     "-Werror",
-    "-I/usr/include/SDL2",
     "-D_REENTRANT",
-    "-I/usr/include/libpng16",
-    "-I/usr/include/python3.10",
-    "-Iinclude",
     "-DHWY_SHARED_DEFINE",
-    "-lyaml-cpp",
-    "-lSDL2_mixer",
-    "-lSDL2_image",
-    "-lSDL2_ttf",
-    "-lSDL2",
     "-fPIC",
 ]
+
+env.StaticLibrary(target="bin/maz_rb.so", source="src/maz_rb.cc",
+                  CCFLAGS=cflags + ["-l" + dep for dep in library_deps]
+                  + ["-I" + direc for direc in include_dirs])
 
 _target = ""
 _src = ""
 for f in obj_files:
     _target = bin_dir + f + ".o"
     _src = src_dir + f + ".cc"
-    env.SharedObject(target=_target, source=_src, CCFLAGS=cflags)
+    env.SharedObject(target=_target, source=_src,
+                     CCFLAGS=cflags + ["-l" + dep for dep in library_deps] +
+                     ["-I" + direc for direc in include_dirs])
 
 
 env.SharedLibrary(

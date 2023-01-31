@@ -1,4 +1,3 @@
-#include "SDL_render.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL_ttf.h>
@@ -7,6 +6,7 @@
 #include <mazengine.h>
 #include <thread>
 #include <vector>
+#include <yaml-cpp/yaml.h>
 
 #include <texture.h>
 
