@@ -52,20 +52,21 @@ cflags = [
     "-fPIC",
 ]
 
-env.SharedLibrary(target="bin/maz_rb", source="src/maz_rb.cc",
-                  CCFLAGS=cflags + ["-l" + dep for dep in library_deps]
-                  + ["-I" + direc for direc in include_dirs])
+env.SharedObject(target=bin_dir + "maz_rb", source=src_dir + "maz_rb.cc",
+                 CCFLAGS=cflags + ["-l" + dep for dep in library_deps]
+                 + ["-I" + direc for direc in include_dirs])
+
+env.SharedLibrary(target="maz_rb", source=bin_dir + "maz_rb")
 
 _target = ""
 _src = ""
 for f in obj_files:
-    _target = bin_dir + f + ".o"
+    _target = bin_dir + f
     _src = src_dir + f + ".cc"
     env.SharedObject(target=_target, source=_src,
                      CCFLAGS=cflags + ["-l" + dep for dep in library_deps] +
                      ["-I" + direc for direc in include_dirs])
 
-
 env.SharedLibrary(
-    target=bin_dir + "mazengine.so", source=["bin/" + o + ".o" for o in obj_files]
+    target="mazengine", source=["bin/" + o for o in obj_files]
 )
