@@ -33,7 +33,7 @@ cflags = [
     "-D_REENTRANT",
     "-I/usr/include/libpng16",
     "-I/usr/include/python3.10",
-    "-Iinclude",
+    "-Iinclude/mazengine",
     "-DHWY_SHARED_DEFINE",
     "-lyaml-cpp",
     "-lSDL2_mixer",
