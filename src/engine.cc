@@ -6,6 +6,7 @@
 #include <mazengine.h>
 #include <thread>
 #include <vector>
+#include <yaml-cpp/yaml.h>
 
 #include <texture.h>
 
