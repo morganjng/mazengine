@@ -52,7 +52,7 @@ cflags = [
     "-fPIC",
 ]
 
-env.StaticLibrary(target="bin/maz_rb.so", source="src/maz_rb.cc",
+env.SharedLibrary(target="bin/maz_rb", source="src/maz_rb.cc",
                   CCFLAGS=cflags + ["-l" + dep for dep in library_deps]
                   + ["-I" + direc for direc in include_dirs])
 
