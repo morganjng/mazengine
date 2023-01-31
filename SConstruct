@@ -25,23 +25,29 @@ obj_files = [
     "geometry"
 ]
 
+include_dirs = [
+    "/usr/include/SDL2",
+    "/usr/include/python3.10",
+    "/usr/include/ruby",
+    "include/mazengine",
+    "extern/rice/include"
+]
+
+library_deps = [
+    "yaml-cpp",
+    "ruby",
+    "SDL2",
+    "SDL2_mixer",
+    "SDL2_image",
+    "SDL2_ttf",
+]
+
 cflags = [
     "-O2",
     "-Wall",
     "-Werror",
-    "-I/usr/include/SDL2",
     "-D_REENTRANT",
-    "-I/usr/include/libpng16",
-    "-I/usr/include/python3.10",
-    "-Iinclude/mazengine",
-    "-I/usr/include/ruby",
     "-DHWY_SHARED_DEFINE",
-    "-lyaml-cpp",
-    "-lSDL2_mixer",
-    "-lSDL2_image",
-    "-lSDL2_ttf",
-    "-lSDL2",
-    "-lruby",
     "-fPIC",
 ]
 
@@ -50,7 +56,9 @@ _src = ""
 for f in obj_files:
     _target = bin_dir + f + ".o"
     _src = src_dir + f + ".cc"
-    env.SharedObject(target=_target, source=_src, CCFLAGS=cflags)
+    env.SharedObject(target=_target, source=_src,
+                     CCFLAGS=cflags + ["-l" + dep for dep in library_deps] +
+                     ["-I" + direc for direc in include_dirs])
 
 
 env.SharedLibrary(
