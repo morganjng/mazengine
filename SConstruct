@@ -34,12 +34,14 @@ cflags = [
     "-I/usr/include/libpng16",
     "-I/usr/include/python3.10",
     "-Iinclude/mazengine",
+    "-I/usr/include/ruby",
     "-DHWY_SHARED_DEFINE",
     "-lyaml-cpp",
     "-lSDL2_mixer",
     "-lSDL2_image",
     "-lSDL2_ttf",
     "-lSDL2",
+    "-lruby",
     "-fPIC",
 ]
 
