@@ -5,6 +5,8 @@
 #ifndef MAZENGINE_H_
 #define MAZENGINE_H_
 
+#include <ruby.h>
+
 #include <SDL2/SDL.h>
 #include <SDL_image.h>
 
