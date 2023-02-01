@@ -19,7 +19,7 @@ set_target_properties(mazengine PROPERTIES VERSION ${PROJECT_VERSION}
 
 target_include_directories(mazengine SYSTEM PRIVATE ${SDL2_INCLUDE_DIRS})
 
-target_include_directories(mazengine SYSTEM PRIVATE ${SDL_IMAGE_INCLUDE_DIRS})
+target_include_directories(mazengine SYSTEM PRIVATE ${SDL2_IMAGE_INCLUDE_DIRS})
 
 target_include_directories(mazengine SYSTEM PRIVATE ${SDL_MIXER_INCLUDE_DIRS})
 
@@ -29,7 +29,7 @@ target_include_directories(mazengine PUBLIC ${MAZENGINE_INCLUDES})
 
 target_link_libraries(
   mazengine
-  PRIVATE ${SDL2_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${YAML_CPP_LIBRARIES}
+  PRIVATE ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${YAML_CPP_LIBRARIES}
           ${SDL_MIXER_LIBRARIES} ${SDL_TTF_LIBRARIES})
 
 if(MVSC)
