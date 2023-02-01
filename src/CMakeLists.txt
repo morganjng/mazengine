@@ -25,8 +25,7 @@ target_include_directories(mazengine SYSTEM PRIVATE ${SDL_MIXER_INCLUDE_DIRS})
 
 target_include_directories(mazengine SYSTEM PRIVATE ${SDL_TTF_INCLUDE_DIRS})
 
-target_include_directories(mazengine
-                           PUBLIC ${CMAKE_SOURCE_DIR}/include/mazengine)
+target_include_directories(mazengine PUBLIC ${MAZENGINE_INCLUDES})
 
 target_link_libraries(
   mazengine
