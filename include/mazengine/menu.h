@@ -19,20 +19,18 @@ namespace mazengine {
 		std::string function; /**< Function from yaml. */
 
 	public:
-		std::string name;				   /**< Name of widget. */
-		std::vector<std::string> on_click; /**< Function for click. */
-		std::vector<std::string> on_hover; /**< Function for hover. */
-		std::vector<std::string> no_click; /**< Function for not-clicking. */
-		std::vector<std::string> no_hover; /**< Function for not-hovering. */
+		std::string name;	  /**< Name of widget. */
+		std::string on_click; /**< Function for click. */
+		std::string on_hover; /**< Function for hover. */
+		std::string no_click; /**< Function for not-clicking. */
+		std::string no_hover; /**< Function for not-hovering. */
 		/**
 		 * Widget constructor. Sets all necessary values.
 		 * */
 		MenuWidget(std::string _name, int x, int y, int _width, int _height,
-				   std::vector<SDL_Surface *> _textures,
-				   std::vector<std::string> on_click,
-				   std::vector<std::string> on_hover,
-				   std::vector<std::string> no_click,
-				   std::vector<std::string> no_hover) {
+				   std::vector<SDL_Surface *> _textures, std::string on_click,
+				   std::string on_hover, std::string no_click,
+				   std::string no_hover) {
 			name = _name;
 			rect.w = _width;
 			rect.h = _height;
@@ -96,18 +94,16 @@ namespace mazengine {
 					widget["y"].as<double>() * internal_height,
 					widget["width"].as<double>() * internal_width,
 					widget["height"].as<double>() * internal_height, *textures,
-					widget["on_click"].as<std::vector<std::string>>(),
-					widget["on_hover"].as<std::vector<std::string>>(),
-					widget["no_click"].as<std::vector<std::string>>(),
-					widget["no_hover"].as<std::vector<std::string>>());
+					widget["on_click"].as<std::string>(),
+					widget["on_hover"].as<std::string>(),
+					widget["no_click"].as<std::string>(),
+					widget["no_hover"].as<std::string>());
 
 				widgets.push_back(w_temp);
 			}
 		};
 		int Tick(); /**< Update state. */
 		int Draw(); /**< Draw state. */
-		int Command(std::vector<std::string> *command,
-					size_t offset); /**< Command implementation. */
 	};
 
 }; // namespace mazengine

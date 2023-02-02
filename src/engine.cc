@@ -32,7 +32,7 @@ namespace mazengine {
 	Engine *Engine::engine = nullptr;
 
 	void Engine::Execute(std::string PythonCommand) {
-		boost::python::exec(PythonCommand.c_str());
+		boost::python::exec(PythonCommand.c_str(), engine->main_namespace);
 	}
 
 	void Engine::LoadTextures() {

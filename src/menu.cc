@@ -22,14 +22,14 @@ namespace mazengine {
 				switch (press) {
 					case MOUSE_MOTION:
 						if (in_rect) {
-							rv = Command(&widget->on_hover, 0);
+							Engine::Execute(widget->on_hover);
 						} else {
-							rv = Command(&widget->no_hover, 0);
+							Engine::Execute(widget->no_hover);
 						}
 						break;
 					case MOUSE_CLICK:
 						if (in_rect) {
-							rv = Command(&widget->on_click, 0);
+							Engine::Execute(widget->on_click);
 						}
 						break;
 					default:
@@ -40,7 +40,7 @@ namespace mazengine {
 				switch (release) {
 					case MOUSE_CLICK:
 						if (in_rect) {
-							rv = Command(&widget->no_click, 0);
+							Engine::Execute(widget->no_click);
 						}
 						break;
 					default:
@@ -49,25 +49,6 @@ namespace mazengine {
 			}
 		}
 		return rv;
-	}
-
-	int Menu::Command(std::vector<std::string> *command, size_t offset) {
-		if (command->size() <= 0 || command->size() <= offset) {
-			return STATUS_OK;
-		}
-		if (command->at(offset) == "up") {
-			return parent->Command(command, offset + 1);
-		}
-		if (command->size() >= 5 + offset && (*command)[offset] == "set") {
-			if ((*command)[offset + 1] == "widget") {
-				if ((*command)[offset + 3] == "texture") {
-					widgets[std::stoi(command->at(offset + 2))]->texture_idx =
-						std::stoi(command->at(offset + 4));
-				}
-			}
-		}
-
-		return 0;
 	}
 
 	int Menu::Draw() {

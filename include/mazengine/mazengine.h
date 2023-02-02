@@ -56,6 +56,8 @@ namespace mazengine {
 		IO *_io;	 /**< IO instance for this Engine. */
 		Game *_game; /**< Game instance for this Engine. */
 		int running;
+		boost::python::object main_module;
+		boost::python::object main_namespace;
 
 	public:
 		static SDL_Renderer
@@ -106,6 +108,13 @@ namespace mazengine {
 			}
 
 			Py_Initialize();
+			main_module = boost::python::import("__main__");
+			main_namespace = main_module.attr("__dict__");
+
+			boost::python::exec("import sys/n sys.path.append('build')",
+								main_namespace);
+
+			main_namespace["maz"] = boost::python::import("libmazengine");
 
 			engine = this;
 		}
@@ -113,7 +122,7 @@ namespace mazengine {
 		 * Execute the given command
 		 * @param PythonCommand a string to execute in the Python runtime.
 		 * */
-		void Execute(std::string PythonCommand);
+		static void Execute(std::string PythonCommand);
 		int SetIO(IO *io);			/**< Sets the IO instance. */
 		IO *GetIO();				/**< Get current IO. */
 		int SetGame(Game *game);	/**< Sets the Game instance. */

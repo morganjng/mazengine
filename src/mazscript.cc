@@ -1,3 +1,4 @@
+#include <boost/core/noncopyable.hpp>
 #include <boost/python.hpp>
 
 #include <mazengine.h>
@@ -5,4 +6,8 @@
 
 using namespace boost::python;
 
-BOOST_PYTHON_MODULE(libmazengine) { class_<mazengine::Engine>("Engine"); }
+struct GameWrap : mazengine::Game, wrapper<mazengine::Game> {};
+
+BOOST_PYTHON_MODULE(libmazengine) {
+	class_<GameWrap, boost::noncopyable>("Game", no_init);
+}

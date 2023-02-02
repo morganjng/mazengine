@@ -30,8 +30,6 @@ namespace mazengine {
 		};
 		int Tick(); /**< Tick current game. */
 		int Draw(); /**< Draw current game. */
-		int Command(std::vector<std::string> *command,
-					size_t offset); /**< Command implementation. */
 	};
 
 }; // namespace mazengine

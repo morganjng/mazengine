@@ -16,20 +16,3 @@ int UGame::Tick() {
 }
 
 int UGame::Draw() { return games[cursor]->Draw(); }
-
-int UGame::Command(std::vector<std::string> *command, size_t offset) {
-	if (command->size() <= offset) {
-		return 0;
-	}
-	if (command->at(offset) == "kill") {
-		return ENGINE_KILL;
-	}
-	if (command->at(offset) == "game") {
-		if (command->size() == 1) {
-			return STATUS_OK;
-		} else {
-			cursor = std::stoi(command->at(offset + 1));
-		}
-	}
-	return STATUS_OK;
-}

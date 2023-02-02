@@ -52,15 +52,6 @@ namespace mazengine {
 		}
 
 		/**
-		 * Take command and parse it to modify state of this Game. Should
-		 * usually be used by child.
-		 * @param command Vector of String commands to be parsed by this
-		 * function.
-		 * @param offset How far into vector to start parsing the command at.
-		 *  */
-		virtual int Command(std::vector<std::string> *command,
-							size_t offset) = 0;
-		/**
 		 * Update state of this Game based on current status.
 		 * @param status Current status of Engine/parent/etc.
 		 *  */
