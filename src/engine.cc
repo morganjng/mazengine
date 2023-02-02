@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL_ttf.h>
+#include <boost/python/errors.hpp>
 #include <chrono>
 #include <iostream>
 #include <mazengine.h>
@@ -32,7 +33,13 @@ namespace mazengine {
 	Engine *Engine::engine = nullptr;
 
 	void Engine::Execute(std::string PythonCommand) {
-		boost::python::exec(PythonCommand.c_str(), engine->main_namespace);
+		try {
+			auto obj = boost::python::exec(PythonCommand.c_str(),
+										   engine->main_namespace);
+		} catch (const boost::python::error_already_set &err) {
+			std::cout << "Python failed to execute " << PythonCommand
+					  << std::endl;
+		}
 	}
 
 	void Engine::LoadTextures() {
