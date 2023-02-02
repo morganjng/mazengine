@@ -2,8 +2,10 @@
 
 #include <mazengine.h>
 
-namespace mazscript {}
+using namespace boost::python;
 
-BOOST_PYTHON_MODULE(mazscript){
+BOOST_PYTHON_MODULE(mazengine) {
+	Py_Initialize();
 
+	class_<mazengine::Engine>("Engine");
 };
