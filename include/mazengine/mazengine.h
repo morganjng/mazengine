@@ -10,6 +10,7 @@
 
 #include <functional>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -72,6 +73,11 @@ namespace mazengine {
 		 * Engine constructor. Sets everything to their default values.
 		 * */
 		Engine() {
+			if (Engine::engine != nullptr) {
+				throw std::runtime_error(
+					"Multiple engines running simultaneously.");
+			}
+
 			auto data = YAML::LoadFile("Mazzycat");
 
 			_io = nullptr;
