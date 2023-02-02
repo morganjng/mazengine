@@ -4,9 +4,12 @@
 #include <chrono>
 #include <iostream>
 #include <mazengine.h>
+#include <pylifecycle.h>
 #include <thread>
 #include <vector>
 #include <yaml-cpp/yaml.h>
+
+#include <boost/python.hpp>
 
 #include <texture.h>
 
@@ -27,6 +30,10 @@ namespace mazengine {
 	std::string Engine::img_path = "img/";
 	std::string Engine::audio_path = "audio/";
 	Engine *Engine::engine = nullptr;
+
+	void Engine::Execute(std::string PythonCommand) {
+		boost::python::exec(PythonCommand.c_str());
+	}
 
 	void Engine::LoadTextures() {
 		for (auto texture : Texture::registry) {
@@ -187,6 +194,8 @@ namespace mazengine {
 		IMG_Quit();
 		TTF_Quit();
 		Mix_Quit();
+
+		Py_Finalize();
 
 		return tick_val;
 	}

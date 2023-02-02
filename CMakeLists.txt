@@ -24,5 +24,10 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL_mixer REQUIRED)
 find_package(SDL_ttf REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(PythonLibs REQUIRED)
+find_package(
+  Boost
+  COMPONENTS python
+  REQUIRED)
 
 add_subdirectory(src)

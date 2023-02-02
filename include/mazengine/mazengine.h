@@ -16,6 +16,8 @@
 #include <yaml-cpp/node/parse.h>
 #include <yaml-cpp/yaml.h>
 
+#include <boost/python.hpp>
+
 #include "game.h"
 #include "geometry.h"
 #include "io.h"
@@ -97,8 +99,15 @@ namespace mazengine {
 				audio_path = data["audio_path"].as<std::string>();
 			}
 
+			Py_Initialize();
+
 			engine = this;
 		}
+		/**
+		 * Execute the given command
+		 * @param PythonCommand a string to execute in the Python runtime.
+		 * */
+		void Execute(std::string PythonCommand);
 		int SetIO(IO *io);			/**< Sets the IO instance. */
 		IO *GetIO();				/**< Get current IO. */
 		int SetGame(Game *game);	/**< Sets the Game instance. */
