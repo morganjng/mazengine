@@ -80,6 +80,8 @@ namespace mazengine {
 					"Multiple engines running simultaneously.");
 			}
 
+			engine = this;
+
 			auto data = YAML::LoadFile("Mazzycat");
 
 			_io = nullptr;
@@ -111,12 +113,10 @@ namespace mazengine {
 			main_module = boost::python::import("__main__");
 			main_namespace = main_module.attr("__dict__");
 
-			Engine::Execute("import sys");
-			Engine::Execute("sys.path.append('build')");
+			Execute("import sys");
+			Execute("sys.path.append('build')");
 
 			main_namespace["maz"] = boost::python::import("libmazengine");
-
-			engine = this;
 		}
 		/**
 		 * Execute the given command
