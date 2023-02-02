@@ -33,11 +33,14 @@ namespace mazengine {
 	Engine *Engine::engine = nullptr;
 
 	void Engine::Execute(std::string PythonCommand) {
+		if (PythonCommand.length() <= 0 || PythonCommand == "null") {
+			return;
+		}
 		try {
-			auto obj = boost::python::exec(PythonCommand.c_str(),
-										   engine->main_namespace);
+			auto _obj = boost::python::exec(PythonCommand.c_str(),
+											engine->main_namespace);
 		} catch (const boost::python::error_already_set &err) {
-			std::cout << "Python failed to execute " << PythonCommand
+			std::cout << "Python failed to execute command " << PythonCommand
 					  << std::endl;
 		}
 	}

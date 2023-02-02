@@ -115,6 +115,7 @@ namespace mazengine {
 
 			Execute("import sys");
 			Execute("sys.path.append('build')");
+			Execute("null = 0");
 
 			main_namespace["maz"] = boost::python::import("libmazengine");
 		}
