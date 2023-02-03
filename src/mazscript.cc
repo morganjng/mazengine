@@ -40,5 +40,5 @@ BOOST_PYTHON_MODULE(libmazengine) {
 	def("SetGame", &SetGame);
 	def("Kill", &Kill);
 	def("GetWindowDimensions", &GetWindowDimensions);
-	def("SetWindowDimensions", &SetWindowDimensions)
+	def("SetWindowDimensions", &SetWindowDimensions);
 }

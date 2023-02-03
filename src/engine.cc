@@ -189,10 +189,7 @@ namespace mazengine {
 
 		while (running == 1) {
 			if (update_dims) {
-				window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED,
-										  SDL_WINDOWPOS_CENTERED, window_width,
-										  window_height, SDL_WINDOW_OPENGL);
-				Engine::renderer = SDL_CreateRenderer(window, -1, 0);
+				SDL_SetWindowSize(window, MZ::window_width, MZ::window_height);
 				update_dims = false;
 			}
 			if (!python_initialized) {
