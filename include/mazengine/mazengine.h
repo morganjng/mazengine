@@ -60,6 +60,11 @@ namespace mazengine {
 		boost::python::object main_namespace;
 
 	public:
+		/**
+		 * Vector of games to rid ourselves of the dreaded UGame and
+		 * tree-traversal.
+		 * */
+		std::vector<Game *> games;
 		static SDL_Renderer
 			*renderer; /**< Renderer for this instance. Will be deprecated. */
 		static int window_width;  /**< Pixel width of window. */
@@ -124,11 +129,17 @@ namespace mazengine {
 		 * @param PythonCommand a string to execute in the Python runtime.
 		 * */
 		static void Execute(std::string PythonCommand);
-		int SetIO(IO *io);			/**< Sets the IO instance. */
-		IO *GetIO();				/**< Get current IO. */
-		int SetGame(Game *game);	/**< Sets the Game instance. */
-		Game *GetGame();			/**< Get current game. */
-		int Start();				/**< Starts the engine. */
+		/**
+		 * Get vector of pointers to games.
+		 * */
+		std::vector<Game *> *GetGames();
+		Game *GetGame();					/**< Get current game. */
+		IO *GetIO();						/**< Get current IO. */
+		int SetIO(IO *io);					/**< Sets the IO instance. */
+		int SetGame(Game *game);			/**< Sets the Game instance. */
+		int SetGame(std::string game_name); /**< Sets Game based on name. */
+		int SetGame(int game_index);		/**< Sets Game based on index. */
+		int Start();						/**< Starts the engine. */
 		int Stop();					/**< Stop the engine from running. */
 		static void LoadTextures(); /**< Load all textures that need loading. */
 	};
