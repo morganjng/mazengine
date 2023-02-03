@@ -190,6 +190,7 @@ namespace mazengine {
 		while (running == 1) {
 			if (!python_initialized) {
 				Execute(_game->init_py);
+				python_initialized = true;
 			}
 
 			start_time = std::chrono::system_clock::now();
@@ -253,5 +254,10 @@ namespace mazengine {
 	IO *Engine::GetIO() { return this->_io; }
 
 	Game *Engine::GetGame() { return this->_game; }
+
+	int Engine::Stop() {
+		running = 0;
+		return 0;
+	}
 
 } // namespace mazengine
