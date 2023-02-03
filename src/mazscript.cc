@@ -16,6 +16,16 @@ void Kill() {
 		mazengine::Engine::engine->Stop();
 }
 
+tuple GetWindowDimensions() {
+	return make_tuple(MZ::window_width, MZ::window_height);
+}
+
+void SetWindowDimensions(int width, int height) {
+	MZ::window_width = width;
+	MZ::window_height = height;
+	MZ::engine->update_dims = true;
+}
+
 class MenuWrapper {
 public:
 	MenuWrapper() { menu = (mazengine::Menu *)MZ::engine->GetGame(); }
@@ -29,4 +39,6 @@ BOOST_PYTHON_MODULE(libmazengine) {
 	class_<MenuWrapper>("Menu").def("SetWidget", &MenuWrapper::SetWidget);
 	def("SetGame", &SetGame);
 	def("Kill", &Kill);
+	def("GetWindowDimensions", &GetWindowDimensions);
+	def("SetWindowDimensions", &SetWindowDimensions)
 }

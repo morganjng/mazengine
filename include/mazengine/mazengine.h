@@ -76,6 +76,7 @@ namespace mazengine {
 		static std::string data_path;  /**< Path to data files. */
 		static std::string img_path;   /**< Path to image files. */
 		static std::string audio_path; /**< Path to audio files. */
+		bool update_dims = false;
 		static Engine *engine;
 		/**
 		 * Engine constructor. Sets everything to their default values.

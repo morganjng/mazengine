@@ -188,6 +188,13 @@ namespace mazengine {
 		std::cout << "Starting " << name << " engine loop." << std::endl;
 
 		while (running == 1) {
+			if (update_dims) {
+				window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED,
+										  SDL_WINDOWPOS_CENTERED, window_width,
+										  window_height, SDL_WINDOW_OPENGL);
+				Engine::renderer = SDL_CreateRenderer(window, -1, 0);
+				update_dims = false;
+			}
 			if (!python_initialized) {
 				Execute(_game->init_py);
 				python_initialized = true;
