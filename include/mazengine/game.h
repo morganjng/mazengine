@@ -23,11 +23,6 @@ namespace mazengine {
 		 * */
 		int internal_height;
 		/**
-		 * Parent of this Game instance -- mostly important for children of
-		 * UGame.
-		 * */
-		Game *parent;
-		/**
 		 * Name of game, which corresponds to yaml file which stores information
 		 * about the Game.
 		 * */
@@ -38,8 +33,7 @@ namespace mazengine {
 		 * @param _name name of this Game instance.
 		 * @param _parent parent of this Game instance.
 		 * */
-		Game(std::string _name, Game *_parent) {
-			parent = _parent;
+		Game(std::string _name) {
 			name = _name;
 			YAML::Node temp = YAML::LoadFile("Mazzycat");
 			std::string data_pth = "data/";

@@ -58,7 +58,7 @@ namespace mazengine {
 		 * Menu constructor. Loads list of widgets from .yaml file and populates
 		 * all variables.
 		 * */
-		Menu(std::string _name, Game *_parent) : Game(_name, _parent) {
+		Menu(std::string _name) : Game(_name) {
 			YAML::Node mz = YAML::LoadFile("Mazzycat");
 
 			YAML::Node data_yaml = YAML::LoadFile(

@@ -29,7 +29,7 @@ namespace mazengine {
 		/**
 		 * IGame constructor. Loads backgrounds from file.
 		 * */
-		IGame(std::string _name, Game *_parent) : Game(_name, _parent) {
+		IGame(std::string _name) : Game(_name) {
 			YAML::Node data =
 				YAML::LoadFile(Mazzycat::GetPaths()["data"] + name + ".yaml");
 			for (std::string val :
