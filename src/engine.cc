@@ -246,8 +246,6 @@ namespace mazengine {
 		TTF_Quit();
 		Mix_Quit();
 
-		Py_Finalize();
-
 		return tick_val;
 	}
 
