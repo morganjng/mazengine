@@ -67,4 +67,12 @@ namespace mazengine {
 		return STATUS_OK;
 	}
 
+	void Menu::SetWidgetValue(std::string value, size_t widget_idx,
+							  size_t new_value) {
+		(void)value;
+		if (widgets.size() > widget_idx) {
+			widgets[widget_idx]->texture_idx = new_value;
+		}
+	}
+
 } // namespace mazengine

@@ -6,8 +6,27 @@
 
 using namespace boost::python;
 
-struct GameWrap : mazengine::Game, wrapper<mazengine::Game> {};
+void SetGame(std::string game_name) {
+	if (MZ::engine)
+		mazengine::Engine::engine->SetGame(game_name);
+}
+
+void Kill() {
+	if (MZ::engine)
+		mazengine::Engine::engine->Stop();
+}
+
+class MenuWrapper {
+public:
+	MenuWrapper() { menu = (mazengine::Menu *)MZ::engine->GetGame(); }
+	mazengine::Menu *menu;
+	void SetWidget(std::string u, size_t v, size_t w) {
+		menu->SetWidgetValue(u, v, w);
+	}
+};
 
 BOOST_PYTHON_MODULE(libmazengine) {
-	class_<GameWrap, boost::noncopyable>("Game", no_init);
+	class_<MenuWrapper>("Menu").def("SetWidget", &MenuWrapper::SetWidget);
+	def("SetGame", &SetGame);
+	def("Kill", &Kill);
 }

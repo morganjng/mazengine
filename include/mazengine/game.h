@@ -27,6 +27,10 @@ namespace mazengine {
 		 * about the Game.
 		 * */
 		std::string name;
+		/**
+		 * Python code to be run before first tick.
+		 * */
+		std::string init_py = "";
 
 		/**
 		 * Constructor of Game. Loads simple data for children.
@@ -41,6 +45,9 @@ namespace mazengine {
 				data_pth = temp["data_path"].as<std::string>();
 			}
 			YAML::Node data = YAML::LoadFile(data_pth + _name + ".yaml");
+			if (data["init"]) {
+				init_py = data["init"].as<std::string>();
+			}
 			internal_width = data["width"].as<int>();
 			internal_height = data["height"].as<int>();
 		}

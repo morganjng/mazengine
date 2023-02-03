@@ -71,6 +71,7 @@ namespace mazengine {
 			games.push_back(game);
 		}
 		_game = game;
+		python_initialized = false;
 		return 0;
 	}
 
@@ -83,6 +84,7 @@ namespace mazengine {
 		}
 		if (idx != -1) {
 			_game = games[idx];
+			python_initialized = false;
 			return 0;
 		}
 		return 1;
@@ -91,6 +93,7 @@ namespace mazengine {
 	int Engine::SetGame(size_t game_index) {
 		if (game_index <= games.size() && games[game_index] != nullptr) {
 			_game = games[game_index];
+			python_initialized = false;
 			return 0;
 		}
 		return 1;
@@ -185,6 +188,10 @@ namespace mazengine {
 		std::cout << "Starting " << name << " engine loop." << std::endl;
 
 		while (running == 1) {
+			if (!python_initialized) {
+				Execute(_game->init_py);
+			}
+
 			start_time = std::chrono::system_clock::now();
 
 			SDL_SetRenderDrawColor(Engine::renderer, 0, 0, 0, 0);

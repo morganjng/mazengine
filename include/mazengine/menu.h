@@ -50,10 +50,10 @@ namespace mazengine {
 
 	class Menu : public Game {
 	protected:
-		std::vector<MenuWidget *> widgets; /**< All widgets. */
-		SDL_Surface *internal_surface;	   /**< Surface to draw to. */
+		SDL_Surface *internal_surface; /**< Surface to draw to. */
 
 	public:
+		std::vector<MenuWidget *> widgets; /**< All widgets. */
 		/**
 		 * Menu constructor. Loads list of widgets from .yaml file and populates
 		 * all variables.
@@ -104,6 +104,8 @@ namespace mazengine {
 		};
 		int Tick(); /**< Update state. */
 		int Draw(); /**< Draw state. */
+		void SetWidgetValue(std::string value, size_t widget_idx,
+							size_t new_value);
 	};
 
 }; // namespace mazengine

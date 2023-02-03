@@ -56,6 +56,7 @@ namespace mazengine {
 		IO *_io;	 /**< IO instance for this Engine. */
 		Game *_game; /**< Game instance for this Engine. */
 		int running;
+		bool python_initialized = false;
 		boost::python::object main_module;
 		boost::python::object main_namespace;
 
