@@ -256,7 +256,8 @@ namespace mazengine {
 	Game *Engine::GetGame() { return this->_game; }
 
 	int Engine::Stop() {
-		running = 0;
+		this->running = 0;
+		std::cout << "HELLO???" << std::endl;
 		return 0;
 	}
 
