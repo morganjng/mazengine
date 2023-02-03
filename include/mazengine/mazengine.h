@@ -138,7 +138,7 @@ namespace mazengine {
 		int SetIO(IO *io);					/**< Sets the IO instance. */
 		int SetGame(Game *game);			/**< Sets the Game instance. */
 		int SetGame(std::string game_name); /**< Sets Game based on name. */
-		int SetGame(int game_index);		/**< Sets Game based on index. */
+		int SetGame(size_t game_index);		/**< Sets Game based on index. */
 		int Start();						/**< Starts the engine. */
 		int Stop();					/**< Stop the engine from running. */
 		static void LoadTextures(); /**< Load all textures that need loading. */

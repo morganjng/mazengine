@@ -45,6 +45,8 @@ namespace mazengine {
 		}
 	}
 
+	std::vector<Game *> *Engine::GetGames() { return &games; }
+
 	void Engine::LoadTextures() {
 		for (auto texture : Texture::registry) {
 			if (texture != nullptr && texture->texture == nullptr) {
@@ -59,7 +61,38 @@ namespace mazengine {
 	}
 
 	int Engine::SetGame(Game *game) {
+		bool is_in = false;
+		for (auto g : games) {
+			if (g != nullptr && g == game) {
+				is_in = true;
+			}
+		}
+		if (!is_in) {
+			games.push_back(game);
+		}
 		_game = game;
+		return 0;
+	}
+
+	int Engine::SetGame(std::string game_name) {
+		int idx = -1;
+		for (size_t i = 0; i < games.size(); i++) {
+			if (games[i] != nullptr && games[i]->name == game_name) {
+				idx = i;
+			}
+		}
+		if (idx != -1) {
+			_game = games[idx];
+			return 0;
+		}
+		return 1;
+	}
+
+	int Engine::SetGame(size_t game_index) {
+		if (game_index <= games.size() && games[game_index] != nullptr) {
+			_game = games[game_index];
+			return 0;
+		}
 		return 1;
 	}
 

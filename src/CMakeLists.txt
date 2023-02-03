@@ -12,7 +12,6 @@ add_library(
   mazzycat.cc
   menu.cc
   texture.cc
-  ugame.cc
   mazscript.cc)
 
 set_target_properties(mazengine PROPERTIES VERSION ${PROJECT_VERSION}
