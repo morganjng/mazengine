@@ -6,6 +6,9 @@
 #include <yaml-cpp/yaml.h>
 
 namespace mazengine {
+	/**
+	 * The IOMouse class is an IO that only parses mouse inputs.
+	 * */
 	class IOMouse : public IO {
 	public:
 		IOMouse() { YAML::Node mz = YAML::LoadFile("Mazzycat"); };

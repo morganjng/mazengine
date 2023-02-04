@@ -20,7 +20,13 @@ namespace mazengine {
 			this->x = x;
 			this->y = y;
 		}
+		/**
+		 * Calculate the distance-squared between two points.
+		 * */
 		static int SquareDistance(int x1, int x2, int y1, int y2);
+		/**
+		 * Calculate the taxicab-distance between two points.
+		 * */
 		static int Taxicab(int x1, int x2, int y1, int y2);
 	};
 

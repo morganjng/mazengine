@@ -35,7 +35,6 @@ namespace mazengine {
 		/**
 		 * Constructor of Game. Loads simple data for children.
 		 * @param _name name of this Game instance.
-		 * @param _parent parent of this Game instance.
 		 * */
 		Game(std::string _name) {
 			name = _name;
@@ -54,7 +53,6 @@ namespace mazengine {
 
 		/**
 		 * Update state of this Game based on current status.
-		 * @param status Current status of Engine/parent/etc.
 		 *  */
 		virtual int Tick() = 0;
 		virtual int Draw() = 0; /**< Draw current state to Engine renderer. */

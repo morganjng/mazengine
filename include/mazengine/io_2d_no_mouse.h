@@ -8,7 +8,9 @@
 #include <vector>
 
 namespace mazengine {
-
+	/**
+	 * The IO2dNoMouse class is an IO class that parses only keyboard inputs.
+	 * */
 	class IO2dNoMouse : public IO {
 	private:
 		std::string settings_path;

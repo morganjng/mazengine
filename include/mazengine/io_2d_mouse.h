@@ -5,6 +5,9 @@
 #include <yaml-cpp/yaml.h>
 
 namespace mazengine {
+	/**
+	 * The IO2dMouse class is an IO class that parses keyboard and mouse inputs.
+	 * */
 	class IO2dMouse : public IO {
 	private:
 		std::string settings_path;

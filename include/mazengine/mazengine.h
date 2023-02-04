@@ -55,9 +55,19 @@ namespace mazengine {
 	protected:
 		IO *_io;	 /**< IO instance for this Engine. */
 		Game *_game; /**< Game instance for this Engine. */
-		int running;
+		int running; /**< Game running status. */
+
+		/**
+		 * Does the python have to be initialized for this game?
+		 * */
 		bool python_initialized = false;
+		/**
+		 * Boost.Python variable.
+		 * */
 		boost::python::object main_module;
+		/**
+		 * Boost.Python variable.
+		 * */
 		boost::python::object main_namespace;
 
 	public:
@@ -76,7 +86,10 @@ namespace mazengine {
 		static std::string data_path;  /**< Path to data files. */
 		static std::string img_path;   /**< Path to image files. */
 		static std::string audio_path; /**< Path to audio files. */
-		bool update_dims = false;
+		bool update_dims = false;	   /**< Do we need to update window size? */
+		/**
+		 * Static reference to engine for access to children variables.
+		 * */
 		static Engine *engine;
 		/**
 		 * Engine constructor. Sets everything to their default values.

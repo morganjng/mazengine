@@ -11,6 +11,9 @@
 
 namespace mazengine {
 
+	/**
+	 * A MenuWidget is an element of the Menu screen.
+	 * */
 	class MenuWidget {
 	protected:
 		SDL_Rect rect; /**< Location on screen. */
@@ -48,6 +51,9 @@ namespace mazengine {
 		SDL_Surface *Texture(); /**< Getter for texture. */
 	};
 
+	/**
+	 * The Menu class represents simple, interactable menus.
+	 * */
 	class Menu : public Game {
 	protected:
 		SDL_Surface *internal_surface; /**< Surface to draw to. */
@@ -104,6 +110,10 @@ namespace mazengine {
 		};
 		int Tick(); /**< Update state. */
 		int Draw(); /**< Draw state. */
+		/**
+		 * Set the specified value of the specified widget to the provided
+		 * value.
+		 * */
 		void SetWidgetValue(std::string value, size_t widget_idx,
 							size_t new_value);
 	};
