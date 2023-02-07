@@ -14,7 +14,11 @@ namespace mazengine {
 		 * An Entity is a movable and reacting element displayed in a Display
 		 * object.
 		 * */
-		class Entity {};
+		class Entity {
+		public:
+			Rect location;
+			Texture *texture;
+		};
 
 		/**
 		 * A Display is an Element that displays a map of tiles, following a
@@ -70,6 +74,14 @@ namespace mazengine {
 				for (int i = 0; i < map_size[0] * map_size[1]; i++) {
 					tiles[i] = temp[i];
 				}
+
+				texture_location_rect.w = tile_size[0];
+				texture_location_rect.h = tile_size[1];
+
+				tile_location_rect.w =
+					tile_size[0] * (output.w / internal_size[0]);
+				tile_location_rect.h =
+					tile_size[1] * (output.h / internal_size[1]);
 			}
 
 			/**
