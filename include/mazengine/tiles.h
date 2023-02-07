@@ -15,7 +15,7 @@ namespace mazengine {
 		class Display : public Element {
 		protected:
 			Texture *tileset;
-			std::vector<Entity *> following;
+			Entity *following;
 			std::vector<Entity> entities;
 			int *tiles;
 			Rect output;
@@ -49,7 +49,10 @@ namespace mazengine {
 			}
 
 			Rect *GetTileLocation(int tile_index);
-			Rect *GetTextureLocation() int GetTile(int x, int y);
+			Rect *GetTextureLocation();
+			int GetTile(int x, int y);
+			int Tick();
+			int Draw();
 		};
 	} // namespace tiles
 } // namespace mazengine
