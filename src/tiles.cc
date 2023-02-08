@@ -3,8 +3,9 @@
 namespace mazengine {
 	namespace tiles {
 		Rect *Display::GetTileLocation(int x, int y) {
-			(void)x;
-			(void)y;
+			int w_scale = output.w / internal_size[0];
+			int h_scale = output.h / internal_size[1];
+
 			return &tile_location_rect;
 		}
 		Rect *Display::GetTextureLocation(int tile_index) {
