@@ -18,6 +18,7 @@ namespace mazengine {
 		public:
 			Rect location;
 			Texture *texture;
+			std::map<std::string, std::string> behaviors;
 		};
 
 		/**

@@ -81,10 +81,9 @@ namespace mazengine {
 			return tiles[x + y * map_size[0]];
 		}
 		int Display::Tick() {
-			following->location.x = *IO::cursor_x * Engine::window_width;
-			following->location.y = *IO::cursor_y * Engine::window_height;
-			std::cout << following->location.x << ", " << following->location.y
-					  << std::endl;
+			for (Entity entity : entities) {
+				entity.Tick();
+			}
 			return 0;
 		}
 		int Display::Draw() {
