@@ -40,6 +40,8 @@ namespace mazengine {
 			Rect tile_location_rect;
 			Rect texture_location_rect;
 
+			std::vector<std::string> triggers;
+
 		public:
 			std::string title;
 			Display(std::string title, Rect output) {
@@ -47,6 +49,8 @@ namespace mazengine {
 				this->title = title;
 				auto data = YAML::LoadFile(
 					(Engine::data_path + "tiles/" + title + ".yaml").c_str());
+
+				triggers = data["triggers"].as<std::vector<std::string>>();
 
 				internal_size = (int *)malloc(sizeof(int) * 2);
 				internal_size[0] = data["width"].as<int>();

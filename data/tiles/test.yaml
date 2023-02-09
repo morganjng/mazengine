@@ -1,3 +1,4 @@
+triggers: [onclick, onpress]
 width: 320
 height: 240
 tileset: stringstar.png
