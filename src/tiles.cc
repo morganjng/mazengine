@@ -6,6 +6,11 @@ namespace mazengine {
 			int w_scale = output.w / internal_size[0];
 			int h_scale = output.h / internal_size[1];
 
+			tile_location_rect.x = (x * tile_size[0] * w_scale) -
+				(following->location.x * w_scale) + output.x;
+			tile_location_rect.y = (y * tile_size[1] * h_scale) -
+				(following->location.y * h_scale) + output.y;
+
 			return &tile_location_rect;
 		}
 		Rect *Display::GetTextureLocation(int tile_index) {
