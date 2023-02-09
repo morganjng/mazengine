@@ -22,4 +22,5 @@ namespace mazengine {
 		return 0;
 	}
 
+	void IGame::AddElement(Element *element) { elements.push_back(element); }
 } // namespace mazengine

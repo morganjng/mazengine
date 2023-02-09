@@ -1,1 +1,10 @@
+# -*- mode: yaml -*-
+name: Mazengine Test
+window_width: 640
+window_height: 480
+framerate: 30
 
+data_path: data/
+img_path: img/
+audio_path: audio/
+settings_path: data/settings.yaml

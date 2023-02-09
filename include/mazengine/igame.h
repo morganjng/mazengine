@@ -37,6 +37,7 @@ namespace mazengine {
 				backgrounds.push_back(new Texture(val));
 			}
 		}
+		void AddElement(Element *element);
 		int Tick(); /**< Update state of elements and this. */
 		int Draw(); /**< Draw current state of elements in order. */
 	};

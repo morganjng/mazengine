@@ -82,6 +82,10 @@ namespace mazengine {
 					tile_size[0] * (output.w / internal_size[0]);
 				tile_location_rect.h =
 					tile_size[1] * (output.h / internal_size[1]);
+
+				following = new Entity;
+				mazengine::Rect loc(16, 16, 0, 0);
+				following->location = loc;
 			}
 
 			/**
