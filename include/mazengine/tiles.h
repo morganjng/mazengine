@@ -132,14 +132,6 @@ namespace mazengine {
 					boost::python::object(EFWrapper(e));
 				following = e;
 
-				texture_location_rect.w = tile_size[0];
-				texture_location_rect.h = tile_size[1];
-
-				tile_location_rect.w =
-					tile_size[0] * (output.w / internal_size[0]);
-				tile_location_rect.h =
-					tile_size[1] * (output.h / internal_size[1]);
-
 				entities.push_back(*following);
 			}
 
@@ -180,14 +172,6 @@ namespace mazengine {
 					boost::python::object(EFWrapper(e));
 				following = e;
 
-				texture_location_rect.w = tile_size[0];
-				texture_location_rect.h = tile_size[1];
-
-				tile_location_rect.w =
-					tile_size[0] * (output.w / internal_size[0]);
-				tile_location_rect.h =
-					tile_size[1] * (output.h / internal_size[1]);
-
 				entities.push_back(*following);
 			}
 
@@ -227,19 +211,15 @@ namespace mazengine {
 					tiles[i] = temp[i];
 				}
 
-				texture_location_rect.w = tile_size[0];
-				texture_location_rect.h = tile_size[1];
-
-				tile_location_rect.w =
-					tile_size[0] * (output.w / internal_size[0]);
-				tile_location_rect.h =
-					tile_size[1] * (output.h / internal_size[1]);
-
 				following = new Entity;
 				mazengine::Rect loc(16, 16, 0, 0);
 				following->location = loc;
 			}
 
+			/**
+			 * Setup Rects for draw.
+			 * */
+			void ConfigureRects(int x, int y);
 			/**
 			 * Return Rect describing where to draw this tile onto the window.
 			 * */

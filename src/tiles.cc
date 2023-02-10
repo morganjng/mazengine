@@ -53,7 +53,17 @@ namespace mazengine {
 			return a;
 		}
 
-		Rect *Display::GetTileLocation(int x, int y) {
+		void Display::ConfigureRects(int x, int y) {
+			int tile_index = GetTile(x, y);
+
+			int w = tileset_size[0] / tile_size[0];
+
+			texture_location_rect.x = (tile_index % w) * tile_size[0];
+			texture_location_rect.y = (tile_index / w) * tile_size[1];
+
+			texture_location_rect.w = tile_size[0];
+			texture_location_rect.h = tile_size[1];
+
 			tile_location_rect.w = tile_size[0] * (output.w / internal_size[0]);
 			tile_location_rect.h = tile_size[1] * (output.h / internal_size[1]);
 
@@ -74,36 +84,40 @@ namespace mazengine {
 				((y * tile_size[1] + tl_y) * h_scale) + output.y;
 
 			if (tile_location_rect.x < output.x) {
+				MoveSide(&texture_location_rect, 3,
+						 ((output.x - tile_location_rect.x) / w_scale) +
+							 texture_location_rect.x);
 				MoveSide(&tile_location_rect, 3, output.x);
 			}
 
 			if (tile_location_rect.y < output.y) {
+				MoveSide(&texture_location_rect, 0,
+						 ((output.y - tile_location_rect.y) / h_scale) +
+							 texture_location_rect.y);
 				MoveSide(&tile_location_rect, 0, output.y);
 			}
 
 			if (tile_location_rect.x + tile_location_rect.w >
 				output.x + output.w) {
+				// MoveSide(&texture_location_rect, 1,
+				// 		 ((output.x - tile_location_rect.x) / w_scale) +
+				// 			 texture_location_rect.x);
 				MoveSide(&tile_location_rect, 1, output.x + output.w);
 			}
 
 			if (tile_location_rect.y + tile_location_rect.h >
 				output.y + output.h) {
+				// MoveSide(&texture_location_rect, 2,
+				// 		 ((output.x - tile_location_rect.x) / w_scale) +
+				// 			 texture_location_rect.x);
 				MoveSide(&tile_location_rect, 2, output.y + output.h);
 			}
-
-			return &tile_location_rect;
 		}
-		Rect *Display::GetTextureLocation(int tile_index) {
-			int w = tileset_size[0] / tile_size[0];
 
-			texture_location_rect.x = (tile_index % w) * tile_size[0];
-			texture_location_rect.y = (tile_index / w) * tile_size[1];
-
-			return &texture_location_rect;
-		}
 		int Display::GetTile(int x, int y) {
 			return tiles[x + y * map_size[0]];
 		}
+
 		int Display::Tick() {
 			for (std::string trigger : triggers) {
 				for (Entity e : entities) {
@@ -122,8 +136,9 @@ namespace mazengine {
 					 j++) {
 					if (i >= 0 && j >= 0 && i < map_size[0] &&
 						j < map_size[0]) {
-						tileset->Draw(GetTextureLocation(GetTile(i, j)),
-									  GetTileLocation(i, j));
+						ConfigureRects(i, j);
+						tileset->Draw(&texture_location_rect,
+									  &tile_location_rect);
 					}
 				}
 			}
