@@ -21,6 +21,20 @@ namespace mazengine {
 			std::map<std::string, std::string> behaviors;
 		};
 
+		class EditorFollow : public Entity {
+		public:
+			int **tiles_ptr;
+			EditorFollow(int tile_w, int tile_h, int **tiles_ptr) : Entity() {
+				this->location.x = 0;
+				this->location.y = 0;
+				this->location.w = tile_w;
+				this->location.h = tile_h;
+				this->tiles_ptr = tiles_ptr;
+				Engine::engine->main_namespace["editor"] =
+					boost::python::object(this);
+			}
+		};
+
 		/**
 		 * A Display is an Element that displays a map of tiles, following a
 		 * certain Entity.
@@ -44,6 +58,21 @@ namespace mazengine {
 
 		public:
 			std::string title;
+			Display(std::string title, std::string tileset, int tileset_w,
+					int tileset_h, int internal_w, int internal_h, int tile_w,
+					int tile_h, int map_w, int map_h) {
+				this->title = title;
+				this->tileset = new Texture(tileset);
+
+				// Triggers for editing, empty vector is written to file
+				triggers.clear();
+				triggers.push_back("onclick");
+				triggers.push_back("onpress");
+
+				following = new EditorFollow(tile_w, tile_h);
+				entities.push_back(*following);
+			}
+
 			Display(std::string title, Rect output) {
 				this->output = output;
 				this->title = title;

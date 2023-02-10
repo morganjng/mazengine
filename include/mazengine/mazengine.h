@@ -61,6 +61,8 @@ namespace mazengine {
 		 * Does the python have to be initialized for this game?
 		 * */
 		bool python_initialized = false;
+
+	public:
 		/**
 		 * Boost.Python variable.
 		 * */
@@ -70,7 +72,6 @@ namespace mazengine {
 		 * */
 		boost::python::object main_namespace;
 
-	public:
 		/**
 		 * Vector of games to rid ourselves of the dreaded UGame and
 		 * tree-traversal.
