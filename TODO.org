@@ -20,3 +20,4 @@
 ** Use cases
 ** Troubleshooting
 * TODO Keyboard press support as well as button inputs (for traditional controller input)
+* TODO Behaviors? Instead of handling every tick having sets of actions and graphs leading into other actions

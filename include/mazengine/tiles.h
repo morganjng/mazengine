@@ -195,6 +195,7 @@ namespace mazengine {
 		class Sidebar : public Element {
 		public:
 			Display *display;
+			Texture *texture;
 			Sidebar(Display *display) { this->display = display; };
 		};
 	} // namespace tiles
