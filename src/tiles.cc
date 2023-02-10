@@ -81,11 +81,13 @@ namespace mazengine {
 				MoveSide(&tile_location_rect, 0, output.y);
 			}
 
-			if (tile_location_rect.x > output.x + output.w) {
+			if (tile_location_rect.x + tile_location_rect.w >
+				output.x + output.w) {
 				MoveSide(&tile_location_rect, 1, output.x + output.w);
 			}
 
-			if (tile_location_rect.y > output.y + output.h) {
+			if (tile_location_rect.y + tile_location_rect.h >
+				output.y + output.h) {
 				MoveSide(&tile_location_rect, 2, output.y + output.h);
 			}
 
