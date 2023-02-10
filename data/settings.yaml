@@ -1,0 +1,9 @@
+up: Up
+down: Down
+left: Left
+right: Right
+A: a
+B: o
+start: Return
+select: Right Shift
+kill: Escape
