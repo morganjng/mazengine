@@ -80,6 +80,62 @@ namespace mazengine {
 			Entity *following;
 			std::vector<Entity> entities;
 			std::string title;
+
+			Display(std::string title) {
+				this->output = Rect(0, 0, 960, 720);
+				this->title = title;
+				auto data = YAML::LoadFile(
+					(Engine::data_path + "tiles/" + title + ".yaml").c_str());
+
+				triggers.clear();
+				triggers.push_back("onclick");
+				triggers.push_back("onpress");
+
+				internal_size = (int *)malloc(sizeof(int) * 2);
+				internal_size[0] = data["width"].as<int>();
+				internal_size[1] = data["height"].as<int>();
+
+				auto map_size_temp = data["map_size"].as<std::vector<int>>();
+				map_size = (int *)malloc(sizeof(int) * 2);
+				map_size[0] = map_size_temp[0];
+				map_size[1] = map_size_temp[1];
+
+				auto tile_size_temp = data["tile_size"].as<std::vector<int>>();
+				tile_size = (int *)malloc(sizeof(int) * 2);
+				tile_size[0] = tile_size_temp[0];
+				tile_size[1] = tile_size_temp[1];
+
+				auto tileset_size_temp =
+					data["tileset_size"].as<std::vector<int>>();
+				tileset_size = (int *)malloc(sizeof(int) * 2);
+				tileset_size[0] = tileset_size_temp[0];
+				tileset_size[1] = tileset_size_temp[1];
+
+				tiles = (int *)malloc(sizeof(int) * map_size[0] * map_size[1]);
+				tileset = new Texture(data["tileset"].as<std::string>());
+
+				auto temp = data["tiles"].as<std::vector<int>>();
+				for (int i = 0; i < map_size[0] * map_size[1]; i++) {
+					tiles[i] = temp[i];
+				}
+
+				auto e = new EditorFollow(tile_size[0], tile_size[1],
+										  map_size[0], map_size[1], this);
+				Engine::engine->main_namespace["editor"] =
+					boost::python::object(EFWrapper(e));
+				following = e;
+
+				texture_location_rect.w = tile_size[0];
+				texture_location_rect.h = tile_size[1];
+
+				tile_location_rect.w =
+					tile_size[0] * (output.w / internal_size[0]);
+				tile_location_rect.h =
+					tile_size[1] * (output.h / internal_size[1]);
+
+				entities.push_back(*following);
+			}
+
 			Display(std::string title, std::string tileset, int tileset_w,
 					int tileset_h, int internal_w, int internal_h, int tile_w,
 					int tile_h, int map_w, int map_h, Rect output) {

@@ -47,3 +47,5 @@ if(MVSC)
 else()
   target_compile_options(mazengine PUBLIC -Wall -Wextra -Wpedantic -Werror)
 endif()
+
+add_subdirectory(util)
