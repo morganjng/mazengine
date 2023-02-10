@@ -31,6 +31,28 @@ void MoveSide(mazengine::Rect *rect, int side, int new_side) {
 
 namespace mazengine {
 	namespace tiles {
+		std::pair<int, int> Display::ScreenToWorld(int x, int y) {
+			std::pair<int, int> a;
+			if (!output.Contains(x, y)) {
+				a.first = -1;
+				a.second = -1;
+				return a;
+			}
+			a.first = (following->location.x / tile_size[0]) -
+				((output.x + output.w / 2) - x) /
+					(tile_size[0] * output.w / internal_size[0]);
+			a.second = (following->location.y / tile_size[1]) -
+				((output.y + output.h / 2) - y) /
+					(tile_size[1] * output.h / internal_size[1]);
+			if (a.first < 0 || a.first > map_size[0]) {
+				a.second = -1;
+			}
+			if (a.second < 0 || a.second > map_size[1]) {
+				a.second = -1;
+			}
+			return a;
+		}
+
 		Rect *Display::GetTileLocation(int x, int y) {
 			tile_location_rect.w = tile_size[0] * (output.w / internal_size[0]);
 			tile_location_rect.h = tile_size[1] * (output.h / internal_size[1]);
@@ -81,8 +103,10 @@ namespace mazengine {
 			return tiles[x + y * map_size[0]];
 		}
 		int Display::Tick() {
-			for (Entity entity : entities) {
-				entity.Tick();
+			for (std::string trigger : triggers) {
+				for (Entity e : entities) {
+					Engine::Execute(e.behaviors[trigger]);
+				}
 			}
 			return 0;
 		}
@@ -105,5 +129,53 @@ namespace mazengine {
 			}
 			return 0;
 		}
+
+		void Display::SetTile(int x, int y, int val) {
+			if (x == -1 || y == -1) {
+				return;
+			}
+			tiles[x + y * map_size[0]] = val;
+		}
+
+		void EditorFollow::Move() {
+			for (auto release : *IO::releases) {
+				if (release == Button::LEFT && location.x > 0) {
+					location.x -= location.w;
+				}
+				if (release == Button::RIGHT) {
+					location.x += location.w;
+				}
+				if (release == Button::UP && location.y > 0) {
+					location.y -= location.h;
+				}
+				if (release == Button::DOWN) {
+					location.y += location.h;
+				}
+			}
+		}
+
+		void EditorFollow::Paint() {
+			for (auto release : *IO::releases) {
+				if (release == Button::MOUSE_CLICK) {
+					clicked = 0;
+				}
+			}
+			for (auto press : *IO::presses) {
+				if (press == Button::MOUSE_CLICK) {
+					clicked = 1;
+					auto a = display->ScreenToWorld(
+						*IO::cursor_x * Engine::window_width,
+						*IO::cursor_y * Engine::window_height);
+					display->SetTile(a.first, a.second, current_brush);
+				}
+				if (press == Button::MOUSE_MOTION && clicked) {
+					auto a = display->ScreenToWorld(
+						*IO::cursor_x * Engine::window_width,
+						*IO::cursor_y * Engine::window_height);
+					display->SetTile(a.first, a.second, current_brush);
+				}
+			}
+		}
+
 	} // namespace tiles
 } // namespace mazengine

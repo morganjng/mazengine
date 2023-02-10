@@ -1,8 +1,10 @@
 #include <boost/core/noncopyable.hpp>
 #include <boost/python.hpp>
 
+#include <boost/python/class.hpp>
 #include <mazengine.h>
 #include <menu.h>
+#include <tiles.h>
 
 using namespace boost::python;
 
@@ -43,6 +45,10 @@ public:
 
 BOOST_PYTHON_MODULE(libmazengine) {
 	class_<MenuWrapper>("Menu").def("SetWidget", &MenuWrapper::SetWidget);
+	class_<mazengine::tiles::EFWrapper>(
+		"Editor", init<mazengine::tiles::EditorFollow *>())
+		.def("Move", &mazengine::tiles::EFWrapper::Move)
+		.def("Paint", &mazengine::tiles::EFWrapper::Paint);
 	def("SetGame", &SetGame);
 	def("Kill", &Kill);
 	def("GetWindowDimensions", &GetWindowDimensions);

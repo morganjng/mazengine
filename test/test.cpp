@@ -1,4 +1,5 @@
 #include <igame.h>
+#include <io_2d_mouse.h>
 #include <io_mouse.h>
 #include <mazengine.h>
 #include <tiles.h>
@@ -20,7 +21,22 @@ void tiles_test() {
 	engine.Start();
 }
 
-void setup() { tests["tiles"] = tiles_test; }
+void tiles_editor_test() {
+	Engine engine;
+	IGame tile_test("tile_editor");
+	IO2dMouse io;
+	tile_test.AddElement(new tiles::Display("edit_test", "tile.png", 32, 32,
+											320, 240, 16, 16, 16, 16,
+											Rect(0, 0, 960, 720)));
+	engine.SetGame(&tile_test);
+	engine.SetIO(&io);
+	engine.Start();
+}
+
+void setup() {
+	tests["tiles"] = tiles_test;
+	tests["editor"] = tiles_editor_test;
+}
 
 int main(int argc, char *argv[]) {
 	setup();

@@ -10,6 +10,7 @@
 
 namespace mazengine {
 	namespace tiles {
+		class Display;
 		/**
 		 * An Entity is a movable and reacting element displayed in a Display
 		 * object.
@@ -24,15 +25,36 @@ namespace mazengine {
 		class EditorFollow : public Entity {
 		public:
 			int **tiles_ptr;
-			EditorFollow(int tile_w, int tile_h, int **tiles_ptr) : Entity() {
+			int map_w;
+			int map_h;
+			int clicked;
+			int current_brush;
+			Display *display;
+			EditorFollow(int tile_w, int tile_h, int map_w, int map_h,
+						 Display *display)
+				: Entity() {
+				current_brush = 1;
 				this->location.x = 0;
 				this->location.y = 0;
+				this->map_w = map_w;
+				this->map_h = map_h;
 				this->location.w = tile_w;
 				this->location.h = tile_h;
-				this->tiles_ptr = tiles_ptr;
-				Engine::engine->main_namespace["editor"] =
-					boost::python::object(this);
+				this->display = display;
+				clicked = 0;
+				behaviors["onclick"] = "editor.Paint()\n";
+				behaviors["onpress"] = "editor.Move()\n";
 			}
+			void Move();
+			void Paint();
+		};
+
+		class EFWrapper {
+		public:
+			mazengine::tiles::EditorFollow *ef;
+			EFWrapper(mazengine::tiles::EditorFollow *ef) { this->ef = ef; }
+			void Paint() { ef->Paint(); }
+			void Move() { ef->Move(); }
 		};
 
 		/**
@@ -42,8 +64,6 @@ namespace mazengine {
 		class Display : public Element {
 		protected:
 			Texture *tileset;
-			Entity *following;
-			std::vector<Entity> entities;
 			int *tiles;
 			Rect output;
 			int *internal_size;
@@ -57,11 +77,14 @@ namespace mazengine {
 			std::vector<std::string> triggers;
 
 		public:
+			Entity *following;
+			std::vector<Entity> entities;
 			std::string title;
 			Display(std::string title, std::string tileset, int tileset_w,
 					int tileset_h, int internal_w, int internal_h, int tile_w,
-					int tile_h, int map_w, int map_h) {
+					int tile_h, int map_w, int map_h, Rect output) {
 				this->title = title;
+				this->output = output;
 				this->tileset = new Texture(tileset);
 
 				// Triggers for editing, empty vector is written to file
@@ -69,7 +92,39 @@ namespace mazengine {
 				triggers.push_back("onclick");
 				triggers.push_back("onpress");
 
-				following = new EditorFollow(tile_w, tile_h);
+				tiles = (int *)malloc(sizeof(int) * map_h * map_w);
+
+				for (int i = 0; i < map_w * map_h; i++) {
+					tiles[i] = 0;
+				}
+
+				tile_size = (int *)malloc(sizeof(int) * 2);
+				map_size = (int *)malloc(sizeof(int) * 2);
+				tileset_size = (int *)malloc(sizeof(int) * 2);
+				internal_size = (int *)malloc(sizeof(int) * 2);
+
+				tile_size[0] = tile_w;
+				tile_size[1] = tile_h;
+				tileset_size[0] = tileset_w;
+				tileset_size[1] = tileset_h;
+				map_size[0] = map_w;
+				map_size[1] = map_h;
+				internal_size[0] = internal_w;
+				internal_size[1] = internal_h;
+
+				auto e = new EditorFollow(tile_w, tile_h, map_w, map_h, this);
+				Engine::engine->main_namespace["editor"] =
+					boost::python::object(EFWrapper(e));
+				following = e;
+
+				texture_location_rect.w = tile_size[0];
+				texture_location_rect.h = tile_size[1];
+
+				tile_location_rect.w =
+					tile_size[0] * (output.w / internal_size[0]);
+				tile_location_rect.h =
+					tile_size[1] * (output.h / internal_size[1]);
+
 				entities.push_back(*following);
 			}
 
@@ -133,6 +188,8 @@ namespace mazengine {
 			int GetTile(int x, int y);
 			int Tick();
 			int Draw();
+			std::pair<int, int> ScreenToWorld(int x, int y);
+			void SetTile(int x, int y, int val);
 		};
 	} // namespace tiles
 } // namespace mazengine
