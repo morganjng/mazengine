@@ -70,6 +70,7 @@ namespace mazengine {
 			int *tileset_size;
 			int *tile_size;
 			int *map_size;
+			int *following_point;
 
 			Rect tile_location_rect;
 			Rect texture_location_rect;
@@ -110,6 +111,12 @@ namespace mazengine {
 				tileset_size = (int *)malloc(sizeof(int) * 2);
 				tileset_size[0] = tileset_size_temp[0];
 				tileset_size[1] = tileset_size_temp[1];
+
+				auto following_pt_temp =
+					data["following_point"].as<std::vector<int>>();
+				following_point = (int *)malloc(sizeof(int) * 2);
+				following_point[0] = following_pt_temp[0];
+				following_point[1] = following_pt_temp[1];
 
 				tiles = (int *)malloc(sizeof(int) * map_size[0] * map_size[1]);
 				tileset = new Texture(data["tileset"].as<std::string>());

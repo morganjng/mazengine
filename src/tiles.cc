@@ -62,8 +62,8 @@ namespace mazengine {
 			int follow_point_y =
 				following->location.y + (following->location.h / 2);
 
-			int tl_x = -follow_point_x + internal_size[0] / 2;
-			int tl_y = -follow_point_y + internal_size[1] / 2;
+			int tl_x = -follow_point_x + following_point[0];
+			int tl_y = -follow_point_y + following_point[1];
 
 			int w_scale = output.w / internal_size[0];
 			int h_scale = output.h / internal_size[1];
@@ -111,8 +111,8 @@ namespace mazengine {
 			return 0;
 		}
 		int Display::Draw() {
-			int off_x = following->location.x / tile_size[0];
-			int off_y = following->location.y / tile_size[1];
+			int off_x = following_point[0] / tile_size[0];
+			int off_y = following_point[1] / tile_size[1];
 			off_x = off_x - 1 - (internal_size[0] / tile_size[0] / 2);
 			off_y = off_y - 1 - (internal_size[0] / tile_size[0] / 2);
 			for (int i = 0; i < 2 + (internal_size[0] / tile_size[0]); i++) {

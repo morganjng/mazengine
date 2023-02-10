@@ -3,8 +3,9 @@ width: 320
 height: 240
 tileset: stringstar.png
 map_size: [16, 16]
-tile_size: [16, 16]
-tileset_size: [288, 176]
+tile_size: [32, 32]
+tileset_size: [32, 32]
+following_point: [160, 160]
 tiles:
   [
     0,
