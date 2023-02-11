@@ -82,142 +82,26 @@ namespace mazengine {
 			std::vector<Entity> entities;
 			std::string title;
 
-			Display(std::string title) {
-				this->output = Rect(0, 0, 960, 720);
-				this->title = title;
-				auto data = YAML::LoadFile(
-					(Engine::data_path + "tiles/" + title + ".yaml").c_str());
+			Display *Load(std::string title);
+			Display *Tileset(std::string tileset_path);
 
+			Display *Title(std::string title);
+			Display *TileSize(int w, int h);
+			Display *MapSize(int w, int h, int tile_preset);
+			Display *TilesetSize(int w, int h);
+			Display *InternalSize(int w, int h);
+			Display *FollowingPoint(int x, int y);
+			Display *Output(int x, int y, int w, int h);
+			EditorFollow *Editor();
+
+			Display() {
 				triggers.clear();
-				triggers.push_back("onclick");
-				triggers.push_back("onpress");
-
-				internal_size = (int *)malloc(sizeof(int) * 2);
-				internal_size[0] = data["width"].as<int>();
-				internal_size[1] = data["height"].as<int>();
-
-				auto map_size_temp = data["map_size"].as<std::vector<int>>();
-				map_size = (int *)malloc(sizeof(int) * 2);
-				map_size[0] = map_size_temp[0];
-				map_size[1] = map_size_temp[1];
-
-				auto tile_size_temp = data["tile_size"].as<std::vector<int>>();
-				tile_size = (int *)malloc(sizeof(int) * 2);
-				tile_size[0] = tile_size_temp[0];
-				tile_size[1] = tile_size_temp[1];
-
-				auto tileset_size_temp =
-					data["tileset_size"].as<std::vector<int>>();
-				tileset_size = (int *)malloc(sizeof(int) * 2);
-				tileset_size[0] = tileset_size_temp[0];
-				tileset_size[1] = tileset_size_temp[1];
-
-				auto following_pt_temp =
-					data["following_point"].as<std::vector<int>>();
-				following_point = (int *)malloc(sizeof(int) * 2);
-				following_point[0] = following_pt_temp[0];
-				following_point[1] = following_pt_temp[1];
-
-				tiles = (int *)malloc(sizeof(int) * map_size[0] * map_size[1]);
-				tileset = new Texture(data["tileset"].as<std::string>());
-
-				auto temp = data["tiles"].as<std::vector<int>>();
-				for (int i = 0; i < map_size[0] * map_size[1]; i++) {
-					tiles[i] = temp[i];
-				}
-
-				auto e = new EditorFollow(tile_size[0], tile_size[1],
-										  map_size[0], map_size[1], this);
-				Engine::engine->main_namespace["editor"] =
-					boost::python::object(EFWrapper(e));
-				following = e;
-
-				entities.push_back(*following);
-			}
-
-			Display(std::string title, std::string tileset, int tileset_w,
-					int tileset_h, int internal_w, int internal_h, int tile_w,
-					int tile_h, int map_w, int map_h, int following_x,
-					int following_y, Rect output) {
-				this->title = title;
-				this->output = output;
-				this->tileset = new Texture(tileset);
-
-				// Triggers for editing, empty vector is written to file
-				triggers.clear();
-				triggers.push_back("onclick");
-				triggers.push_back("onpress");
-
-				tiles = (int *)malloc(sizeof(int) * map_h * map_w);
-
-				for (int i = 0; i < map_w * map_h; i++) {
-					tiles[i] = 0;
-				}
-
+				entities.clear();
 				tile_size = (int *)malloc(sizeof(int) * 2);
 				map_size = (int *)malloc(sizeof(int) * 2);
 				tileset_size = (int *)malloc(sizeof(int) * 2);
 				internal_size = (int *)malloc(sizeof(int) * 2);
 				following_point = (int *)malloc(sizeof(int) * 2);
-
-				tile_size[0] = tile_w;
-				tile_size[1] = tile_h;
-				tileset_size[0] = tileset_w;
-				tileset_size[1] = tileset_h;
-				map_size[0] = map_w;
-				map_size[1] = map_h;
-				internal_size[0] = internal_w;
-				internal_size[1] = internal_h;
-				following_point[0] = following_x;
-				following_point[1] = following_y;
-
-				auto e = new EditorFollow(tile_w, tile_h, map_w, map_h, this);
-				Engine::engine->main_namespace["editor"] =
-					boost::python::object(EFWrapper(e));
-				following = e;
-
-				entities.push_back(*following);
-			}
-
-			Display(std::string title, Rect output) {
-				this->output = output;
-				this->title = title;
-				auto data = YAML::LoadFile(
-					(Engine::data_path + "tiles/" + title + ".yaml").c_str());
-
-				triggers = data["triggers"].as<std::vector<std::string>>();
-
-				internal_size = (int *)malloc(sizeof(int) * 2);
-				internal_size[0] = data["width"].as<int>();
-				internal_size[1] = data["height"].as<int>();
-
-				auto map_size_temp = data["map_size"].as<std::vector<int>>();
-				map_size = (int *)malloc(sizeof(int) * 2);
-				map_size[0] = map_size_temp[0];
-				map_size[1] = map_size_temp[1];
-
-				auto tile_size_temp = data["tile_size"].as<std::vector<int>>();
-				tile_size = (int *)malloc(sizeof(int) * 2);
-				tile_size[0] = tile_size_temp[0];
-				tile_size[1] = tile_size_temp[1];
-
-				auto tileset_size_temp =
-					data["tileset_size"].as<std::vector<int>>();
-				tileset_size = (int *)malloc(sizeof(int) * 2);
-				tileset_size[0] = tileset_size_temp[0];
-				tileset_size[1] = tileset_size_temp[1];
-
-				tiles = (int *)malloc(sizeof(int) * map_size[0] * map_size[1]);
-				tileset = new Texture(data["tileset"].as<std::string>());
-
-				auto temp = data["tiles"].as<std::vector<int>>();
-				for (int i = 0; i < map_size[0] * map_size[1]; i++) {
-					tiles[i] = temp[i];
-				}
-
-				following = new Entity;
-				mazengine::Rect loc(16, 16, 0, 0);
-				following->location = loc;
 			}
 
 			void SetTile(int x, int y, int val);

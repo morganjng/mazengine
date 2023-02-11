@@ -44,7 +44,7 @@ target_link_libraries(
 if(MVSC)
   target_compile_options(mazengine PUBLIC /W4 /WX)
 else()
-  target_compile_options(mazengine PUBLIC -Wall -Wextra -Wpedantic -Werror)
+  target_compile_options(mazengine PUBLIC -Wall -Wextra -Wpedantic -Werror -g)
 endif()
 
 add_subdirectory(util)

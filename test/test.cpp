@@ -15,7 +15,7 @@ void tiles_test() {
 	Engine engine;
 	IGame tile_test("tile_test");
 	IOMouse io;
-	tile_test.AddElement(new tiles::Display("test", Rect(0, 0, 640, 480)));
+	// tile_test.AddElement(new tiles::Display("test", Rect(0, 0, 640, 480)));
 	engine.SetGame(&tile_test);
 	engine.SetIO(&io);
 	engine.Start();
@@ -25,9 +25,9 @@ void tiles_editor_test() {
 	Engine engine;
 	IGame tile_test("tile_editor");
 	IO2dMouse io;
-	tile_test.AddElement(new tiles::Display("edit_test", "tile.png", 32, 32,
-											320, 240, 16, 16, 16, 16, 160, 160,
-											Rect(0, 0, 960, 720)));
+	// tile_test.AddElement(new tiles::Display("edit_test", "tile.png", 32, 32,
+	// 										320, 240, 16, 16, 16, 16, 160, 160,
+	// 										Rect(0, 0, 960, 720)));
 	engine.SetGame(&tile_test);
 	engine.SetIO(&io);
 	engine.Start();

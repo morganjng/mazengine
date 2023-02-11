@@ -31,6 +31,110 @@ void MoveSide(mazengine::Rect *rect, int side, int new_side) {
 
 namespace mazengine {
 	namespace tiles {
+
+		Display *Display::Load(std::string title) {
+			this->title = title;
+			auto data = YAML::LoadFile(
+				(Engine::data_path + "tiles/" + title + ".yaml").c_str());
+
+			internal_size[0] = data["width"].as<int>();
+			internal_size[1] = data["height"].as<int>();
+
+			auto map_size_temp = data["map_size"].as<std::vector<int>>();
+			map_size[0] = map_size_temp[0];
+			map_size[1] = map_size_temp[1];
+
+			auto tile_size_temp = data["tile_size"].as<std::vector<int>>();
+			tile_size[0] = tile_size_temp[0];
+			tile_size[1] = tile_size_temp[1];
+
+			auto tileset_size_temp =
+				data["tileset_size"].as<std::vector<int>>();
+			tileset_size[0] = tileset_size_temp[0];
+			tileset_size[1] = tileset_size_temp[1];
+
+			auto following_pt_temp =
+				data["following_point"].as<std::vector<int>>();
+			following_point[0] = following_pt_temp[0];
+			following_point[1] = following_pt_temp[1];
+
+			tiles = (int *)malloc(sizeof(int) * map_size[0] * map_size[1]);
+			tileset = new Texture(data["tileset"].as<std::string>());
+
+			auto temp = data["tiles"].as<std::vector<int>>();
+			for (int i = 0; i < map_size[0] * map_size[1]; i++) {
+				tiles[i] = temp[i];
+			}
+
+			return this;
+		}
+
+		Display *Display::Tileset(std::string tileset_path) {
+			tileset = new Texture(tileset_path);
+			return this;
+		}
+
+		Display *Display::Title(std::string title) {
+			this->title = title;
+			return this;
+		}
+
+		Display *Display::TileSize(int w, int h) {
+			tile_size[0] = w;
+			tile_size[1] = h;
+			return this;
+		}
+		Display *Display::MapSize(int w, int h, int tile_preset) {
+			map_size[0] = w;
+			map_size[1] = h;
+			tiles = (int *)malloc(sizeof(int) * w * h);
+			for (int i = 0; i < w * h; i++) {
+				tiles[i] = tile_preset;
+			}
+			return this;
+		}
+		Display *Display::TilesetSize(int w, int h) {
+			tileset_size[0] = w;
+			tileset_size[1] = h;
+			return this;
+		}
+
+		Display *Display::InternalSize(int w, int h) {
+			internal_size[0] = w;
+			internal_size[1] = h;
+			return this;
+		}
+
+		Display *Display::FollowingPoint(int x, int y) {
+			following_point[0] = x;
+			following_point[1] = y;
+			return this;
+		}
+
+		Display *Display::Output(int x, int y, int w, int h) {
+			this->output.x = x;
+			this->output.y = y;
+			this->output.w = w;
+			this->output.h = h;
+			return this;
+		}
+
+		EditorFollow *Display::Editor() {
+			triggers.push_back("onclick");
+			triggers.push_back("onpress");
+
+			auto e = new EditorFollow(tile_size[0], tile_size[1], map_size[0],
+									  map_size[1], this);
+
+			Engine::engine->main_namespace["editor"] =
+				boost::python::object(*new EFWrapper(e));
+			following = e;
+
+			entities.push_back(*e);
+
+			return e;
+		};
+
 		std::pair<int, int> Display::ScreenToWorld(int x, int y) {
 			std::pair<int, int> a;
 			if (!output.Contains(x, y)) {
