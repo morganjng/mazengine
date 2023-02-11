@@ -32,22 +32,6 @@
 
 namespace mazengine {
 	/**
-	 * Mazzycat provides information about the engine and its settings to
-	 * members -- soon will be deprecated for Engine static functions and
-	 * variables.
-	 *  */
-	class Mazzycat {
-	public:
-		static std::vector<YAML::Node> data; /**< Loaded Mazzycat file. */
-		static void Init();					 /**< Load Mazzycat file. */
-		static std::string GetName();		 /**< Name of game. */
-		static std::pair<int, int> GetWindowSize(); /**< Window width/height. */
-		static int GetFramerate();					/**< Framerate of engine. */
-		static std::map<std::string, std::string>
-			GetPaths(); /**< Paths map from Mazzycat. */
-	};
-
-	/**
 	 * The engine class represents a wrapper for the game - controls how it
 	 * ticks, when it ticks, and when it draws. Should not be extended.
 	 * */

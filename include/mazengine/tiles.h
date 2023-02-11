@@ -220,23 +220,15 @@ namespace mazengine {
 				following->location = loc;
 			}
 
+			void SetTile(int x, int y, int val);
 			/**
 			 * Setup Rects for draw.
 			 * */
 			void ConfigureRects(int x, int y);
-			/**
-			 * Return Rect describing where to draw this tile onto the window.
-			 * */
-			Rect *GetTileLocation(int x, int y);
-			/**
-			 * Return Rect describing where this tile exists on the tileset.
-			 * */
-			Rect *GetTextureLocation(int tile_index);
 			int GetTile(int x, int y);
 			int Tick();
 			int Draw();
 			std::pair<int, int> ScreenToWorld(int x, int y);
-			void SetTile(int x, int y, int val);
 		};
 
 		class Sidebar : public Element {
