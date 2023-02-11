@@ -99,17 +99,19 @@ namespace mazengine {
 
 			if (tile_location_rect.x + tile_location_rect.w >
 				output.x + output.w) {
-				// MoveSide(&texture_location_rect, 1,
-				// 		 ((output.x - tile_location_rect.x) / w_scale) +
-				// 			 texture_location_rect.x);
+				MoveSide(
+					&texture_location_rect, 1,
+					((output.x + output.w - tile_location_rect.x) / w_scale) +
+						texture_location_rect.x);
 				MoveSide(&tile_location_rect, 1, output.x + output.w);
 			}
 
 			if (tile_location_rect.y + tile_location_rect.h >
 				output.y + output.h) {
-				// MoveSide(&texture_location_rect, 2,
-				// 		 ((output.x - tile_location_rect.x) / w_scale) +
-				// 			 texture_location_rect.x);
+				MoveSide(
+					&texture_location_rect, 2,
+					((output.y + output.h - tile_location_rect.y) / h_scale) +
+						texture_location_rect.y);
 				MoveSide(&tile_location_rect, 2, output.y + output.h);
 			}
 		}

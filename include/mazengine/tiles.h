@@ -137,7 +137,8 @@ namespace mazengine {
 
 			Display(std::string title, std::string tileset, int tileset_w,
 					int tileset_h, int internal_w, int internal_h, int tile_w,
-					int tile_h, int map_w, int map_h, Rect output) {
+					int tile_h, int map_w, int map_h, int following_x,
+					int following_y, Rect output) {
 				this->title = title;
 				this->output = output;
 				this->tileset = new Texture(tileset);
@@ -157,6 +158,7 @@ namespace mazengine {
 				map_size = (int *)malloc(sizeof(int) * 2);
 				tileset_size = (int *)malloc(sizeof(int) * 2);
 				internal_size = (int *)malloc(sizeof(int) * 2);
+				following_point = (int *)malloc(sizeof(int) * 2);
 
 				tile_size[0] = tile_w;
 				tile_size[1] = tile_h;
@@ -166,6 +168,8 @@ namespace mazengine {
 				map_size[1] = map_h;
 				internal_size[0] = internal_w;
 				internal_size[1] = internal_h;
+				following_point[0] = following_x;
+				following_point[1] = following_y;
 
 				auto e = new EditorFollow(tile_w, tile_h, map_w, map_h, this);
 				Engine::engine->main_namespace["editor"] =

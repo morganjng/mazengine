@@ -61,6 +61,12 @@ int main() {
 		std::cout << "Enter the map height." << std::endl;
 		std::cin >> response;
 		vals.push_back(std::stoi(response));
+		std::cout << "Enter the following x point." << std::endl;
+		std::cin >> response;
+		vals.push_back(std::stoi(response));
+		std::cout << "Enter the following y point." << std::endl;
+		std::cin >> response;
+		vals.push_back(std::stoi(response));
 	}
 
 	Engine engine;
@@ -68,7 +74,7 @@ int main() {
 	IO2dMouse io;
 	tile_test.AddElement(new tiles::Display(
 		ab[0], ab[1], vals[0], vals[1], vals[2], vals[3], vals[4], vals[5],
-		vals[6], vals[7], Rect(0, 0, 960, 720)));
+		vals[6], vals[7], vals[8], vals[9], Rect(0, 0, 960, 720)));
 	engine.SetGame(&tile_test);
 	engine.SetIO(&io);
 	engine.Start();
