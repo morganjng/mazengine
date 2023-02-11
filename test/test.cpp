@@ -26,7 +26,7 @@ void tiles_editor_test() {
 	IGame tile_test("tile_editor");
 	IO2dMouse io;
 	tile_test.AddElement(new tiles::Display("edit_test", "tile.png", 32, 32,
-											320, 240, 16, 16, 16, 16,
+											320, 240, 16, 16, 16, 16, 160, 160,
 											Rect(0, 0, 960, 720)));
 	engine.SetGame(&tile_test);
 	engine.SetIO(&io);

@@ -31,7 +31,7 @@ namespace mazengine {
 		 * */
 		IGame(std::string _name) : Game(_name) {
 			YAML::Node data =
-				YAML::LoadFile(Mazzycat::GetPaths()["data"] + name + ".yaml");
+				YAML::LoadFile(Engine::data_path + name + ".yaml");
 			for (std::string val :
 				 data["backgrounds"].as<std::vector<std::string>>()) {
 				backgrounds.push_back(new Texture(val));

@@ -9,7 +9,6 @@ add_library(
   io_2d_mouse.cc
   io_2d_no_mouse.cc
   io_mouse.cc
-  mazzycat.cc
   menu.cc
   texture.cc
   mazscript.cc
