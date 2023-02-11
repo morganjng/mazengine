@@ -116,13 +116,6 @@ namespace mazengine {
 			int Draw();
 			std::pair<int, int> ScreenToWorld(int x, int y);
 		};
-
-		class Sidebar : public Element {
-		public:
-			Display *display;
-			Texture *texture;
-			Sidebar(Display *display) { this->display = display; };
-		};
 	} // namespace tiles
 } // namespace mazengine
 

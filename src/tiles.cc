@@ -333,6 +333,14 @@ namespace mazengine {
 
 		void EditorFollow::Move() {
 			for (auto release : *IO::releases) {
+				if (release == Button::SELECT) {
+					std::cout << "Enter the new value for cursor." << std::endl;
+					std::cin >> current_brush;
+				}
+				if (release == Button::START) {
+					display->Save();
+					Engine::engine->Stop();
+				}
 				if (release == Button::LEFT && location.x > 0) {
 					location.x -= location.w;
 				}

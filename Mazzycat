@@ -1,6 +1,6 @@
 # -*- mode: yaml -*-
 name: Mazengine Test
-window_width: 1280
+window_width: 960
 window_height: 720
 framerate: 30
 
