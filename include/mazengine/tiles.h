@@ -83,6 +83,8 @@ namespace mazengine {
 			std::string title;
 
 			Display *Load(std::string title);
+			void Save();
+
 			Display *Tileset(std::string tileset_path);
 
 			Display *Title(std::string title);

@@ -1,5 +1,8 @@
 #include <tiles.h>
 
+#include <fstream>
+#include <iostream>
+
 /**
  * Move side of a rectangle, changing width and height with it.
  *   * - 0 - *
@@ -67,6 +70,74 @@ namespace mazengine {
 			}
 
 			return this;
+		}
+
+		void Display::Save() {
+			std::ofstream fout;
+			fout.open(Engine::data_path + "tiles/" + title + ".yaml");
+
+			YAML::Emitter out;
+			out.SetIndent(4);
+
+			std::vector<int> temp;
+			std::vector<std::string> temp_str;
+
+			out << YAML::BeginMap;
+
+			out << YAML::Key << "triggers";
+			out << YAML::Value << triggers;
+
+			out << YAML::Key << "width";
+			out << YAML::Value << internal_size[0];
+
+			out << YAML::Key << "height";
+			out << YAML::Value << internal_size[1];
+
+			out << YAML::Key << "tileset";
+			out << YAML::Value << tileset->path;
+
+			temp.clear();
+			temp.push_back(map_size[0]);
+			temp.push_back(map_size[1]);
+
+			out << YAML::Key << "map_size";
+			out << YAML::Value << temp;
+
+			temp.clear();
+			temp.push_back(tile_size[0]);
+			temp.push_back(tile_size[1]);
+
+			out << YAML::Key << "tile_size";
+			out << YAML::Value << temp;
+
+			temp.clear();
+			temp.push_back(tileset_size[0]);
+			temp.push_back(tileset_size[1]);
+
+			out << YAML::Key << "tileset_size";
+			out << YAML::Value << temp;
+
+			temp.clear();
+			temp.push_back(following_point[0]);
+			temp.push_back(following_point[1]);
+
+			out << YAML::Key << "following_point";
+			out << YAML::Value << temp;
+
+			temp.clear();
+
+			for (int i = 0; i < map_size[0] * map_size[1]; i++) {
+				temp.push_back(tiles[i]);
+			}
+
+			out << YAML::Key << "tiles";
+			out << YAML::Value << temp;
+
+			out << YAML::EndMap;
+
+			fout << out.c_str();
+
+			fout.close();
 		}
 
 		Display *Display::Tileset(std::string tileset_path) {
