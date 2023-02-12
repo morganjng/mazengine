@@ -206,7 +206,6 @@ namespace mazengine {
 		};
 
 		std::pair<int, int> Display::ScreenToWorld(int x, int y) {
-			std::cout << "click at " << x << ", " << y;
 			std::pair<int, int> a;
 			if (!output.Contains(x, y)) {
 				a.first = -1;
@@ -221,7 +220,6 @@ namespace mazengine {
 				following->location.h / 2 + following->location.y * h_scale;
 			a.first = _x / (tile_size[0] * w_scale);
 			a.second = _y / (tile_size[1] * h_scale);
-			std::cout << "to " << a.first << ", " << a.second << std::endl;
 			if (a.first < 0 || a.first > map_size[0]) {
 				a.second = -1;
 			}
@@ -335,6 +333,18 @@ namespace mazengine {
 			}
 			if (status == 255) {
 				tileset->Draw(nullptr, &output);
+				int x_pos = *IO::cursor_x * Engine::window_width;
+				int y_pos = *IO::cursor_y * Engine::window_height;
+				int tile_w = tileset_size[0] / tile_size[0];
+				int tile_h = tileset_size[1] / tile_size[1];
+				tile_w = 960 / tile_w;
+				tile_h = 720 / tile_h;
+				int x = x_pos / tile_w;
+				int y = y_pos / tile_h;
+				x *= tile_w;
+				y *= tile_h;
+				Rect r(x, y, tile_w, tile_h);
+				following->texture->Draw(nullptr, &r);
 			}
 			return 0;
 		}
@@ -382,26 +392,35 @@ namespace mazengine {
 					if (state == 1) {
 						display->status = 0;
 						state = 0;
-						current_brush = ((int)(display->tileset_size[0] /
-											   display->tile_size[0])) *
-								(*IO::cursor_y * Engine::window_height /
-								 ((int)(display->tile_size[1] *
-										display->output.h /
-										display->tileset_size[1]))) +
-							(*IO::cursor_x * Engine::window_width /
-							 ((int)(display->tile_size[0] * display->output.w /
-									display->tileset_size[0])));
+						int x_pos = *IO::cursor_x * Engine::window_width;
+						int y_pos = *IO::cursor_y * Engine::window_height;
+						int tile_w =
+							display->tileset_size[0] / display->tile_size[0];
+						int tile_h =
+							display->tileset_size[1] / display->tile_size[1];
+						tile_w = 960 / tile_w;
+						tile_h = 720 / tile_h;
+						int x = x_pos / tile_w;
+						int y = y_pos / tile_h;
+						current_brush = y *
+								(display->tileset_size[0] /
+								 display->tile_size[0]) +
+							x;
+						clicked = 0;
+						return;
 					}
 					clicked = 0;
 				}
 			}
 			for (auto press : *IO::presses) {
 				if (press == Button::MOUSE_CLICK) {
-					clicked = 1;
-					auto a = display->ScreenToWorld(
-						*IO::cursor_x * Engine::window_width,
-						*IO::cursor_y * Engine::window_height);
-					display->SetTile(a.first, a.second, current_brush);
+					if (state != 1) {
+						clicked = 1;
+						auto a = display->ScreenToWorld(
+							*IO::cursor_x * Engine::window_width,
+							*IO::cursor_y * Engine::window_height);
+						display->SetTile(a.first, a.second, current_brush);
+					}
 				}
 				if (press == Button::MOUSE_MOTION && clicked) {
 					auto a = display->ScreenToWorld(

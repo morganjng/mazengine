@@ -35,6 +35,7 @@ namespace mazengine {
 						 Display *display)
 				: Entity() {
 				current_brush = 1;
+				texture = new Texture("color.png");
 				this->location.x = 0;
 				this->location.y = 0;
 				this->map_w = map_w;
