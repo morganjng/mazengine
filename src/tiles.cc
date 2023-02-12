@@ -207,18 +207,22 @@ namespace mazengine {
 		};
 
 		std::pair<int, int> Display::ScreenToWorld(int x, int y) {
+			std::cout << "click at " << x << ", " << y;
 			std::pair<int, int> a;
 			if (!output.Contains(x, y)) {
 				a.first = -1;
 				a.second = -1;
 				return a;
 			}
-			a.first = (following->location.x / tile_size[0]) -
-				((output.x + output.w / 2) - x) /
-					(tile_size[0] * output.w / internal_size[0]);
-			a.second = (following->location.y / tile_size[1]) -
-				((output.y + output.h / 2) - y) /
-					(tile_size[1] * output.h / internal_size[1]);
+			int w_scale = output.w / internal_size[0];
+			int h_scale = output.h / internal_size[1];
+			int _x = x - following_point[0] * w_scale +
+				following->location.w / 2 + following->location.x * w_scale;
+			int _y = y - following_point[1] * h_scale +
+				following->location.h / 2 + following->location.y * h_scale;
+			a.first = _x / (tile_size[0] * w_scale);
+			a.second = _y / (tile_size[1] * h_scale);
+			std::cout << "to " << a.first << ", " << a.second << std::endl;
 			if (a.first < 0 || a.first > map_size[0]) {
 				a.second = -1;
 			}
@@ -314,6 +318,9 @@ namespace mazengine {
 					if (i >= 0 && j >= 0 && i < map_size[0] &&
 						j < map_size[0]) {
 						ConfigureRects(i, j);
+						// std::cout << "x, y :" << i << ", " << j
+						// 		  << "Rect : " << tile_location_rect.x << ", "
+						// 		  << tile_location_rect.y << std::endl;
 						tileset->Draw(&texture_location_rect,
 									  &tile_location_rect);
 					}
