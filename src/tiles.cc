@@ -232,6 +232,13 @@ namespace mazengine {
 		}
 
 		void Display::ConfigureRects(int x, int y) {
+			if (x < 0 || y < 0 || x >= map_size[0] || y >= map_size[1]) {
+				tile_location_rect.x = 0;
+				tile_location_rect.y = 0;
+				tile_location_rect.w = 0;
+				tile_location_rect.h = 0;
+				return;
+			}
 			int tile_index = GetTile(x, y);
 
 			int w = tileset_size[0] / tile_size[0];
@@ -307,19 +314,18 @@ namespace mazengine {
 			return 0;
 		}
 		int Display::Draw() {
-			int off_x = following_point[0] / tile_size[0];
-			int off_y = following_point[1] / tile_size[1];
+			int off_x = (following->location.x + (following->location.w / 2)) /
+				tile_size[0];
+			int off_y = (following->location.y + (following->location.h / 2)) /
+				tile_size[1];
 			off_x = off_x - 1 - (internal_size[0] / tile_size[0] / 2);
 			off_y = off_y - 1 - (internal_size[0] / tile_size[0] / 2);
-			for (int i = 0; i < 2 + (internal_size[0] / tile_size[0]); i++) {
-				for (int j = 0; j < 2 + (internal_size[1] / tile_size[1]);
+			for (int i = 0; i < 2 + (internal_size[1] / tile_size[1]); i++) {
+				for (int j = 0; j < 2 + (internal_size[0] / tile_size[0]);
 					 j++) {
-					if (i >= 0 && j >= 0 && i < map_size[0] &&
+					if (i >= 0 && j >= 0 && i < map_size[1] &&
 						j < map_size[0]) {
-						ConfigureRects(i, j);
-						// std::cout << "x, y :" << i << ", " << j
-						// 		  << "Rect : " << tile_location_rect.x << ", "
-						// 		  << tile_location_rect.y << std::endl;
+						ConfigureRects(off_x + j, off_y + i);
 						tileset->Draw(&texture_location_rect,
 									  &tile_location_rect);
 					}
