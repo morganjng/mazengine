@@ -17,6 +17,7 @@ namespace mazengine {
 		 * */
 		class Entity {
 		public:
+			int state;
 			Rect location;
 			Texture *texture;
 			std::map<std::string, std::string> behaviors;
@@ -62,7 +63,8 @@ namespace mazengine {
 		 * certain Entity.
 		 * */
 		class Display : public Element {
-		protected:
+		public:
+			int status;
 			Texture *tileset;
 			int *tiles;
 			Rect output;
@@ -77,7 +79,6 @@ namespace mazengine {
 
 			std::vector<std::string> triggers;
 
-		public:
 			Entity *following;
 			std::vector<Entity> entities;
 			std::string title;

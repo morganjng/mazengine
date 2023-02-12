@@ -34,7 +34,6 @@ void MoveSide(mazengine::Rect *rect, int side, int new_side) {
 
 namespace mazengine {
 	namespace tiles {
-
 		Display *Display::Load(std::string title) {
 			this->title = title;
 			auto data = YAML::LoadFile(
@@ -328,6 +327,9 @@ namespace mazengine {
 			}
 			for (Entity entity : entities) {
 			}
+			if (status == 255) {
+				tileset->Draw(nullptr, &output);
+			}
 			return 0;
 		}
 
@@ -341,8 +343,13 @@ namespace mazengine {
 		void EditorFollow::Move() {
 			for (auto release : *IO::releases) {
 				if (release == Button::SELECT) {
-					std::cout << "Enter the new value for cursor." << std::endl;
-					std::cin >> current_brush;
+					if (state == 1) {
+						state = 0;
+						display->status = 0;
+					} else {
+						state = 1;
+						display->status = 255;
+					}
 				}
 				if (release == Button::START) {
 					display->Save();
@@ -366,6 +373,19 @@ namespace mazengine {
 		void EditorFollow::Paint() {
 			for (auto release : *IO::releases) {
 				if (release == Button::MOUSE_CLICK) {
+					if (state == 1) {
+						display->status = 0;
+						state = 0;
+						current_brush = ((int)(display->tileset_size[0] /
+											   display->tile_size[0])) *
+								(*IO::cursor_y * Engine::window_height /
+								 ((int)(display->tile_size[1] *
+										display->output.h /
+										display->tileset_size[1]))) +
+							(*IO::cursor_x * Engine::window_width /
+							 ((int)(display->tile_size[0] * display->output.w /
+									display->tileset_size[0])));
+					}
 					clicked = 0;
 				}
 			}
