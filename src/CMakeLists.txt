@@ -12,7 +12,8 @@ add_library(
   menu.cc
   texture.cc
   mazscript.cc
-  tiles.cc)
+  tile_display.cc
+  tile_editor.cc)
 
 set_target_properties(mazengine PROPERTIES VERSION ${PROJECT_VERSION}
                                            SOVERSION ${PROJECT_VERSION_MAJOR})
