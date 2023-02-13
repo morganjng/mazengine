@@ -37,6 +37,9 @@ namespace mazengine {
 				backgrounds.push_back(new Texture(val));
 			}
 		}
+		/**
+		 * Add an element to the top of the list of elements.
+		 * */
 		void AddElement(Element *element);
 		int Tick(); /**< Update state of elements and this. */
 		int Draw(); /**< Draw current state of elements in order. */

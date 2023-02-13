@@ -13,9 +13,12 @@ namespace mazengine {
 		 * */
 		class Entity {
 		public:
-			int state;
-			Rect location;
-			Texture *texture;
+			int state;		  /**< Current state of this entity. */
+			Rect location;	  /**< Current world location. */
+			Texture *texture; /**< Texture to draw. Will be deprecated. */
+			/**
+			 * How the entity acts on certain triggers. Needs rethinking.
+			 * */
 			std::map<std::string, std::string> behaviors;
 		};
 	} // namespace tiles
