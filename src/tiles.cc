@@ -201,6 +201,7 @@ namespace mazengine {
 			following = e;
 
 			entities.push_back(*e);
+			status = 254;
 
 			return e;
 		};
@@ -230,7 +231,8 @@ namespace mazengine {
 		}
 
 		void Display::ConfigureRects(int x, int y) {
-			if (x < 0 || y < 0 || x >= map_size[0] || y >= map_size[1]) {
+			if (x < 0 || y < 0 || x >= map_size[0] || y >= map_size[1] ||
+				GetTile(x, y) == -1) {
 				tile_location_rect.x = 0;
 				tile_location_rect.y = 0;
 				tile_location_rect.w = 0;
@@ -346,6 +348,13 @@ namespace mazengine {
 				Rect r(x, y, tile_w, tile_h);
 				following->texture->Draw(nullptr, &r);
 			}
+			if (status == 254) {
+				int x_pos = *IO::cursor_x * Engine::window_width;
+				int y_pos = *IO::cursor_y * Engine::window_height;
+				auto a = ScreenToWorld(x_pos, y_pos);
+				ConfigureRects(a.first, a.second);
+				following->texture->Draw(nullptr, &tile_location_rect);
+			}
 			return 0;
 		}
 
@@ -361,7 +370,7 @@ namespace mazengine {
 				if (release == Button::SELECT) {
 					if (state == 1) {
 						state = 0;
-						display->status = 0;
+						display->status = 254;
 					} else {
 						state = 1;
 						display->status = 255;
@@ -390,7 +399,7 @@ namespace mazengine {
 			for (auto release : *IO::releases) {
 				if (release == Button::MOUSE_CLICK) {
 					if (state == 1) {
-						display->status = 0;
+						display->status = 254;
 						state = 0;
 						int x_pos = *IO::cursor_x * Engine::window_width;
 						int y_pos = *IO::cursor_y * Engine::window_height;
