@@ -117,6 +117,18 @@ namespace mazengine {
 		void SetWidgetValue(std::string value, size_t widget_idx,
 							size_t new_value);
 	};
+	/**
+	 * Wrapper for Menu class so Python can interact with it.
+	 * */
+	class MenuWrapper {
+	public:
+		MenuWrapper() { menu = (mazengine::Menu *)MZ::engine->GetGame(); }
+		mazengine::Menu *menu; /**< Pointer to the menu being wrapped. */
+		/**
+		 * Interface to menu->SetWidgetValue function for Python.
+		 * */
+		void SetWidget(std::string u, size_t v, size_t w);
+	};
 
 }; // namespace mazengine
 

@@ -75,4 +75,8 @@ namespace mazengine {
 		}
 	}
 
+	void MenuWrapper::SetWidget(std::string u, size_t v, size_t w) {
+		menu->SetWidgetValue(u, v, w);
+	}
+
 } // namespace mazengine

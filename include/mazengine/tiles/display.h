@@ -4,7 +4,8 @@
 #include "../element.h"
 #include "../mazengine.h"
 #include "../texture.h"
-#include "tiles.h"
+#include "tile.h"
+
 namespace mazengine {
 	namespace tiles {
 		class Entity;

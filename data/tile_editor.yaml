@@ -1,3 +1,5 @@
 width: 960
 height: 720
+init: |
+  maz.SetWindowDimensions(960,720)
 backgrounds: []

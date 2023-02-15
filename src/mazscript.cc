@@ -28,23 +28,9 @@ void SetWindowDimensions(int width, int height) {
 	MZ::engine->update_dims = true;
 }
 
-/**
- * Wrapper for Menu class so Python can interact with it.
- * */
-class MenuWrapper {
-public:
-	MenuWrapper() { menu = (mazengine::Menu *)MZ::engine->GetGame(); }
-	mazengine::Menu *menu; /**< Pointer to the menu being wrapped. */
-	/**
-	 * Interface to menu->SetWidgetValue function for Python.
-	 * */
-	void SetWidget(std::string u, size_t v, size_t w) {
-		menu->SetWidgetValue(u, v, w);
-	}
-};
-
 BOOST_PYTHON_MODULE(libmazengine) {
-	class_<MenuWrapper>("Menu").def("SetWidget", &MenuWrapper::SetWidget);
+	class_<mazengine::MenuWrapper>("Menu").def(
+		"SetWidget", &mazengine::MenuWrapper::SetWidget);
 	class_<mazengine::tiles::EFWrapper>(
 		"Editor", init<mazengine::tiles::EditorFollow *>())
 		.def("Move", &mazengine::tiles::EFWrapper::Move)
