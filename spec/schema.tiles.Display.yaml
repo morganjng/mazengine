@@ -1,0 +1,11 @@
+---
+triggers: array<string> {required}
+width: int {required}
+height: int {required}
+tileset: string {required}
+map_size: int[2] {required}
+tile_size: int[2] {required}
+tileset_size: int[2] {required}
+following_point: int[2] {required}
+tiles: array<int> {required}
+

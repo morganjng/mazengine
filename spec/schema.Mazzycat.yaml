@@ -1,0 +1,9 @@
+---
+name: string {required}
+window_width: int {required}
+window_height: int {required}
+framerate: int {required}
+data_path: string {required}
+img_path: string {required}
+audio_path: string {required}
+settings_path: string {required}

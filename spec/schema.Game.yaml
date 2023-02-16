@@ -1,0 +1,5 @@
+# Schema for Game classes
+---
+width: int {required}    # Internal width of this game
+height: int {required}   # Internal height of this game
+init: python {optional}  # Python script to be executed at the first tick of this game

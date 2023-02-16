@@ -1,0 +1,17 @@
+# Schema for Menu classes
+# See schema.game.yaml
+---
+width: int {required}
+height: int {required}
+init: python {optional}
+widget_names: arrary<string> {required}
+widgets:
+  <all S in widget_names>:
+    x: float {required}
+    y: float {required}
+    width: float {required}
+    on_click: python {required}
+    on_hover: python {required}
+    no_click: python {required}
+    no_hover: python {required}
+    texture_paths: array<string> {required}

@@ -1,0 +1,8 @@
+# Schema for IGame classes
+# See schema.game.yaml
+# See schema.Mazzycat.yaml
+---
+width: int {required}
+height: int {required}
+init: python {optional}
+backgrounds: array<string> {required}  # Paths to backgrounds to draw.
