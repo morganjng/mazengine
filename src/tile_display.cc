@@ -310,10 +310,8 @@ int Display::Draw() {
 	off_y = off_y - 1 - (internal_size[0] / tile_size[0] / 2);
 	for (int i = 0; i < 2 + (internal_size[1] / tile_size[1]); i++) {
 		for (int j = 0; j < 2 + (internal_size[0] / tile_size[0]); j++) {
-			if (i >= 0 && j >= 0 && i < map_size[1] && j < map_size[0]) {
-				ConfigureRects(off_x + j, off_y + i);
-				tileset->Draw(&texture_location_rect, &tile_location_rect);
-			}
+			ConfigureRects(off_x + j, off_y + i);
+			tileset->Draw(&texture_location_rect, &tile_location_rect);
 		}
 	}
 	for (Entity entity : entities) {

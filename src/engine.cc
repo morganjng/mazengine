@@ -259,7 +259,7 @@ namespace mazengine {
 
 	int Engine::Stop() {
 		this->running = 0;
-		std::cout << "HELLO???" << std::endl;
+		// std::cout << "HELLO???" << std::endl;
 		return 0;
 	}
 
