@@ -1,16 +1,7 @@
 #+title: Tasks Sheet for Mazengine
-
-* DONE Decide on a scripting language
-+ AngelScript - No, not standard
-+ Lua - No, 1 indexed
-+ Python - Maybe, but the bindings seem difficult to write and are geared towards C, not C++
-+ Ruby with Rice - Maybe, but neither of us know Ruby
-  + But this is a learning opportunity
-+ JS - no
-* DONE Tile rendering
-* DONE Multiplying/etc. rectangles
-* DONE Generic 2D Polygons
-CLOSED: [2023-02-16 Thu 12:50]
+* TODO (URGENT) SIGSEGV on Tile Editor write
+ + All tiles filled - SIGSEGV on save
+ + Doesn't render to fill screen
 * TODO Generic 3D Polygons
 * TODO Standard elements
 * TODO Audio implementation
