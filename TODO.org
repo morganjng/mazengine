@@ -1,7 +1,4 @@
 #+title: Tasks Sheet for Mazengine
-* TODO (URGENT) SIGSEGV on Tile Editor write
- + All tiles filled - SIGSEGV on save
- + Doesn't render to fill screen
 * TODO Generic 3D Polygons
 * TODO Standard elements
 * TODO Audio implementation
