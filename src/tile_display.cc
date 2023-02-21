@@ -58,13 +58,10 @@ Display *Display::Load(std::string title) {
 	following_point[0] = following_pt_temp[0];
 	following_point[1] = following_pt_temp[1];
 
-	tiles = (int *)malloc(sizeof(int) * map_size[0] * map_size[1]);
 	tileset = new Texture(data["tileset"].as<std::string>());
 
-	auto temp = data["tiles"].as<std::vector<int>>();
-	for (int i = 0; i < map_size[0] * map_size[1]; i++) {
-		tiles[i] = temp[i];
-	}
+	auto temp = data["tiles"].as<std::vector<std::vector<int>>>();
+	tiles = std::vector<std::vector<int>>(temp);
 
 	return this;
 }
@@ -121,15 +118,8 @@ void Display::Save() {
 	out << YAML::Key << "following_point";
 	out << YAML::Value << temp;
 
-	temp.clear();
-
-	for (int i = 0; i < map_size[0] * map_size[1]; i++) {
-		temp.push_back(tiles[i]);
-	}
-
 	out << YAML::Key << "tiles";
-	out << YAML::Value << temp;
-
+	out << YAML::Value << tiles;
 	out << YAML::EndMap;
 
 	fout << out.c_str();
@@ -155,9 +145,11 @@ Display *Display::TileSize(int w, int h) {
 Display *Display::MapSize(int w, int h, int tile_preset) {
 	map_size[0] = w;
 	map_size[1] = h;
-	tiles = (int *)malloc(sizeof(int) * w * h);
-	for (int i = 0; i < w * h; i++) {
-		tiles[i] = tile_preset;
+	for (int i = 0; i < h; i++) {
+		tiles.push_back(std::vector<int>());
+		for(int j = 0; j < w; j++) {
+			tiles[i].push_back(tile_preset);
+		}
 	}
 	return this;
 }
@@ -291,7 +283,7 @@ void Display::ConfigureRects(int x, int y) {
 	}
 }
 
-int Display::GetTile(int x, int y) { return tiles[x + y * map_size[0]]; }
+int Display::GetTile(int x, int y) { return tiles[y][x]; }
 
 int Display::Tick() {
 	for (std::string trigger : triggers) {
@@ -345,5 +337,5 @@ void Display::SetTile(int x, int y, int val) {
 	if (x == -1 || y == -1) {
 		return;
 	}
-	tiles[x + y * map_size[0]] = val;
+	tiles[y][x] = val;
 }

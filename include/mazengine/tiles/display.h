@@ -20,7 +20,7 @@ namespace mazengine {
 			int status; /**< Current status. TODO remove magic numbers. */
 			Texture
 				*tileset; /**< Tileset being drawn from. TODO add sprites. */
-			int *tiles;	  /**< Tilemap in ints relating to tileset/eventually
+			std::vector<std::vector<int>> tiles;	  /**< Tilemap in ints relating to tileset/eventually
 							 sprites. */
 			Rect output;  /**< Where to draw this on the window. */
 			int *internal_size;	  /**< Native display size. */
@@ -91,6 +91,7 @@ namespace mazengine {
 			Display() {
 				triggers.clear();
 				entities.clear();
+				tiles.clear();
 				tile_size = (int *)malloc(sizeof(int) * 2);
 				map_size = (int *)malloc(sizeof(int) * 2);
 				tileset_size = (int *)malloc(sizeof(int) * 2);
