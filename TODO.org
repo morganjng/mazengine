@@ -1,4 +1,6 @@
 #+title: Tasks Sheet for Mazengine
+* TODO Stress test tiles with vectors
+* TODO Add collision data
 * TODO Generic 3D Polygons
 * TODO Standard elements
 * TODO Audio implementation
